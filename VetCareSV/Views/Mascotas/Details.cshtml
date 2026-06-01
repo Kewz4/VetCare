@@ -1,0 +1,72 @@
+@model VetCareSV.Models.Mascota
+@{ ViewData["Title"] = "Detalle de Mascota"; }
+<div class="vc-container" style="padding-top:2rem;">
+    <div class="vc-form-header">
+        <a asp-action="Index" class="vc-back-link">← Mis Mascotas</a>
+        <div class="vc-header-actions">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="vc-btn-ghost-sm">Editar</a>
+        </div>
+    </div>
+    <div class="vc-detail-layout">
+        <div class="vc-card vc-pet-detail-card">
+            <div class="vc-pet-icon-large">@(Model.Especie == "Perro" ? "🐕" : Model.Especie == "Gato" ? "🐈" : "🦜")</div>
+            <h2>@Model.Nombre</h2>
+            <div class="vc-detail-grid">
+                <div class="vc-detail-item">
+                    <span class="vc-detail-label">Especie</span>
+                    <span class="vc-detail-value">@Model.Especie</span>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Raza))
+                {
+                    <div class="vc-detail-item">
+                        <span class="vc-detail-label">Raza</span>
+                        <span class="vc-detail-value">@Model.Raza</span>
+                    </div>
+                }
+                @if (Model.Edad.HasValue)
+                {
+                    <div class="vc-detail-item">
+                        <span class="vc-detail-label">Edad</span>
+                        <span class="vc-detail-value">@Model.Edad año(s)</span>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.Color))
+                {
+                    <div class="vc-detail-item">
+                        <span class="vc-detail-label">Color</span>
+                        <span class="vc-detail-value">@Model.Color</span>
+                    </div>
+                }
+            </div>
+            <div style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;">
+                <a asp-controller="Citas" asp-action="Create" class="vc-btn-primary">Agendar Cita</a>
+                <a asp-controller="HistorialMedico" asp-action="Mascota" asp-route-mascotaId="@Model.Id" class="vc-btn-ghost">Historial Médico</a>
+            </div>
+        </div>
+        <div>
+            <h3 class="vc-section-subtitle">Citas Recientes</h3>
+            @if (!Model.Citas.Any())
+            {
+                <div class="vc-empty-state">
+                    <span>📅</span>
+                    <p>Sin citas registradas aún.</p>
+                </div>
+            }
+            else
+            {
+                <div class="vc-citas-list">
+                    @foreach (var c in Model.Citas.OrderByDescending(x => x.Fecha).Take(5))
+                    {
+                        <div class="vc-cita-row">
+                            <div>
+                                <strong>@c.Fecha.ToString("dd/MM/yyyy HH:mm")</strong>
+                                <small>@c.Veterinaria?.Nombre</small>
+                            </div>
+                            <span class="vc-badge vc-badge--@c.Estado.ToLower()">@c.Estado</span>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>

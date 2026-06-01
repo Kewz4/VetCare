@@ -1,0 +1,50 @@
+@model VetCareSV.DTOs.CrearMascotaDTO
+@{ ViewData["Title"] = "Registrar Mascota"; }
+<div class="vc-container vc-form-page">
+    <div class="vc-form-header">
+        <a asp-action="Index" class="vc-back-link">← Mis Mascotas</a>
+        <h1>Registrar Mascota</h1>
+    </div>
+    <div class="vc-form-card">
+        <form asp-action="Create" method="post" class="vc-form">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="vc-validation-errors"></div>
+            <div class="vc-form-row">
+                <div class="vc-field">
+                    <label asp-for="Nombre">Nombre de la mascota *</label>
+                    <input asp-for="Nombre" placeholder="Ej. Firulais" />
+                    <span asp-validation-for="Nombre" class="vc-field-error"></span>
+                </div>
+                <div class="vc-field">
+                    <label asp-for="Especie">Especie *</label>
+                    <select asp-for="Especie">
+                        <option value="">-- Selecciona --</option>
+                        <option value="Perro">🐕 Perro</option>
+                        <option value="Gato">🐈 Gato</option>
+                        <option value="Ave">🦜 Ave</option>
+                        <option value="Otro">Otro</option>
+                    </select>
+                    <span asp-validation-for="Especie" class="vc-field-error"></span>
+                </div>
+            </div>
+            <div class="vc-form-row">
+                <div class="vc-field">
+                    <label asp-for="Raza">Raza</label>
+                    <input asp-for="Raza" placeholder="Ej. Labrador" />
+                </div>
+                <div class="vc-field">
+                    <label asp-for="Edad">Edad (años)</label>
+                    <input asp-for="Edad" type="number" min="0" max="50" placeholder="Ej. 3" />
+                </div>
+            </div>
+            <div class="vc-field">
+                <label asp-for="Color">Color</label>
+                <input asp-for="Color" placeholder="Ej. Amarillo con manchas blancas" />
+            </div>
+            <div class="vc-form-actions">
+                <a asp-action="Index" class="vc-btn-ghost">Cancelar</a>
+                <button type="submit" class="vc-btn-primary">Registrar Mascota</button>
+            </div>
+        </form>
+    </div>
+</div>

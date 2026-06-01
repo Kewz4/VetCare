@@ -1,0 +1,126 @@
+@using VetCareSV.Models
+@{ ViewData["Title"] = "Panel de Administración";
+   var usuarios = ViewBag.Usuarios as IEnumerable<Usuario> ?? Enumerable.Empty<Usuario>();
+   var citas = ViewBag.Citas as IEnumerable<Cita> ?? Enumerable.Empty<Cita>();
+   var mascotas = ViewBag.Mascotas as IEnumerable<Mascota> ?? Enumerable.Empty<Mascota>();
+   var stats = ViewBag.Stats as Dictionary<string, int> ?? new Dictionary<string, int>(); }
+<div class="vc-container" style="padding-top:2rem;">
+    <div class="vc-page-header">
+        <div>
+            <h1>Panel de Administración</h1>
+            <p>Gestión global del sistema VetCare SV</p>
+        </div>
+    </div>
+
+    <div class="vc-admin-stats">
+        <div class="vc-stat-card vc-stat-card--accent">
+            <span class="vc-stat-num">@usuarios.Count()</span>
+            <span class="vc-stat-label">Usuarios</span>
+        </div>
+        <div class="vc-stat-card">
+            <span class="vc-stat-num">@mascotas.Count()</span>
+            <span class="vc-stat-label">Mascotas</span>
+        </div>
+        <div class="vc-stat-card">
+            <span class="vc-stat-num">@citas.Count()</span>
+            <span class="vc-stat-label">Total Citas</span>
+        </div>
+        <div class="vc-stat-card">
+            <span class="vc-stat-num">@(stats.GetValueOrDefault("Pendiente", 0))</span>
+            <span class="vc-stat-label">Pendientes</span>
+        </div>
+        <div class="vc-stat-card">
+            <span class="vc-stat-num">@(stats.GetValueOrDefault("Completada", 0))</span>
+            <span class="vc-stat-label">Completadas</span>
+        </div>
+    </div>
+
+    <section style="margin-top:2.5rem;">
+        <h2 class="vc-section-subtitle">Todas las Citas</h2>
+        @if (!citas.Any())
+        {
+            <p style="color:var(--navy-300);">Sin citas registradas.</p>
+        }
+        else
+        {
+            <div class="vc-table-wrapper">
+                <table class="vc-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Mascota</th>
+                            <th>Dueño</th>
+                            <th>Veterinaria</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var c in citas)
+                        {
+                            <tr>
+                                <td>@c.Id</td>
+                                <td>@c.Mascota?.Nombre</td>
+                                <td>@c.Mascota?.Usuario?.Nombre</td>
+                                <td>@c.Veterinaria?.Nombre</td>
+                                <td>@c.Fecha.ToString("dd/MM/yy HH:mm")</td>
+                                <td><span class="vc-badge vc-badge--@c.Estado.ToLower()">@c.Estado</span></td>
+                                <td>
+                                    <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;">
+                                        <form asp-action="CambiarEstadoCita" method="post" style="display:flex;gap:0.35rem;align-items:center;">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@c.Id" />
+                                            <select name="estado" class="vc-select-sm">
+                                                <option value="Pendiente" selected="@(c.Estado == "Pendiente" ? "selected" : null)">Pendiente</option>
+                                                <option value="Confirmada" selected="@(c.Estado == "Confirmada" ? "selected" : null)">Confirmada</option>
+                                                <option value="Completada" selected="@(c.Estado == "Completada" ? "selected" : null)">Completada</option>
+                                                <option value="Cancelada" selected="@(c.Estado == "Cancelada" ? "selected" : null)">Cancelada</option>
+                                            </select>
+                                            <button type="submit" class="vc-btn-primary-sm">OK</button>
+                                        </form>
+                                        @if (c.Estado == "Confirmada" && c.HistorialMedico == null)
+                                        {
+                                            <a asp-controller="HistorialMedico" asp-action="Create" asp-route-citaId="@c.Id" class="vc-btn-ghost-sm">+ Historial</a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </section>
+
+    <section style="margin-top:2.5rem;">
+        <h2 class="vc-section-subtitle">Usuarios Registrados</h2>
+        <div class="vc-table-wrapper">
+            <table class="vc-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Rol</th>
+                        <th>Mascotas</th>
+                        <th>Registro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var u in usuarios)
+                    {
+                        <tr>
+                            <td>@u.Id</td>
+                            <td>@u.Nombre</td>
+                            <td>@u.Email</td>
+                            <td><span class="vc-badge vc-badge--@(u.Rol == "Admin" ? "admin" : u.Rol == "Veterinario" ? "vet" : "user")">@u.Rol</span></td>
+                            <td>@u.Mascotas.Count</td>
+                            <td>@u.FechaRegistro.ToString("dd/MM/yyyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,75 @@
+@model IEnumerable<VetCareSV.Models.ComercioAliado>
+@{ ViewData["Title"] = "Comercios Aliados"; }
+<div class="vc-container" style="padding-top:2rem;">
+    <div class="vc-page-header">
+        <div>
+            <h1>Comercios Aliados</h1>
+            <p>Tiendas, farmacias y servicios para tu mascota en El Salvador</p>
+        </div>
+    </div>
+    <form method="get" class="vc-search-bar">
+        <div class="vc-field" style="flex:1;">
+            <input type="text" name="termino" value="@ViewBag.Termino" placeholder="Buscar comercios..." />
+        </div>
+        <div class="vc-field">
+            <select name="categoria">
+                <option value="">Todas las categorías</option>
+                @foreach (var cat in new[] { "Tienda", "Farmacia", "Grooming", "Agropecuaria", "Veterinaria" })
+                {
+                    <option value="@cat" selected="@(ViewBag.Categoria == cat ? "selected" : null)">@cat</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="vc-btn-primary">Buscar</button>
+        @if (!string.IsNullOrEmpty(ViewBag.Termino as string) || !string.IsNullOrEmpty(ViewBag.Categoria as string))
+        {
+            <a asp-action="Index" class="vc-btn-ghost">Limpiar</a>
+        }
+    </form>
+
+    <div class="vc-categoria-chips">
+        <a href="@Url.Action("Index")" class="vc-chip @(string.IsNullOrEmpty(ViewBag.Categoria as string) ? "vc-chip--active" : "")">Todos</a>
+        @foreach (var cat in new[] { "Tienda", "Farmacia", "Grooming", "Agropecuaria" })
+        {
+            <a href="@Url.Action("Index", new { categoria = cat })" class="vc-chip @(ViewBag.Categoria == cat ? "vc-chip--active" : "")">@cat</a>
+        }
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="vc-empty-state">
+            <span>🏪</span>
+            <p>No se encontraron comercios con esos criterios.</p>
+            <a asp-action="Index" class="vc-btn-ghost">Ver todos</a>
+        </div>
+    }
+    else
+    {
+        <div class="vc-cards-grid">
+            @foreach (var c in Model)
+            {
+                var icon = c.Categoria switch {
+                    "Farmacia" => "💊",
+                    "Grooming" => "✂️",
+                    "Agropecuaria" => "🌾",
+                    "Veterinaria" => "🏥",
+                    _ => "🛒"
+                };
+                <div class="vc-card vc-comercio-card">
+                    <div class="vc-card-icon">@icon</div>
+                    <div class="vc-card-body">
+                        <span class="vc-chip vc-chip--sm">@c.Categoria</span>
+                        <h3>@c.Nombre</h3>
+                        @if (!string.IsNullOrEmpty(c.Departamento))
+                        { <p class="vc-card-meta">📍 @c.Departamento</p> }
+                        <p class="vc-card-text">@c.Direccion</p>
+                        @if (!string.IsNullOrEmpty(c.Telefono))
+                        { <p class="vc-card-text">📞 @c.Telefono</p> }
+                        @if (!string.IsNullOrEmpty(c.Descripcion))
+                        { <p class="vc-card-desc">@c.Descripcion</p> }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

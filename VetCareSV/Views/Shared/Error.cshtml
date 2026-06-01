@@ -1,0 +1,12 @@
+@model VetCareSV.Models.ErrorViewModel
+@{ ViewData["Title"] = "Error"; }
+<div class="vc-container" style="padding:4rem 1rem;text-align:center;">
+    <div style="font-size:4rem;margin-bottom:1rem;">⚠️</div>
+    <h1 style="color:var(--mint);margin-bottom:0.5rem;">Algo salió mal</h1>
+    <p style="color:var(--navy-200);margin-bottom:2rem;">Ocurrió un error inesperado. Por favor intenta de nuevo.</p>
+    @if (Model?.ShowRequestId == true)
+    {
+        <p style="font-size:0.8rem;color:var(--navy-400);">Request ID: <code>@Model.RequestId</code></p>
+    }
+    <a asp-controller="Home" asp-action="Index" class="vc-btn-primary" style="margin-top:1.5rem;display:inline-block;">Volver al Inicio</a>
+</div>

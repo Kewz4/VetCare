@@ -1,0 +1,43 @@
+@model VetCareSV.DTOs.CrearCitaDTO
+@{ ViewData["Title"] = "Agendar Cita"; }
+<div class="vc-container vc-form-page">
+    <div class="vc-form-header">
+        <a asp-action="Index" class="vc-back-link">← Mis Citas</a>
+        <h1>Agendar Nueva Cita</h1>
+    </div>
+    <div class="vc-form-card">
+        <form asp-action="Create" method="post" class="vc-form">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="vc-validation-errors"></div>
+            <div class="vc-form-row">
+                <div class="vc-field">
+                    <label asp-for="MascotaId">Mascota *</label>
+                    <select asp-for="MascotaId" asp-items="ViewBag.Mascotas">
+                        <option value="">-- Selecciona tu mascota --</option>
+                    </select>
+                    <span asp-validation-for="MascotaId" class="vc-field-error"></span>
+                </div>
+                <div class="vc-field">
+                    <label asp-for="VeterinariaId">Veterinaria *</label>
+                    <select asp-for="VeterinariaId" asp-items="ViewBag.Veterinarias">
+                        <option value="">-- Selecciona una veterinaria --</option>
+                    </select>
+                    <span asp-validation-for="VeterinariaId" class="vc-field-error"></span>
+                </div>
+            </div>
+            <div class="vc-field">
+                <label asp-for="Fecha">Fecha y hora de la cita *</label>
+                <input asp-for="Fecha" type="datetime-local" />
+                <span asp-validation-for="Fecha" class="vc-field-error"></span>
+            </div>
+            <div class="vc-field">
+                <label asp-for="Motivo">Motivo de la consulta</label>
+                <textarea asp-for="Motivo" rows="3" placeholder="Describe el motivo de la visita..."></textarea>
+            </div>
+            <div class="vc-form-actions">
+                <a asp-action="Index" class="vc-btn-ghost">Cancelar</a>
+                <button type="submit" class="vc-btn-primary">Agendar Cita</button>
+            </div>
+        </form>
+    </div>
+</div>

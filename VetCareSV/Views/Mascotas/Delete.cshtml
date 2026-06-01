@@ -1,0 +1,33 @@
+@model VetCareSV.Models.Mascota
+@{ ViewData["Title"] = "Eliminar Mascota"; }
+<div class="vc-container vc-form-page">
+    <div class="vc-delete-confirm">
+        <div class="vc-delete-icon">⚠️</div>
+        <h1>¿Eliminar a @Model.Nombre?</h1>
+        <p>Esta acción es permanente. Se eliminarán también todas las citas asociadas a esta mascota.</p>
+        <div class="vc-card vc-delete-info">
+            <div class="vc-detail-item">
+                <span class="vc-detail-label">Nombre</span>
+                <span class="vc-detail-value">@Model.Nombre</span>
+            </div>
+            <div class="vc-detail-item">
+                <span class="vc-detail-label">Especie</span>
+                <span class="vc-detail-value">@Model.Especie</span>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.Raza))
+            {
+                <div class="vc-detail-item">
+                    <span class="vc-detail-label">Raza</span>
+                    <span class="vc-detail-value">@Model.Raza</span>
+                </div>
+            }
+        </div>
+        <div class="vc-form-actions">
+            <a asp-action="Index" class="vc-btn-ghost">Cancelar</a>
+            <form asp-action="Delete" asp-route-id="@Model.Id" method="post" style="display:inline;">
+                @Html.AntiForgeryToken()
+                <button type="submit" class="vc-btn-danger">Sí, eliminar</button>
+            </form>
+        </div>
+    </div>
+</div>

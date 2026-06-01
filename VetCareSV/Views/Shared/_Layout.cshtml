@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — VetCare SV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/vetcare.css" asp-append-version="true" />
+</head>
+<body>
+<nav class="vc-nav" id="mainNav">
+    <a asp-controller="Home" asp-action="Index" class="vc-nav-logo">
+        <span class="vc-nav-paw">🐾</span>
+        VetCare <span class="vc-accent">SV</span>
+    </a>
+    <div class="vc-nav-links">
+        <a asp-controller="Home" asp-action="Index">Inicio</a>
+        <a asp-controller="Veterinarias" asp-action="Index">Veterinarias</a>
+        <a asp-controller="Comercios" asp-action="Index">Comercios</a>
+        @if (Context.Session.GetInt32("UsuarioId") != null)
+        {
+            <a asp-controller="Mascotas" asp-action="Index">Mis Mascotas</a>
+            <a asp-controller="Citas" asp-action="Index">Mis Citas</a>
+            @if (Context.Session.GetString("UsuarioRol") == "Admin")
+            {
+                <a asp-controller="Admin" asp-action="Index" class="vc-badge-admin">Admin</a>
+            }
+            <div class="vc-user-menu">
+                <span class="vc-user-name">👤 @Context.Session.GetString("UsuarioNombre")</span>
+                <div class="vc-user-dropdown">
+                    <a asp-controller="Usuarios" asp-action="Perfil">Mi Perfil</a>
+                    <form asp-controller="Usuarios" asp-action="Logout" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit">Cerrar Sesión</button>
+                    </form>
+                </div>
+            </div>
+        }
+        else
+        {
+            <a asp-controller="Usuarios" asp-action="Login" class="vc-btn-ghost-sm">Iniciar Sesión</a>
+            <a asp-controller="Usuarios" asp-action="Registro" class="vc-btn-primary-sm">Registrarse</a>
+        }
+    </div>
+</nav>
+
+<main class="vc-main">
+    @if (TempData["Exito"] != null)
+    {
+        <div class="vc-alert vc-alert--success">✓ @TempData["Exito"]</div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="vc-alert vc-alert--error">✕ @TempData["Error"]</div>
+    }
+    @RenderBody()
+</main>
+
+<footer class="vc-footer">
+    <div class="vc-footer-inner">
+        <div class="vc-footer-logo">
+            <span>🐾</span> VetCare <span class="vc-accent">SV</span>
+        </div>
+        <p class="vc-footer-sub">Sistema de Citas Veterinarias · El Salvador · 2026</p>
+        <p class="vc-footer-credit">Kenneth Rodas · Universidad Mónica Herrera</p>
+    </div>
+</footer>
+
+<script>
+const nav = document.getElementById('mainNav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), {passive:true});
+</script>
+@await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

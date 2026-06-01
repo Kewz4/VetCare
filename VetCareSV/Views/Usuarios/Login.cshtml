@@ -1,0 +1,25 @@
+@model VetCareSV.DTOs.LoginDTO
+@{ ViewData["Title"] = "Iniciar Sesión"; }
+<div class="vc-auth-page">
+    <div class="vc-auth-card">
+        <div class="vc-auth-logo">🐾</div>
+        <h1 class="vc-auth-title">Bienvenido de vuelta</h1>
+        <p class="vc-auth-sub">Ingresa a tu cuenta VetCare SV</p>
+        <form asp-action="Login" method="post" class="vc-form">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="vc-validation-errors"></div>
+            <div class="vc-field">
+                <label asp-for="Email">Correo electrónico</label>
+                <input asp-for="Email" type="email" placeholder="correo@ejemplo.com" />
+                <span asp-validation-for="Email" class="vc-field-error"></span>
+            </div>
+            <div class="vc-field">
+                <label asp-for="Password">Contraseña</label>
+                <input asp-for="Password" type="password" placeholder="••••••••" />
+                <span asp-validation-for="Password" class="vc-field-error"></span>
+            </div>
+            <button type="submit" class="vc-btn-primary vc-btn-full">Iniciar Sesión</button>
+        </form>
+        <p class="vc-auth-switch">¿No tienes cuenta? <a asp-action="Registro">Regístrate aquí</a></p>
+    </div>
+</div>

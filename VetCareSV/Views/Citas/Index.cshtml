@@ -1,0 +1,58 @@
+@model IEnumerable<VetCareSV.Models.Cita>
+@{ ViewData["Title"] = "Mis Citas"; }
+<div class="vc-container" style="padding-top:2rem;">
+    <div class="vc-page-header">
+        <div>
+            <h1>Mis Citas</h1>
+            <p>Historial y próximas citas veterinarias</p>
+        </div>
+        <a asp-action="Create" class="vc-btn-primary">+ Agendar Cita</a>
+    </div>
+    @if (!Model.Any())
+    {
+        <div class="vc-empty-state">
+            <span>📅</span>
+            <p>No tienes citas agendadas aún.</p>
+            <a asp-action="Create" class="vc-btn-primary">Agendar primera cita</a>
+        </div>
+    }
+    else
+    {
+        <div class="vc-table-wrapper">
+            <table class="vc-table">
+                <thead>
+                    <tr>
+                        <th>Mascota</th>
+                        <th>Veterinaria</th>
+                        <th>Fecha</th>
+                        <th>Motivo</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var c in Model)
+                    {
+                        <tr>
+                            <td><strong>@c.Mascota?.Nombre</strong></td>
+                            <td>@c.Veterinaria?.Nombre</td>
+                            <td>@c.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@(c.Motivo ?? "—")</td>
+                            <td><span class="vc-badge vc-badge--@c.Estado.ToLower()">@c.Estado</span></td>
+                            <td class="vc-table-actions">
+                                <a asp-action="Details" asp-route-id="@c.Id" class="vc-btn-ghost-sm">Ver</a>
+                                @if (c.Estado == "Pendiente" || c.Estado == "Confirmada")
+                                {
+                                    <form asp-action="Cancelar" asp-route-id="@c.Id" method="post" style="display:inline;">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="vc-btn-danger-sm" onclick="return confirm('¿Cancelar esta cita?')">Cancelar</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
