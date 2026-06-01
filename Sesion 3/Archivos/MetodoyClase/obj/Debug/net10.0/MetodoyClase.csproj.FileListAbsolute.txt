@@ -1,0 +1,14 @@
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\bin\Debug\net10.0\MetodoyClase.exe
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\bin\Debug\net10.0\MetodoyClase.deps.json
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\bin\Debug\net10.0\MetodoyClase.runtimeconfig.json
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\bin\Debug\net10.0\MetodoyClase.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\bin\Debug\net10.0\MetodoyClase.pdb
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\obj\Debug\net10.0\MetodoyClase.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\obj\Debug\net10.0\MetodoyClase.AssemblyInfoInputs.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\obj\Debug\net10.0\MetodoyClase.AssemblyInfo.cs
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\obj\Debug\net10.0\MetodoyClase.csproj.CoreCompileInputs.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\obj\Debug\net10.0\MetodoyClase.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\obj\Debug\net10.0\refint\MetodoyClase.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\obj\Debug\net10.0\MetodoyClase.pdb
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\obj\Debug\net10.0\MetodoyClase.genruntimeconfig.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\MetodoyClase\obj\Debug\net10.0\ref\MetodoyClase.dll

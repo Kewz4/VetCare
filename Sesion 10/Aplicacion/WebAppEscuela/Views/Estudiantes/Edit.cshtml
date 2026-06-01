@@ -1,0 +1,88 @@
+@model WebAppEscuela.Models.Estudiante
+
+@{
+    ViewData["Title"] = "Editar Alumno";
+}
+
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <form asp-action="Edit" method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="FechaRegistro" />
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Nombre" class="form-label">Nombre *</label>
+                        <input asp-for="Nombre" class="form-control" required>
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Apellido" class="form-label">Apellido *</label>
+                        <input asp-for="Apellido" class="form-control" required>
+                        <span asp-validation-for="Apellido" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="Email" class="form-label">Email *</label>
+                        <input asp-for="Email" type="email" class="form-control" required>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Telefono" class="form-label">Teléfono</label>
+                        <input asp-for="Telefono" class="form-control">
+                        <span asp-validation-for="Telefono" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label asp-for="FechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                        <input asp-for="FechaNacimiento" type="date" class="form-control">
+                        <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Activo" class="form-label">Activo</label>
+                        <div class="form-check mt-2">
+                            <input asp-for="Activo" type="checkbox" class="form-check-input" id="activoCheck">
+                            <label class="form-check-label" for="activoCheck">
+                                Marcar como activo
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Direccion" class="form-label">Dirección</label>
+                    <textarea asp-for="Direccion" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Direccion" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Guardar Cambios
+                    </button>
+                    <a asp-action="Index" class="btn btn-secondary">
+                        <i class="bi bi-x"></i> Cancelar
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

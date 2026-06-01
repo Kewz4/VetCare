@@ -1,0 +1,66 @@
+@model WebAppEscuela.Models.Estudiante
+
+@{
+    ViewData["Title"] = "Eliminar Alumno";
+}
+
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>@ViewData["Title"]</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="alert alert-warning" role="alert">
+                <strong>⚠️ Advertencia:</strong> Está a punto de eliminar este registro. Esta acción no puede deshacerse.
+            </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Nombre:</label>
+                            <p>@Model.Nombre</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Apellido:</label>
+                            <p>@Model.Apellido</p>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold">Email:</label>
+                            <p>@Model.Email</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Teléfono:</label>
+                            <p>@(string.IsNullOrEmpty(Model.Telefono) ? "N/A" : Model.Telefono)</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Fecha de Nacimiento:</label>
+                            <p>@(Model.FechaNacimiento.HasValue ? Model.FechaNacimiento.Value.ToString("dd/MM/yyyy") : "N/A")</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h5>¿Desea continuar con la eliminación?</h5>
+
+            <form asp-action="DeleteConfirmed" method="post" style="display:inline;">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger">
+                    <i class="bi bi-trash"></i> Sí, Eliminar
+                </button>
+                <a asp-action="Index" class="btn btn-secondary">
+                    <i class="bi bi-x"></i> Cancelar
+                </a>
+            </form>
+        </div>
+    </div>
+</div>

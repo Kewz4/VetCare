@@ -1,0 +1,14 @@
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\bin\Debug\net10.0\Clase3.exe
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\bin\Debug\net10.0\Clase3.deps.json
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\bin\Debug\net10.0\Clase3.runtimeconfig.json
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\bin\Debug\net10.0\Clase3.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\bin\Debug\net10.0\Clase3.pdb
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\obj\Debug\net10.0\Clase3.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\obj\Debug\net10.0\Clase3.AssemblyInfoInputs.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\obj\Debug\net10.0\Clase3.AssemblyInfo.cs
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\obj\Debug\net10.0\Clase3.csproj.CoreCompileInputs.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\obj\Debug\net10.0\Clase3.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\obj\Debug\net10.0\refint\Clase3.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\obj\Debug\net10.0\Clase3.pdb
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\obj\Debug\net10.0\Clase3.genruntimeconfig.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\AplicacionConsola\Clase3\obj\Debug\net10.0\ref\Clase3.dll

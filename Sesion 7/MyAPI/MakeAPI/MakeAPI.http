@@ -1,0 +1,122 @@
+@baseUrl = https://localhost:7001/api
+
+### ========== OBTENER TODOS LOS PRODUCTOS ==========
+GET {{baseUrl}}/productos
+Accept: application/json
+
+###
+
+### ========== OBTENER UN PRODUCTO POR ID ==========
+GET {{baseUrl}}/productos/1
+Accept: application/json
+
+###
+
+### ========== CREAR UN NUEVO PRODUCTO ==========
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "Webcam Logitech",
+  "precio": 79.99,
+  "categoria": "Accesorios",
+  "stock": 20
+}
+
+###
+
+### ========== CREAR OTRO PRODUCTO ==========
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "Audífonos Sony",
+  "precio": 199.99,
+  "categoria": "Audio",
+  "stock": 12
+}
+
+###
+
+### ========== INTENTAR CREAR PRODUCTO DUPLICADO (ERROR) ==========
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "Webcam Logitech",
+  "precio": 89.99,
+  "categoria": "Accesorios",
+  "stock": 15
+}
+
+###
+
+### ========== INTENTAR CREAR PRODUCTO CON PRECIO INVÁLIDO (ERROR) ==========
+POST {{baseUrl}}/productos
+Content-Type: application/json
+
+{
+  "nombre": "Producto Inválido",
+  "precio": -50,
+  "categoria": "Test",
+  "stock": 10
+}
+
+###
+
+### ========== ACTUALIZAR UN PRODUCTO ==========
+PUT {{baseUrl}}/productos/1
+Content-Type: application/json
+
+{
+  "nombre": "Laptop ASUS Vivobook",
+  "precio": 1199.99,
+  "categoria": "Computadoras"
+}
+
+###
+
+### ========== ACTUALIZAR STOCK - AUMENTAR (PATCH) ==========
+### Sumar 10 unidades al producto con ID 1
+PATCH {{baseUrl}}/productos/1/stock?cantidad=10
+Accept: application/json
+
+###
+
+### ========== ACTUALIZAR STOCK - DISMINUIR (PATCH) ==========
+### Restar 3 unidades al producto con ID 2
+PATCH {{baseUrl}}/productos/2/stock?cantidad=-3
+Accept: application/json
+
+###
+
+### ========== INTENTAR ACTUALIZAR STOCK A CANTIDAD NEGATIVA (ERROR) ==========
+### Intenta restar más de lo que hay disponible
+PATCH {{baseUrl}}/productos/2/stock?cantidad=-50
+Accept: application/json
+
+###
+
+### ========== OBTENER PRODUCTO QUE NO EXISTE (ERROR 404) ==========
+GET {{baseUrl}}/productos/999
+Accept: application/json
+
+###
+
+### ========== ELIMINAR UN PRODUCTO ==========
+DELETE {{baseUrl}}/productos/3
+Accept: application/json
+
+###
+
+### ========== OBTENER TODOS LOS PRODUCTOS (VERIFICAR ELIMINACIÓN) ==========
+GET {{baseUrl}}/productos
+Accept: application/json
+
+###
+
+### ========== INTENTAR OBTENER PRODUCTO ELIMINADO (ERROR 404) ==========
+GET {{baseUrl}}/productos/3
+Accept: application/json
+
+###

@@ -1,0 +1,10 @@
+            Console.WriteLine("prueba de métodos en C#\n");
+
+            //Mostrar salario base
+            float salarioBase = calculaSalarioBase();
+            Console.WriteLine("Salario base: " + salarioBase);
+
+
+            public class calculaSalarioBase(){
+
+            }

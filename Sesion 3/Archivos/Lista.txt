@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+
+namespace Clase3
+{
+    class Program
+    {
+        static void Main()
+        {
+            // Crear una Lista de strings
+            List<string> frutas = new List<string>();
+
+            // AGREGAR elementos a la lista
+            frutas.Add("Manzana");
+            frutas.Add("Plátano");
+            frutas.Add("Naranja");
+            frutas.Add("Uva");
+            frutas.Add("Mango");
+
+            Console.WriteLine("=== LISTA DE FRUTAS ===\n");
+
+            // RECORRER la lista (mostrar todos los elementos)
+            Console.WriteLine("📋 Frutas disponibles:");
+            foreach (string fruta in frutas)
+            {
+                Console.WriteLine($"  • {fruta}");
+            }
+
+            Console.WriteLine($"\nTotal: {frutas.Count} frutas\n");
+
+            // QUITAR un elemento de la lista
+            Console.WriteLine("🗑️ Removiendo 'Plátano'...");
+            frutas.Remove("Plátano");
+
+            Console.WriteLine("\n📋 Frutas después de remover:");
+            foreach (string fruta in frutas)
+            {
+                Console.WriteLine($"  • {fruta}");
+            }
+
+            Console.WriteLine($"\nTotal: {frutas.Count} frutas");
+        }   
+    }
+ }

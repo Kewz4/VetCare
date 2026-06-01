@@ -1,0 +1,70 @@
+/*main
+            Console.WriteLine("=== PROGRAMA DE VIDEOJUEGOS ===\n");
+
+            //Ejemplo de uso de la clase Videojuego
+            Videojuego juego1 = new Videojuego("The Legend of Zelda", 2023, 9.5);
+            juego1.MostrarInfo();
+            juego1.MostrarEstado();
+
+            Console.WriteLine($"¿Es moderno? {(juego1.EsJuegoModerno() ? "Sí" : "No")}\n");
+
+            //Crea más videojuegos aquí para probar:
+            Videojuego juego2 = new Videojuego("Super Mario Bros", 1985, 8.2);
+            juego2.MostrarInfo();
+            juego2.MostrarEstado();
+*/
+
+public class Videojuego
+    {
+        // ATRIBUTOS (propiedades del videojuego)
+        private string titulo;
+        private int anioLanzamiento;
+        private double calificacion;  // De 0 a 10
+
+        // Constructor - Inicializa el videojuego
+        public Videojuego(string titulo, int anio, double calificacion)
+        {
+            this.titulo = titulo;
+            this.anioLanzamiento = anio;
+            this.calificacion = calificacion;
+        }
+
+        // MÉTODOS EXISTENTES
+        public void MostrarInfo()
+        {
+            Console.WriteLine($"\n🎮 --- {titulo} ---");
+            Console.WriteLine($"Año de lanzamiento: {anioLanzamiento}");
+            Console.WriteLine($"Calificación: {calificacion}/10 ⭐");
+        }
+
+        public bool EsJuegoModerno()
+        {
+            return anioLanzamiento >= 2020;
+        }
+
+        public void MostrarEstado()
+        {
+            if (calificacion >= 8)
+                Console.WriteLine("✅ ¡Excelente juego!");
+            else if (calificacion >= 6)
+                Console.WriteLine("👍 Juego bueno");
+            else
+                Console.WriteLine("⚠️ Juego promedio");
+        }
+
+        // MÉTODOS QUE LOS ALUMNOS DEBEN COMPLETAR/AGREGAR:
+        
+        // TODO 1: Crea un método llamado "ObtenerTitulo()" que retorne el título
+        // public string ObtenerTitulo() { ... }
+
+        // TODO 2: Crea un método llamado "ActualizarCalificacion(double nueva)" 
+        // que cambie la calificación del juego
+
+        // TODO 3: Crea un atributo nueva "genero" (string) 
+        // y un método para obtenerlo
+
+        // TODO 4: Crea un método "JuegoAntiguo()" que retorne true 
+        // si el juego fue lanzado antes de 2015
+
+        // TODO 5: Agrega tu propio atributo y método (opcional - sé creativo!)
+    }

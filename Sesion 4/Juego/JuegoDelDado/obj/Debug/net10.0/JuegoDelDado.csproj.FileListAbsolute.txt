@@ -1,0 +1,14 @@
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\bin\Debug\net10.0\JuegoDelDado.exe
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\bin\Debug\net10.0\JuegoDelDado.deps.json
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\bin\Debug\net10.0\JuegoDelDado.runtimeconfig.json
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\bin\Debug\net10.0\JuegoDelDado.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\bin\Debug\net10.0\JuegoDelDado.pdb
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\obj\Debug\net10.0\JuegoDelDado.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\obj\Debug\net10.0\JuegoDelDado.AssemblyInfoInputs.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\obj\Debug\net10.0\JuegoDelDado.AssemblyInfo.cs
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\obj\Debug\net10.0\JuegoDelDado.csproj.CoreCompileInputs.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\obj\Debug\net10.0\JuegoDelDado.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\obj\Debug\net10.0\refint\JuegoDelDado.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\obj\Debug\net10.0\JuegoDelDado.pdb
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\obj\Debug\net10.0\JuegoDelDado.genruntimeconfig.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Session 4\Juego\JuegoDelDado\obj\Debug\net10.0\ref\JuegoDelDado.dll

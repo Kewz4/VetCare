@@ -1,0 +1,14 @@
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\obj\Debug\net10.0\AppObjetos.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\obj\Debug\net10.0\AppObjetos.AssemblyInfoInputs.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\obj\Debug\net10.0\AppObjetos.AssemblyInfo.cs
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\obj\Debug\net10.0\AppObjetos.csproj.CoreCompileInputs.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\bin\Debug\net10.0\AppObjetos.exe
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\bin\Debug\net10.0\AppObjetos.deps.json
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\bin\Debug\net10.0\AppObjetos.runtimeconfig.json
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\bin\Debug\net10.0\AppObjetos.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\bin\Debug\net10.0\AppObjetos.pdb
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\obj\Debug\net10.0\AppObjetos.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\obj\Debug\net10.0\refint\AppObjetos.dll
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\obj\Debug\net10.0\AppObjetos.pdb
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\obj\Debug\net10.0\AppObjetos.genruntimeconfig.cache
+C:\Users\Cesar\Documents\CLASES EMH\CICLO I\Lenguajes Programacion\Sesion 3\Ejercicio Objetos\AppObjetos\obj\Debug\net10.0\ref\AppObjetos.dll
