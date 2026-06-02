@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VetCare SV — Cuidamos a tu familia peluda</title>
+  <title>VetCare SV · Sistema de Citas Veterinarias</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
@@ -225,7 +225,40 @@
     }
     .btn-ghost:hover { border-color: var(--mint); color: var(--mint); }
 
-    /* Hero visual side */
+    /* Hero dog illustration */
+    .hero-dog {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .hero-dog-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+    }
+    .hero-dog-glow {
+      position: absolute;
+      width: 380px; height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(62,207,178,0.2) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-dog img {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 20px 60px rgba(62,207,178,0.15));
+      animation: float 4s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* Hero visual side (kept for responsive hide rule reference) */
     .hero-visual {
       position: relative;
       z-index: 2;
@@ -481,7 +514,7 @@
       align-items: baseline;
     }
     .module-features li::before {
-      content: '—';
+      content: '·';
       color: var(--teal-400);
       flex-shrink: 0;
     }
@@ -867,6 +900,7 @@
     @media (max-width: 900px) {
       .hero { grid-template-columns: 1fr; padding-top: 100px; }
       .hero-visual { display: none; }
+      .hero-dog { display: none; }
       .problem-section,
       .arch-section,
       .scope-section { grid-template-columns: 1fr; gap: 48px; }
@@ -909,9 +943,9 @@
   <!-- ═══ HERO ═══════════════════════════════════════════════════ -->
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero-content">
-      <div class="hero-eyebrow" aria-label="El Salvador">
+      <div class="hero-eyebrow" aria-label="Proyecto académico">
         <span class="hero-eyebrow-dot" aria-hidden="true"></span>
-        Hecho para El Salvador
+        Proyecto Final · Universidad Mónica Herrera 2026
       </div>
       <h1 class="hero-title" id="hero-title">
         <span class="line-break">Tu mascota</span>
@@ -919,7 +953,7 @@
         atención veterinaria
       </h1>
       <p class="hero-sub">
-        VetCare SV conecta a dueños de mascotas con veterinarias y comercios aliados en El Salvador. Agenda citas, gestiona historiales y encuentra clínicas — todo en un solo lugar.
+        VetCare SV conecta a dueños de mascotas con veterinarias y comercios aliados. Construido con C# ASP.NET Core MVC y PostgreSQL: agenda citas, gestiona historiales y organiza clínicas en un solo sistema.
       </p>
       <div class="hero-actions">
         <a href="#modulos" class="btn-primary">Explorar la plataforma</a>
@@ -927,39 +961,10 @@
       </div>
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <div class="hero-card hero-card--accent">
-        <div class="hero-card-label">Próxima cita</div>
-        <div class="hero-card-value">
-          <span class="hero-stat-number">14</span>
-          <span class="hero-stat-unit">Jun, 2026</span>
-        </div>
-        <div class="hero-card-sub">Max — Clínica Veterinaria San Salvador · 10:00 AM</div>
-      </div>
-      <div class="hero-cards-row">
-        <div class="hero-card">
-          <div class="hero-card-label">Comercios Aliados</div>
-          <div class="hero-card-value">
-            <span class="hero-stat-number">120+</span>
-          </div>
-          <div class="hero-card-sub">Veterinarias y tiendas</div>
-        </div>
-        <div class="hero-card">
-          <div class="hero-card-label">Mascotas registradas</div>
-          <div class="hero-card-value">
-            <span class="hero-stat-number">3.4k</span>
-          </div>
-          <div class="hero-card-sub">En toda la república</div>
-        </div>
-      </div>
-      <div class="hero-card">
-        <div class="hero-card-label">Historial médico activo</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
-          <span style="background:rgba(62,207,178,0.15);color:var(--mint);font-size:0.75rem;font-weight:600;padding:4px 12px;border-radius:100px;">🐕 Perros</span>
-          <span style="background:rgba(62,207,178,0.15);color:var(--mint);font-size:0.75rem;font-weight:600;padding:4px 12px;border-radius:100px;">🐈 Gatos</span>
-          <span style="background:rgba(62,207,178,0.15);color:var(--mint);font-size:0.75rem;font-weight:600;padding:4px 12px;border-radius:100px;">🐦 Aves</span>
-        </div>
-        <div class="hero-card-sub" style="margin-top:10px">Diagnósticos · Tratamientos · Vacunas</div>
+    <div class="hero-dog" aria-hidden="true">
+      <div class="hero-dog-wrap">
+        <div class="hero-dog-glow"></div>
+        <img src="assets/dog-hero.svg" alt="Mascota feliz" width="420" height="520" />
       </div>
     </div>
   </section>
@@ -975,15 +980,15 @@
       <ul class="problem-list reveal reveal-delay-2">
         <li class="problem-item">
           <div class="problem-icon problem-icon--bad" aria-hidden="true">✕</div>
-          <p class="problem-text"><strong>Solo por llamada telefónica</strong> — sin confirmación digital, sin recordatorio automático.</p>
+          <p class="problem-text"><strong>Solo por llamada telefónica:</strong> sin confirmación digital, sin recordatorio automático.</p>
         </li>
         <li class="problem-item">
           <div class="problem-icon problem-icon--bad" aria-hidden="true">✕</div>
-          <p class="problem-text"><strong>Sin historial centralizado</strong> — cada visita queda en papel o se pierde.</p>
+          <p class="problem-text"><strong>Sin historial centralizado:</strong> cada visita queda en papel o se pierde.</p>
         </li>
         <li class="problem-item">
           <div class="problem-icon problem-icon--bad" aria-hidden="true">✕</div>
-          <p class="problem-text"><strong>Difícil encontrar veterinarias</strong> — no hay un directorio confiable para El Salvador.</p>
+          <p class="problem-text"><strong>Difícil encontrar veterinarias:</strong> no existe un directorio confiable ni centralizado.</p>
         </li>
         <li class="problem-item">
           <div class="problem-icon problem-icon--good" aria-hidden="true">✓</div>
@@ -1417,13 +1422,13 @@
 
   <!-- ═══ CTA ════════════════════════════════════════════════════ -->
   <section class="cta-section" id="contacto" aria-labelledby="cta-title">
-    <p class="cta-eyebrow reveal">¿Listo para empezar?</p>
+    <p class="cta-eyebrow reveal">Proyecto Final · Especialización III</p>
     <h2 class="cta-title reveal reveal-delay-1" id="cta-title">
       Cuida a tu mascota<br>
       con <em>VetCare SV</em>
     </h2>
     <p class="cta-sub reveal reveal-delay-2">
-      Un sistema hecho en El Salvador, para El Salvador y sus mascotas. Basado en los conceptos del curso: POO · MVC · LINQ · Entity Framework · DTOs · Try-Catch.
+      Construido con C# ASP.NET Core MVC, Entity Framework Core y PostgreSQL. Seis módulos que aplican POO, patrones de diseño, LINQ y arquitectura en capas.
     </p>
     <div class="cta-actions reveal reveal-delay-3">
       <a href="mailto:Kenneth.rodas@monicaherrera.edu.sv" class="btn-primary">Contactar al desarrollador</a>
