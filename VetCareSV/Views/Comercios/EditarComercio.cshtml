@@ -22,7 +22,10 @@
                     <select name="Categoria">
                         @foreach (var cat in new[] { "Tienda", "Farmacia", "Grooming", "Agropecuaria", "Clínica" })
                         {
-                            <option value="@cat" @(Model.Categoria == cat ? "selected" : "")>@cat</option>
+                            if (Model.Categoria == cat)
+                            { <option value="@cat" selected>@cat</option> }
+                            else
+                            { <option value="@cat">@cat</option> }
                         }
                     </select>
                 </div>
@@ -38,7 +41,10 @@
                         <option value="">— Selecciona —</option>
                         @foreach (var d in new[] { "San Salvador", "Santa Ana", "La Libertad", "San Miguel", "Sonsonate", "Ahuachapán", "La Paz", "Usulután" })
                         {
-                            <option value="@d" @(Model.Departamento == d ? "selected" : "")>@d</option>
+                            if (Model.Departamento == d)
+                            { <option value="@d" selected>@d</option> }
+                            else
+                            { <option value="@d">@d</option> }
                         }
                     </select>
                 </div>
