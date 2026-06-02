@@ -1,7 +1,8 @@
 @{ ViewData["Title"] = "Inicio"; }
+
 <section class="vc-hero">
     <div class="vc-hero-content">
-        <div class="vc-eyebrow"><span class="vc-dot"></span> Hecho para El Salvador</div>
+        <div class="vc-eyebrow"><span class="vc-dot"></span> Sistema veterinario para El Salvador</div>
         <h1 class="vc-hero-title">Tu mascota merece<br><em>la mejor atención</em></h1>
         <p class="vc-hero-sub">Agenda citas veterinarias, gestiona el historial médico de tus mascotas y encuentra veterinarias y comercios aliados — todo en un solo lugar.</p>
         <div class="vc-hero-actions">
@@ -16,24 +17,30 @@
                 <a asp-controller="Veterinarias" asp-action="Index" class="vc-btn-ghost">Ver Veterinarias</a>
             }
         </div>
+        <div class="vc-hero-stats">
+            <div class="vc-stat-card">
+                <span class="vc-stat-num">@ViewBag.TotalMascotas</span>
+                <span class="vc-stat-label">Mascotas registradas</span>
+            </div>
+            <div class="vc-stat-card vc-stat-card--accent">
+                <span class="vc-stat-num">@ViewBag.TotalVeterinarias</span>
+                <span class="vc-stat-label">Veterinarias aliadas</span>
+            </div>
+            <div class="vc-stat-card">
+                <span class="vc-stat-num">@ViewBag.TotalCitas</span>
+                <span class="vc-stat-label">Citas agendadas</span>
+            </div>
+            <div class="vc-stat-card">
+                <span class="vc-stat-num">@ViewBag.TotalComercios</span>
+                <span class="vc-stat-label">Comercios aliados</span>
+            </div>
+        </div>
     </div>
-    <div class="vc-hero-stats">
-        <div class="vc-stat-card">
-            <span class="vc-stat-num">@ViewBag.TotalMascotas</span>
-            <span class="vc-stat-label">Mascotas registradas</span>
-        </div>
-        <div class="vc-stat-card vc-stat-card--accent">
-            <span class="vc-stat-num">@ViewBag.TotalVeterinarias</span>
-            <span class="vc-stat-label">Veterinarias aliadas</span>
-        </div>
-        <div class="vc-stat-card">
-            <span class="vc-stat-num">@ViewBag.TotalCitas</span>
-            <span class="vc-stat-label">Citas agendadas</span>
-        </div>
-        <div class="vc-stat-card">
-            <span class="vc-stat-num">@ViewBag.TotalComercios</span>
-            <span class="vc-stat-label">Comercios aliados</span>
-        </div>
+    <div class="vc-hero-pets">
+        <img src="https://1rdekw89rj.ucarecdn.net/de2fb12e-690b-4a05-a89d-b96c1a5b2b0c/dog.png"
+             alt="Perro" class="vc-hero-dog" />
+        <img src="https://1rdekw89rj.ucarecdn.net/763e0416-69f4-4653-84e8-ff20897cb2b8/cat.png"
+             alt="Gato" class="vc-hero-cat" />
     </div>
 </section>
 

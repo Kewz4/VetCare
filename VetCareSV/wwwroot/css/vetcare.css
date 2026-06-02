@@ -61,10 +61,9 @@ a:hover { opacity: 0.8; }
   backdrop-filter: blur(10px);
 }
 .vc-nav-logo {
-  font-family: 'DM Serif Display', serif;
-  font-size: 1.4rem; font-weight: 400;
-  color: var(--white); display: flex; align-items: center; gap: 0.5rem;
+  display: flex; align-items: center;
 }
+.vc-nav-logo-img { height: 38px; width: auto; display: block; }
 .vc-nav-paw { font-size: 1.2rem; }
 .vc-accent { color: var(--mint); }
 .vc-nav-links {
@@ -126,10 +125,38 @@ a:hover { opacity: 0.8; }
    HERO
    ========================================================= */
 .vc-hero {
-  min-height: 90vh; display: flex; flex-direction: column; justify-content: center;
+  min-height: 90vh; display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
   padding: 6rem 2rem 4rem;
+  gap: 2rem;
   background: radial-gradient(ellipse at 60% 40%, rgba(26,143,136,0.18) 0%, transparent 65%),
               linear-gradient(160deg, var(--navy-900) 0%, #0a2330 100%);
+  overflow: hidden;
+  position: relative;
+}
+.vc-hero-pets {
+  position: relative; height: 520px;
+}
+.vc-hero-dog {
+  position: absolute; bottom: 0; right: -20px;
+  width: 78%; max-width: 420px;
+  filter: drop-shadow(0 20px 60px rgba(0,0,0,0.4));
+  animation: float-dog 5s ease-in-out infinite;
+}
+.vc-hero-cat {
+  position: absolute; bottom: 0; left: -10px;
+  width: 42%; max-width: 220px;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.3));
+  animation: float-cat 5s ease-in-out 0.8s infinite;
+}
+@keyframes float-dog {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes float-cat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 .vc-eyebrow {
   display: flex; align-items: center; gap: 0.5rem;
@@ -542,8 +569,11 @@ a:hover { opacity: 0.8; }
 }
 .vc-footer-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
 .vc-footer-logo {
-  font-family: 'DM Serif Display', serif; font-size: 1.3rem;
-  color: var(--white); margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem; display: flex; justify-content: center;
+}
+.vc-footer-logo-img {
+  height: 36px; width: auto;
+  filter: brightness(0) invert(1); opacity: 0.85;
 }
 .vc-footer-sub { color: var(--navy-300); font-size: 0.85rem; margin-bottom: 0.25rem; }
 .vc-footer-credit { color: var(--navy-400); font-size: 0.8rem; }
@@ -554,7 +584,10 @@ a:hover { opacity: 0.8; }
 @media (max-width: 768px) {
   .vc-nav { padding: 0.75rem 1rem; }
   .vc-nav-links { gap: 0.25rem; }
-  .vc-hero { padding: 5rem 1rem 3rem; }
+  .vc-hero { padding: 5rem 1rem 3rem; grid-template-columns: 1fr; }
+  .vc-hero-pets { height: 280px; order: -1; }
+  .vc-hero-dog { width: 65%; right: 0; }
+  .vc-hero-cat { width: 35%; }
   .vc-hero-stats { grid-template-columns: 1fr 1fr; }
   .vc-detail-layout { grid-template-columns: 1fr; }
   .vc-profile-grid { grid-template-columns: 1fr; }
