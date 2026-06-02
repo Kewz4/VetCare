@@ -43,11 +43,11 @@ builder.Services.AddScoped<IComercioService, ComercioService>();
 
 var app = builder.Build();
 
-// Aplicar migraciones pendientes automáticamente al arrancar
+// Crear tablas automáticamente al arrancar (no requiere archivos de migración)
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    db.Database.Migrate();
+    db.Database.EnsureCreated();
 }
 
 if (!app.Environment.IsDevelopment())
