@@ -23,7 +23,7 @@ public class HistorialService : IHistorialService
         if (await _context.HistorialesMedicos.AnyAsync(h => h.CitaId == dto.CitaId))
             throw new InvalidOperationException("Esta cita ya tiene historial registrado");
 
-        var historial = new HistorialMedico { Diagnostico = dto.Diagnostico, Tratamiento = dto.Tratamiento, Observaciones = dto.Observaciones, CitaId = dto.CitaId, FechaRegistro = DateTime.Now };
+        var historial = new HistorialMedico { Diagnostico = dto.Diagnostico, Tratamiento = dto.Tratamiento, Observaciones = dto.Observaciones, CitaId = dto.CitaId, FechaRegistro = DateTime.UtcNow };
         _context.HistorialesMedicos.Add(historial);
 
         var cita = await _context.Citas.FindAsync(dto.CitaId);

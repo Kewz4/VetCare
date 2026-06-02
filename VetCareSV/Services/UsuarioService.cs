@@ -27,7 +27,7 @@ public class UsuarioService : IUsuarioService
             Email = dto.Email,
             PasswordHash = BCrypt.Net.BCrypt.HashPassword(dto.Password),
             Rol = "Dueno",
-            FechaRegistro = DateTime.Now
+            FechaRegistro = DateTime.UtcNow
         };
         _context.Usuarios.Add(usuario);
         await _context.SaveChangesAsync();

@@ -8,6 +8,6 @@ public class Usuario
     [Required][EmailAddress][MaxLength(150)] public string Email { get; set; } = string.Empty;
     [Required] public string PasswordHash { get; set; } = string.Empty;
     [Required] public string Rol { get; set; } = "Dueno"; // Dueno, Veterinario, Admin
-    public DateTime FechaRegistro { get; set; } = DateTime.Now;
+    public DateTime FechaRegistro { get; set; } = DateTime.UtcNow;
     public ICollection<Mascota> Mascotas { get; set; } = new List<Mascota>();
 }
