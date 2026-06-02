@@ -63,7 +63,7 @@ a:hover { opacity: 0.8; }
 .vc-nav-logo {
   display: flex; align-items: center;
 }
-.vc-nav-logo-img { height: 68px; width: auto; display: block; }
+.vc-nav-logo-img { height: 96px; width: auto; display: block; }
 .vc-accent { color: var(--mint); }
 .vc-nav-links {
   display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
