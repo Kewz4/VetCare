@@ -35,6 +35,7 @@ public class CitasController : Controller
         var vets = await _vetService.ObtenerTodasAsync();
         ViewBag.Mascotas = new SelectList(mascotas, "Id", "Nombre");
         ViewBag.Veterinarias = new SelectList(vets, "Id", "Nombre");
+        ViewBag.NoPets = !mascotas.Any();
         return View();
     }
 
