@@ -44,6 +44,7 @@ using (var scope = app.Services.CreateScope())
         )
     """);
     db.Database.ExecuteSqlRaw("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS comercio_id INTEGER REFERENCES comercios_aliados(id) ON DELETE SET NULL");
+    db.Database.ExecuteSqlRaw("ALTER TABLE productos ADD COLUMN IF NOT EXISTS imagen_url TEXT");
 
     if (!db.Veterinarias.Any())
     {

@@ -114,6 +114,7 @@ public class AppDbContext : DbContext
             e.Property(p => p.Nombre).HasColumnName("nombre").IsRequired().HasMaxLength(200);
             e.Property(p => p.Descripcion).HasColumnName("descripcion");
             e.Property(p => p.Precio).HasColumnName("precio").HasColumnType("decimal(10,2)");
+            e.Property(p => p.ImageUrl).HasColumnName("imagen_url");
             e.Property(p => p.ComercioId).HasColumnName("comercio_id");
             e.HasOne(p => p.Comercio).WithMany(c => c.Productos).HasForeignKey(p => p.ComercioId).OnDelete(DeleteBehavior.Cascade);
         });

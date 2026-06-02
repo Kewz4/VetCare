@@ -784,7 +784,7 @@ a:hover { opacity: 0.8; }
    ========================================================= */
 .vc-footer {
   background: rgba(0,0,0,0.3); border-top: 1px solid rgba(62,207,178,0.1);
-  padding: 2.5rem 1.5rem;
+  padding: 3.5rem 1.5rem 5rem;
 }
 .vc-footer-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
 .vc-footer-logo {
@@ -913,4 +913,36 @@ a:hover { opacity: 0.8; }
 @media (max-width: 768px) {
   .vc-cita-detail-grid { grid-template-columns: 1fr; }
   .vc-dashboard-grid { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   DASHBOARD STATS & PRODUCT CARDS
+   ========================================================= */
+.vc-dash-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem;
+}
+.vc-dash-stat {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius); padding: 1.25rem 1.5rem; text-align: center;
+}
+.vc-dash-stat-num { display: block; font-size: 1.8rem; font-weight: 700; color: var(--mint); font-family: 'DM Serif Display', serif; line-height: 1.1; margin-bottom: 0.3rem; }
+.vc-dash-stat-label { display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--navy-300); font-weight: 600; }
+.vc-dash-section { margin-bottom: 3rem; }
+
+.vc-producto-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.vc-producto-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column;
+  transition: border-color var(--transition);
+}
+.vc-producto-card:hover { border-color: rgba(62,207,178,0.25); }
+.vc-producto-card-img { height: 140px; overflow: hidden; }
+.vc-producto-card-img img { width: 100%; height: 100%; object-fit: cover; }
+.vc-producto-card-img--empty { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); color: var(--navy-400); }
+.vc-producto-card-img--empty svg { width: 40px; height: 40px; }
+.vc-producto-card-body { padding: 0.85rem 1rem; flex: 1; display: flex; flex-direction: column; gap: 0.25rem; }
+.vc-producto-card-del { padding: 0 1rem 0.85rem; }
+
+@media (max-width: 768px) {
+  .vc-dash-stats { grid-template-columns: repeat(2, 1fr); }
 }

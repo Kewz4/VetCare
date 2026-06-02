@@ -1,59 +1,58 @@
 @model VetCareSV.Models.ComercioAliado
 @{ ViewData["Title"] = "Panel de Comercio"; }
+@using System.Collections.Generic
 @{
     var productos = ViewBag.Productos as IEnumerable<VetCareSV.Models.Producto> ?? Enumerable.Empty<VetCareSV.Models.Producto>();
+    var clientes = ViewBag.Clientes as IEnumerable<(VetCareSV.Models.Usuario Usuario, string Mascota, string Producto, DateTime Fecha)> ?? Enumerable.Empty<(VetCareSV.Models.Usuario, string, string, DateTime)>();
 }
 <div class="vc-container" style="padding-top:2rem;">
     <div class="vc-page-header">
         <div>
             <h1>Panel de Comercio</h1>
-            <p>Gestiona <strong>@Model.Nombre</strong> en el directorio VetCare SV</p>
+            <p>Bienvenido, <strong>@Model.Nombre</strong></p>
         </div>
-        <a asp-action="Index" class="vc-btn-ghost">Ver directorio</a>
-    </div>
-
-    <div class="vc-dashboard-grid">
-        <!-- Info del comercio -->
-        <div class="vc-card vc-detail-card">
-            <h3 style="margin-bottom:1.25rem;color:var(--mint)">Información del comercio</h3>
-            <div class="vc-detail-info-grid">
-                <div class="vc-detail-info-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M10 14h4v6h-4z"/></svg>
-                    <div><span class="vc-detail-info-label">Nombre</span><span class="vc-detail-info-value">@Model.Nombre</span></div>
-                </div>
-                <div class="vc-detail-info-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
-                    <div><span class="vc-detail-info-label">Dirección</span><span class="vc-detail-info-value">@Model.Direccion, @Model.Departamento</span></div>
-                </div>
-                <div class="vc-detail-info-item">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                    <div><span class="vc-detail-info-label">Categoría</span><span class="vc-detail-info-value">@Model.Categoria</span></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Estadística rápida -->
-        <div class="vc-card vc-stat-highlight">
-            <div class="vc-stat-big">@productos.Count()</div>
-            <div class="vc-stat-big-label">productos registrados</div>
-            <p style="color:var(--navy-300);font-size:0.85rem;margin-top:0.5rem;">Estos productos aparecen en las recetas médicas de nuestros usuarios</p>
+        <div style="display:flex;gap:0.75rem;">
+            <a asp-action="EditarComercio" class="vc-btn-ghost">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vc-icon-sm"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                Editar información
+            </a>
+            <a asp-action="Index" class="vc-btn-ghost">Ver directorio</a>
         </div>
     </div>
 
-    <!-- Productos section -->
-    <div style="margin-top:2.5rem;">
+    <!-- Stats row -->
+    <div class="vc-dash-stats">
+        <div class="vc-dash-stat">
+            <span class="vc-dash-stat-num">@productos.Count()</span>
+            <span class="vc-dash-stat-label">Productos</span>
+        </div>
+        <div class="vc-dash-stat">
+            <span class="vc-dash-stat-num">@clientes.Count()</span>
+            <span class="vc-dash-stat-label">Clientes alcanzados</span>
+        </div>
+        <div class="vc-dash-stat">
+            <span class="vc-dash-stat-num">@Model.Categoria</span>
+            <span class="vc-dash-stat-label">Categoría</span>
+        </div>
+        <div class="vc-dash-stat">
+            <span class="vc-dash-stat-num" style="font-size:1rem;font-family:'DM Sans',sans-serif;">@Model.Departamento</span>
+            <span class="vc-dash-stat-label">Departamento</span>
+        </div>
+    </div>
+
+    <!-- Productos -->
+    <div class="vc-dash-section">
         <div class="vc-page-header" style="margin-bottom:1.25rem;">
             <div>
                 <h2>Mis Productos</h2>
-                <p>Productos que aparecen en recetas médicas de VetCare SV</p>
+                <p>Aparecen como recomendaciones en recetas médicas de usuarios</p>
             </div>
-            <button class="vc-btn-primary" onclick="document.getElementById('addProductPanel').classList.toggle('open')">
+            <button class="vc-btn-primary" onclick="document.getElementById('addProductPanel').classList.toggle('open')" type="button">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vc-icon-sm"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
                 Agregar producto
             </button>
         </div>
 
-        <!-- Panel agregar producto -->
         <div class="vc-add-panel" id="addProductPanel">
             <div class="vc-add-panel-inner">
                 <h3>Agregar producto manualmente</h3>
@@ -74,6 +73,11 @@
                         <label>Descripción</label>
                         <input type="text" name="Descripcion" placeholder="Breve descripción del producto" />
                     </div>
+                    <div class="vc-field">
+                        <label>URL de imagen</label>
+                        <input type="url" name="ImageUrl" placeholder="https://..." />
+                        <p class="vc-field-hint">Enlace directo a una imagen del producto (jpg, png, webp)</p>
+                    </div>
                     <div class="vc-form-actions">
                         <button type="submit" class="vc-btn-primary">Guardar producto</button>
                     </div>
@@ -87,7 +91,7 @@
                     <div class="vc-field">
                         <label>Archivo CSV</label>
                         <input type="file" name="archivo" accept=".csv" class="vc-file-input" />
-                        <p class="vc-field-hint">Formato: <code>Nombre,Descripcion,Precio</code> (una línea por producto, sin encabezado requerido)</p>
+                        <p class="vc-field-hint">Formato: <code>Nombre,Descripcion,Precio,ImageUrl</code> — una fila por producto</p>
                     </div>
                     <div class="vc-form-actions">
                         <button type="submit" class="vc-btn-ghost">Subir CSV</button>
@@ -101,7 +105,57 @@
             <div class="vc-empty-state">
                 <div class="vc-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M10 14h4v6h-4z"/></svg></div>
                 <p>Aún no tienes productos registrados.</p>
-                <p style="color:var(--navy-300);font-size:0.9rem;">Agrega productos para que aparezcan en recetas médicas de usuarios.</p>
+                <p style="color:var(--navy-300);font-size:0.9rem;">Agrega productos para que aparezcan en recetas médicas de los usuarios.</p>
+            </div>
+        }
+        else
+        {
+            <div class="vc-producto-cards">
+                @foreach (var p in productos)
+                {
+                    <div class="vc-producto-card">
+                        @if (!string.IsNullOrEmpty(p.ImageUrl))
+                        {
+                            <div class="vc-producto-card-img">
+                                <img src="@p.ImageUrl" alt="@p.Nombre" />
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="vc-producto-card-img vc-producto-card-img--empty">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                            </div>
+                        }
+                        <div class="vc-producto-card-body">
+                            <strong class="vc-producto-nombre">@p.Nombre</strong>
+                            @if (!string.IsNullOrEmpty(p.Descripcion))
+                            { <span class="vc-producto-desc">@p.Descripcion</span> }
+                            @if (p.Precio.HasValue)
+                            { <span class="vc-producto-precio">$@p.Precio.Value.ToString("0.00")</span> }
+                        </div>
+                        <form asp-action="EliminarProducto" asp-route-id="@p.Id" method="post" class="vc-producto-card-del">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="vc-btn-danger-sm" onclick="return confirm('¿Eliminar este producto?')">Eliminar</button>
+                        </form>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+
+    <!-- Clientes -->
+    <div class="vc-dash-section">
+        <div style="margin-bottom:1.25rem;">
+            <h2>Clientes alcanzados</h2>
+            <p>Usuarios que recibieron recetas médicas con tus productos</p>
+        </div>
+
+        @if (!clientes.Any())
+        {
+            <div class="vc-empty-state">
+                <div class="vc-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
+                <p>Aún no hay clientes vinculados a tus productos.</p>
+                <p style="color:var(--navy-300);font-size:0.9rem;">Cuando un veterinario recete alguno de tus productos, el cliente aparecerá aquí.</p>
             </div>
         }
         else
@@ -110,25 +164,22 @@
                 <table class="vc-table">
                     <thead>
                         <tr>
-                            <th>Producto</th>
-                            <th>Descripción</th>
-                            <th>Precio</th>
-                            <th>Acciones</th>
+                            <th>Cliente</th>
+                            <th>Correo</th>
+                            <th>Mascota</th>
+                            <th>Producto recetado</th>
+                            <th>Fecha de cita</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var p in productos)
+                        @foreach (var c in clientes)
                         {
                             <tr>
-                                <td><strong>@p.Nombre</strong></td>
-                                <td style="color:var(--navy-300)">@(p.Descripcion ?? "—")</td>
-                                <td>@(p.Precio.HasValue ? "$" + p.Precio.Value.ToString("0.00") : "—")</td>
-                                <td>
-                                    <form asp-action="EliminarProducto" asp-route-id="@p.Id" method="post" style="display:inline;">
-                                        @Html.AntiForgeryToken()
-                                        <button type="submit" class="vc-btn-danger-sm" onclick="return confirm('¿Eliminar este producto?')">Eliminar</button>
-                                    </form>
-                                </td>
+                                <td><strong>@c.Usuario.Nombre</strong></td>
+                                <td style="color:var(--navy-300)">@c.Usuario.Email</td>
+                                <td>@c.Mascota</td>
+                                <td><span class="vc-chip vc-chip--sm">@c.Producto</span></td>
+                                <td>@c.Fecha.ToString("dd/MM/yyyy")</td>
                             </tr>
                         }
                     </tbody>

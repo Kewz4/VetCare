@@ -96,15 +96,64 @@ public class ComerciosController : Controller
         var productos = await _context.Productos.Where(p => p.ComercioId == comercioId.Value).OrderBy(p => p.Nombre).ToListAsync();
         ViewBag.Productos = productos;
 
+        // Clients: users whose prescriptions reference any of this comercio's products
+        var nombreProductos = productos.Select(p => p.Nombre.ToLower()).ToList();
+        var clientes = new List<(VetCareSV.Models.Usuario Usuario, string Mascota, string Producto, DateTime Fecha)>();
+        if (nombreProductos.Any())
+        {
+            var historiales = await _context.HistorialesMedicos
+                .Include(h => h.Cita).ThenInclude(c => c!.Mascota).ThenInclude(m => m!.Usuario)
+                .Where(h => h.Cita != null && h.Cita.Mascota != null)
+                .ToListAsync();
+            foreach (var h in historiales)
+            {
+                var trat = h.Tratamiento.ToLower();
+                var match = nombreProductos.FirstOrDefault(n => trat.Contains(n.Split(' ')[0]));
+                if (match != null && h.Cita?.Mascota?.Usuario != null)
+                    clientes.Add((h.Cita.Mascota.Usuario, h.Cita.Mascota.Nombre, productos.First(p => p.Nombre.ToLower() == match).Nombre, h.Cita.Fecha));
+            }
+        }
+        ViewBag.Clientes = clientes.DistinctBy(c => c.Usuario.Id).OrderByDescending(c => c.Fecha).ToList();
+
+        return View(comercio);
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> EditarComercio()
+    {
+        var uid = HttpContext.Session.GetInt32("UsuarioId");
+        if (uid == null) return RedirectToAction("Login", "Usuarios");
+        var comercioId = HttpContext.Session.GetInt32("ComercioId");
+        if (comercioId == null) return RedirectToAction(nameof(Index));
+        var comercio = await _context.ComerciosAliados.FindAsync(comercioId.Value);
+        if (comercio == null) return RedirectToAction(nameof(Index));
         return View(comercio);
     }
 
     [HttpPost][ValidateAntiForgeryToken]
-    public async Task<IActionResult> AgregarProducto(string Nombre, string? Descripcion, decimal? Precio, int ComercioId)
+    public async Task<IActionResult> EditarComercio(int id, string Nombre, string Direccion, string? Departamento, string? Telefono, string Categoria, string? Descripcion)
+    {
+        var uid = HttpContext.Session.GetInt32("UsuarioId");
+        if (uid == null) return RedirectToAction("Login", "Usuarios");
+        var comercio = await _context.ComerciosAliados.FindAsync(id);
+        if (comercio == null) return NotFound();
+        comercio.Nombre = Nombre.Trim();
+        comercio.Direccion = Direccion.Trim();
+        comercio.Departamento = Departamento?.Trim();
+        comercio.Telefono = Telefono?.Trim();
+        comercio.Categoria = Categoria;
+        comercio.Descripcion = Descripcion?.Trim();
+        await _context.SaveChangesAsync();
+        TempData["Exito"] = "Información del comercio actualizada.";
+        return RedirectToAction(nameof(Dashboard));
+    }
+
+    [HttpPost][ValidateAntiForgeryToken]
+    public async Task<IActionResult> AgregarProducto(string Nombre, string? Descripcion, decimal? Precio, string? ImageUrl, int ComercioId)
     {
         if (!string.IsNullOrWhiteSpace(Nombre))
         {
-            _context.Productos.Add(new Producto { Nombre = Nombre.Trim(), Descripcion = Descripcion?.Trim(), Precio = Precio, ComercioId = ComercioId });
+            _context.Productos.Add(new Producto { Nombre = Nombre.Trim(), Descripcion = Descripcion?.Trim(), Precio = Precio, ImageUrl = ImageUrl?.Trim(), ComercioId = ComercioId });
             await _context.SaveChangesAsync();
             TempData["Exito"] = "Producto agregado.";
         }
@@ -127,7 +176,8 @@ public class ComerciosController : Controller
             var desc = parts.Length > 1 ? parts[1].Trim() : null;
             decimal? precio = null;
             if (parts.Length > 2 && decimal.TryParse(parts[2].Trim(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var p)) precio = p;
-            _context.Productos.Add(new Producto { Nombre = nombre, Descripcion = string.IsNullOrEmpty(desc) ? null : desc, Precio = precio, ComercioId = ComercioId });
+            var imgUrl = parts.Length > 3 ? parts[3].Trim() : null;
+            _context.Productos.Add(new Producto { Nombre = nombre, Descripcion = string.IsNullOrEmpty(desc) ? null : desc, Precio = precio, ImageUrl = string.IsNullOrEmpty(imgUrl) ? null : imgUrl, ComercioId = ComercioId });
             count++;
         }
         await _context.SaveChangesAsync();

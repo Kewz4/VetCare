@@ -1,0 +1,60 @@
+@model VetCareSV.Models.ComercioAliado
+@{ ViewData["Title"] = "Editar Comercio"; }
+<div class="vc-container vc-form-page">
+    <div class="vc-form-header">
+        <a asp-action="Dashboard" class="vc-back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vc-icon-xs"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Panel de Comercio
+        </a>
+        <h1>Editar Información</h1>
+    </div>
+    <div class="vc-form-card">
+        <form asp-action="EditarComercio" method="post" class="vc-form">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.Id" />
+            <div class="vc-form-row">
+                <div class="vc-field">
+                    <label>Nombre del comercio *</label>
+                    <input type="text" name="Nombre" value="@Model.Nombre" required />
+                </div>
+                <div class="vc-field">
+                    <label>Categoría *</label>
+                    <select name="Categoria">
+                        @foreach (var cat in new[] { "Tienda", "Farmacia", "Grooming", "Agropecuaria", "Clínica" })
+                        {
+                            <option value="@cat" @(Model.Categoria == cat ? "selected" : "")>@cat</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="vc-form-row">
+                <div class="vc-field">
+                    <label>Dirección *</label>
+                    <input type="text" name="Direccion" value="@Model.Direccion" required />
+                </div>
+                <div class="vc-field">
+                    <label>Departamento</label>
+                    <select name="Departamento">
+                        <option value="">— Selecciona —</option>
+                        @foreach (var d in new[] { "San Salvador", "Santa Ana", "La Libertad", "San Miguel", "Sonsonate", "Ahuachapán", "La Paz", "Usulután" })
+                        {
+                            <option value="@d" @(Model.Departamento == d ? "selected" : "")>@d</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <div class="vc-field">
+                <label>Teléfono</label>
+                <input type="text" name="Telefono" value="@Model.Telefono" placeholder="Ej. 2264-5500" />
+            </div>
+            <div class="vc-field">
+                <label>Descripción</label>
+                <textarea name="Descripcion" rows="3" placeholder="Describe brevemente tu comercio...">@Model.Descripcion</textarea>
+            </div>
+            <div class="vc-form-actions">
+                <a asp-action="Dashboard" class="vc-btn-ghost">Cancelar</a>
+                <button type="submit" class="vc-btn-primary">Guardar cambios</button>
+            </div>
+        </form>
+    </div>
+</div>
