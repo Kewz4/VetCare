@@ -65,7 +65,35 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseStaticFiles();
+// Static files con hash en query string → cache largo (inmutable)
+// Sin hash → no cache
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        var query = ctx.Context.Request.QueryString.Value ?? "";
+        if (query.Contains("v="))
+        {
+            ctx.Context.Response.Headers["Cache-Control"] = "public, max-age=31536000, immutable";
+        }
+        else
+        {
+            ctx.Context.Response.Headers["Cache-Control"] = "no-cache";
+        }
+    }
+});
+
+// Las páginas HTML nunca se cachean para que el browser siempre obtenga el HTML fresco con los URLs actualizados
+app.Use(async (context, next) =>
+{
+    await next();
+    if (context.Response.ContentType?.StartsWith("text/html") == true)
+    {
+        context.Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
+        context.Response.Headers["Pragma"] = "no-cache";
+    }
+});
+
 app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
