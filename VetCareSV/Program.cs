@@ -27,11 +27,36 @@ builder.Services.AddScoped<IComercioService, ComercioService>();
 
 var app = builder.Build();
 
-// Crear tablas automáticamente al arrancar
+// Crear tablas y datos semilla al arrancar
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
+
+    if (!db.Veterinarias.Any())
+    {
+        db.Veterinarias.AddRange(
+            new VetCareSV.Models.Veterinaria { Nombre = "Clínica Veterinaria San Salvador Centro", Direccion = "Calle Arce, San Salvador", Departamento = "San Salvador", Telefono = "2222-1111", Email = "info@vetsancen.sv", Horario = "Lun-Vie 8am-6pm" },
+            new VetCareSV.Models.Veterinaria { Nombre = "Veterinaria Santa Ana Animal Care", Direccion = "4a Avenida Sur, Santa Ana", Departamento = "Santa Ana", Telefono = "2441-2200", Email = "info@vetsa.sv", Horario = "Lun-Sáb 9am-5pm" },
+            new VetCareSV.Models.Veterinaria { Nombre = "Clínica Mascotas Soyapango", Direccion = "Bulevar del Ejército, Soyapango", Departamento = "San Salvador", Telefono = "2277-3300", Horario = "Lun-Vie 8am-7pm" },
+            new VetCareSV.Models.Veterinaria { Nombre = "VetSalud La Libertad", Direccion = "Carretera El Litoral Km 15, La Libertad", Departamento = "La Libertad", Telefono = "2346-5500", Horario = "Mar-Dom 8am-5pm" },
+            new VetCareSV.Models.Veterinaria { Nombre = "Veterinaria San Miguel Norte", Direccion = "Av. Roosevelt, San Miguel", Departamento = "San Miguel", Telefono = "2661-4400", Horario = "Lun-Sáb 8am-6pm" }
+        );
+        db.SaveChanges();
+    }
+
+    if (!db.ComerciosAliados.Any())
+    {
+        db.ComerciosAliados.AddRange(
+            new VetCareSV.Models.ComercioAliado { Nombre = "PetShop El Salvador", Categoria = "Tienda", Direccion = "Centro Comercial Metrocentro, San Salvador", Departamento = "San Salvador", Telefono = "2264-5500", Descripcion = "Tienda de mascotas con alimentos, accesorios y juguetes." },
+            new VetCareSV.Models.ComercioAliado { Nombre = "Farmacia Veterinaria Dueñas", Categoria = "Farmacia", Direccion = "Colonia Escalón, San Salvador", Departamento = "San Salvador", Telefono = "2263-4400", Descripcion = "Medicamentos y suplementos para toda especie." },
+            new VetCareSV.Models.ComercioAliado { Nombre = "Groomers SV - Peluquería Canina", Categoria = "Grooming", Direccion = "Av. Masferrer, San Salvador", Departamento = "San Salvador", Telefono = "7788-9900", Descripcion = "Servicio de baño, corte y estética para perros y gatos." },
+            new VetCareSV.Models.ComercioAliado { Nombre = "Agropecuaria Hermanos López", Categoria = "Agropecuaria", Direccion = "Km 25 Carretera a Santa Ana", Departamento = "La Libertad", Telefono = "2338-1100", Descripcion = "Alimentos para ganado, aves y mascotas." },
+            new VetCareSV.Models.ComercioAliado { Nombre = "Casa del Acuario SV", Categoria = "Tienda", Direccion = "1a Calle Poniente, Santa Ana", Departamento = "Santa Ana", Telefono = "2441-6600", Descripcion = "Peces, reptiles y accesorios especializados." },
+            new VetCareSV.Models.ComercioAliado { Nombre = "PetFood Premium SV", Categoria = "Tienda", Direccion = "Col. San Benito, San Salvador", Departamento = "San Salvador", Telefono = "2264-7700", Descripcion = "Alimentos premium y orgánicos para mascotas." }
+        );
+        db.SaveChanges();
+    }
 }
 
 if (!app.Environment.IsDevelopment())
@@ -40,7 +65,35 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseStaticFiles();
+// Static files con hash en query string → cache largo (inmutable)
+// Sin hash → no cache
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = ctx =>
+    {
+        var query = ctx.Context.Request.QueryString.Value ?? "";
+        if (query.Contains("v="))
+        {
+            ctx.Context.Response.Headers["Cache-Control"] = "public, max-age=31536000, immutable";
+        }
+        else
+        {
+            ctx.Context.Response.Headers["Cache-Control"] = "no-cache";
+        }
+    }
+});
+
+// Las páginas HTML nunca se cachean para que el browser siempre obtenga el HTML fresco
+app.Use(async (context, next) =>
+{
+    await next();
+    if (context.Response.ContentType?.StartsWith("text/html") == true)
+    {
+        context.Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
+        context.Response.Headers["Pragma"] = "no-cache";
+    }
+});
+
 app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
@@ -52,10 +105,6 @@ app.MapControllerRoute(
 app.Run();
 
 // ── Resolución de connection string ───────────────────────────────
-// Orden de prioridad:
-//   1. DATABASE_URL  (postgres://user:pass@host:port/db)
-//   2. PGHOST + PGPORT + PGDATABASE + PGUSER + PGPASSWORD  (Railway plugin vars)
-//   3. appsettings.json DefaultConnection  (desarrollo local)
 static string ResolveConnectionString()
 {
     // 1. DATABASE_URL

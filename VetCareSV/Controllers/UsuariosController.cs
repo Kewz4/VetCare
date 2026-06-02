@@ -41,7 +41,14 @@ public class UsuariosController : Controller
             return RedirectToAction("Index", "Home");
         }
         catch (InvalidOperationException ex) { ModelState.AddModelError("", ex.Message); return View(dto); }
-        catch (Exception ex) { ModelState.AddModelError("", "Error al registrar: " + ex.Message); return View(dto); }
+        catch (Exception ex)
+        {
+            var msg = ex.Message;
+            if (ex.InnerException != null) msg += " | " + ex.InnerException.Message;
+            if (ex.InnerException?.InnerException != null) msg += " | " + ex.InnerException.InnerException.Message;
+            ModelState.AddModelError("", "Error al registrar: " + msg);
+            return View(dto);
+        }
     }
 
     [HttpPost][ValidateAntiForgeryToken]

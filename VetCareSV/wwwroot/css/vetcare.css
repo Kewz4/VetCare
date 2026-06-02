@@ -294,11 +294,17 @@ a:hover { opacity: 0.8; }
 .vc-field select option { background: var(--navy-700); color: var(--white); }
 .vc-field textarea { resize: vertical; }
 .vc-field-error { color: var(--red); font-size: 0.8rem; }
+.field-validation-error { color: var(--red); font-size: 0.8rem; display: block; }
+.field-validation-valid { display: none; }
+.input-validation-error { border-color: var(--red) !important; }
 .vc-validation-errors {
   background: rgba(224,82,82,0.1); border: 1px solid var(--red);
   border-radius: var(--radius-sm); padding: 0.75rem 1rem; color: var(--red); font-size: 0.875rem;
+  display: none;
 }
+.vc-validation-errors.validation-summary-errors { display: block; }
 .vc-validation-errors ul { padding-left: 1.25rem; }
+.vc-validation-errors ul li { list-style: disc; }
 .vc-select-sm {
   background: rgba(255,255,255,0.06); border: 1px solid rgba(62,207,178,0.2);
   border-radius: var(--radius-sm); padding: 0.3rem 0.5rem;
