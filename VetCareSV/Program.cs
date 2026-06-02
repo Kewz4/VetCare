@@ -33,6 +33,17 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
 
+    // Create productos table if it doesn't exist (EnsureCreated won't add new tables)
+    db.Database.ExecuteSqlRaw("""
+        CREATE TABLE IF NOT EXISTS productos (
+            id SERIAL PRIMARY KEY,
+            nombre VARCHAR(200) NOT NULL,
+            descripcion TEXT,
+            precio DECIMAL(10,2),
+            comercio_id INTEGER NOT NULL REFERENCES comercios_aliados(id) ON DELETE CASCADE
+        )
+    """);
+
     if (!db.Veterinarias.Any())
     {
         db.Veterinarias.AddRange(
