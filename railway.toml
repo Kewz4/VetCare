@@ -1,6 +1,7 @@
 [build]
 builder = "DOCKERFILE"
 dockerfilePath = "VetCareSV/Dockerfile"
+buildContext = "VetCareSV"
 
 [deploy]
 startCommand = "dotnet VetCareSV.dll"
