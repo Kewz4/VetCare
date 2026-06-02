@@ -9,4 +9,5 @@ public class ComercioAliado
     public string? Departamento { get; set; }
     public string? Telefono { get; set; }
     public string? Descripcion { get; set; }
+    public ICollection<Producto> Productos { get; set; } = new List<Producto>();
 }

@@ -1,76 +1,149 @@
 @model VetCareSV.Models.Cita
 @{ ViewData["Title"] = "Detalle de Cita"; }
+@{
+    var productos = ViewBag.ProductosReceta as IEnumerable<VetCareSV.Models.Producto> ?? Enumerable.Empty<VetCareSV.Models.Producto>();
+    var mapQuery = Model.Veterinaria != null ? Uri.EscapeDataString(Model.Veterinaria.Nombre + ", " + Model.Veterinaria.Direccion + ", El Salvador") : "";
+    var mapsLink = "https://www.google.com/maps/search/" + mapQuery;
+}
 <div class="vc-container" style="padding-top:2rem;">
     <div class="vc-form-header">
-        <a asp-action="Index" class="vc-back-link">← Mis Citas</a>
+        <a asp-action="Index" class="vc-back-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vc-icon-xs"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            Mis Citas
+        </a>
+        <span class="vc-badge vc-badge--@Model.Estado.ToLower()">@Model.Estado</span>
     </div>
-    <div class="vc-detail-layout">
-        <div class="vc-card">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
-                <h2 style="margin:0;">Cita #@Model.Id</h2>
-                <span class="vc-badge vc-badge--@Model.Estado.ToLower()">@Model.Estado</span>
-            </div>
-            <div class="vc-detail-grid">
-                <div class="vc-detail-item">
-                    <span class="vc-detail-label">Mascota</span>
-                    <span class="vc-detail-value">@Model.Mascota?.Nombre (@Model.Mascota?.Especie)</span>
+
+    <div class="vc-cita-detail-grid">
+
+        <!-- Tarjeta de cita -->
+        <div class="vc-card vc-detail-card">
+            <div class="vc-detail-card-header">
+                <div class="vc-card-icon-svg vc-card-icon-svg--lg">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
                 </div>
-                <div class="vc-detail-item">
-                    <span class="vc-detail-label">Veterinaria</span>
-                    <span class="vc-detail-value">@Model.Veterinaria?.Nombre</span>
-                </div>
-                <div class="vc-detail-item">
-                    <span class="vc-detail-label">Dirección</span>
-                    <span class="vc-detail-value">@Model.Veterinaria?.Direccion</span>
-                </div>
-                <div class="vc-detail-item">
-                    <span class="vc-detail-label">Teléfono</span>
-                    <span class="vc-detail-value">@(Model.Veterinaria?.Telefono ?? "—")</span>
-                </div>
-                <div class="vc-detail-item">
-                    <span class="vc-detail-label">Fecha y hora</span>
-                    <span class="vc-detail-value">@Model.Fecha.ToString("dddd, dd MMMM yyyy · HH:mm")</span>
-                </div>
-                <div class="vc-detail-item">
-                    <span class="vc-detail-label">Motivo</span>
-                    <span class="vc-detail-value">@(Model.Motivo ?? "No especificado")</span>
+                <div>
+                    <h1 class="vc-detail-title">Cita #@Model.Id</h1>
+                    <p style="color:var(--navy-300);font-size:0.9rem;margin-top:0.25rem;">@Model.Fecha.ToString("dddd, dd MMMM yyyy · HH:mm")</p>
                 </div>
             </div>
-            @if (Model.Estado == "Pendiente" || Model.Estado == "Confirmada")
-            {
-                <div style="margin-top:1.5rem;">
-                    <form asp-action="Cancelar" asp-route-id="@Model.Id" method="post">
+            <div class="vc-detail-info-grid">
+                <div class="vc-detail-info-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><ellipse cx="12" cy="17" rx="5" ry="3.5"/><ellipse cx="6.5" cy="11" rx="2" ry="3"/><ellipse cx="17.5" cy="11" rx="2" ry="3"/><ellipse cx="9" cy="7" rx="1.5" ry="2"/><ellipse cx="15" cy="7" rx="1.5" ry="2"/></svg>
+                    <div>
+                        <span class="vc-detail-info-label">Mascota</span>
+                        <span class="vc-detail-info-value">@Model.Mascota?.Nombre (@Model.Mascota?.Especie · @Model.Mascota?.Raza)</span>
+                    </div>
+                </div>
+                <div class="vc-detail-info-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+                    <div>
+                        <span class="vc-detail-info-label">Veterinaria</span>
+                        <span class="vc-detail-info-value">@Model.Veterinaria?.Nombre</span>
+                    </div>
+                </div>
+                <div class="vc-detail-info-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                    <div>
+                        <span class="vc-detail-info-label">Dirección</span>
+                        <span class="vc-detail-info-value">@Model.Veterinaria?.Direccion, @Model.Veterinaria?.Departamento</span>
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Veterinaria?.Telefono))
+                {
+                    <div class="vc-detail-info-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.28 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72c.128.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.572 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                        <div>
+                            <span class="vc-detail-info-label">Teléfono</span>
+                            <span class="vc-detail-info-value">@Model.Veterinaria?.Telefono</span>
+                        </div>
+                    </div>
+                }
+                @if (!string.IsNullOrEmpty(Model.Motivo))
+                {
+                    <div class="vc-detail-info-item">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        <div>
+                            <span class="vc-detail-info-label">Motivo</span>
+                            <span class="vc-detail-info-value">@Model.Motivo</span>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="vc-detail-actions">
+                <a href="@mapsLink" target="_blank" rel="noopener" class="vc-btn-ghost">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vc-icon-sm"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                    Ver en mapa
+                </a>
+                @if (Model.Estado == "Pendiente" || Model.Estado == "Confirmada")
+                {
+                    <form asp-action="Cancelar" asp-route-id="@Model.Id" method="post" style="display:inline;">
                         @Html.AntiForgeryToken()
                         <button type="submit" class="vc-btn-danger" onclick="return confirm('¿Cancelar esta cita?')">Cancelar cita</button>
                     </form>
-                </div>
-            }
+                }
+            </div>
         </div>
+
+        <!-- Receta médica -->
         @if (Model.HistorialMedico != null)
         {
-            <div class="vc-card">
-                <h3 style="color:var(--mint);margin-bottom:1rem;">📋 Historial Médico</h3>
-                <div class="vc-detail-grid">
-                    <div class="vc-detail-item">
-                        <span class="vc-detail-label">Diagnóstico</span>
-                        <span class="vc-detail-value">@Model.HistorialMedico.Diagnostico</span>
+            <div class="vc-card vc-detail-card vc-receta-card">
+                <div class="vc-receta-header">
+                    <div class="vc-card-icon-svg vc-card-icon-svg--lg vc-receta-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
                     </div>
-                    <div class="vc-detail-item">
-                        <span class="vc-detail-label">Tratamiento</span>
-                        <span class="vc-detail-value">@Model.HistorialMedico.Tratamiento</span>
-                    </div>
-                    @if (!string.IsNullOrEmpty(Model.HistorialMedico.Observaciones))
-                    {
-                        <div class="vc-detail-item">
-                            <span class="vc-detail-label">Observaciones</span>
-                            <span class="vc-detail-value">@Model.HistorialMedico.Observaciones</span>
-                        </div>
-                    }
-                    <div class="vc-detail-item">
-                        <span class="vc-detail-label">Registrado</span>
-                        <span class="vc-detail-value">@Model.HistorialMedico.FechaRegistro.ToString("dd/MM/yyyy HH:mm")</span>
+                    <div>
+                        <h2 class="vc-detail-title">Receta Médica</h2>
+                        <p style="color:var(--navy-300);font-size:0.85rem;">Registrado el @Model.HistorialMedico.FechaRegistro.ToString("dd/MM/yyyy")</p>
                     </div>
                 </div>
+                <div class="vc-receta-section">
+                    <p class="vc-receta-label">Diagnóstico</p>
+                    <p class="vc-receta-text">@Model.HistorialMedico.Diagnostico</p>
+                </div>
+                <div class="vc-receta-section">
+                    <p class="vc-receta-label">Tratamiento prescrito</p>
+                    <p class="vc-receta-text">@Model.HistorialMedico.Tratamiento</p>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.HistorialMedico.Observaciones))
+                {
+                    <div class="vc-receta-section">
+                        <p class="vc-receta-label">Observaciones</p>
+                        <p class="vc-receta-text">@Model.HistorialMedico.Observaciones</p>
+                    </div>
+                }
+
+                @if (productos.Any())
+                {
+                    <div class="vc-receta-productos">
+                        <div class="vc-receta-productos-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm" style="color:var(--mint)"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M10 14h4v6h-4z"/></svg>
+                            <span>Disponible en nuestros comercios aliados</span>
+                        </div>
+                        <div class="vc-producto-list">
+                            @foreach (var p in productos)
+                            {
+                                <div class="vc-producto-item">
+                                    <div class="vc-producto-info">
+                                        <strong class="vc-producto-nombre">@p.Nombre</strong>
+                                        @if (!string.IsNullOrEmpty(p.Descripcion))
+                                        { <span class="vc-producto-desc">@p.Descripcion</span> }
+                                        <span class="vc-producto-tienda">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-xs"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M10 14h4v6h-4z"/></svg>
+                                            @p.Comercio?.Nombre
+                                        </span>
+                                    </div>
+                                    <div class="vc-producto-right">
+                                        @if (p.Precio.HasValue)
+                                        { <span class="vc-producto-precio">$@p.Precio.Value.ToString("0.00")</span> }
+                                        <a asp-controller="Comercios" asp-action="Details" asp-route-id="@p.ComercioId" class="vc-btn-primary-sm">Ver tienda</a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
             </div>
         }
     </div>

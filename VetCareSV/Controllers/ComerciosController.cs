@@ -90,6 +90,53 @@ public class ComerciosController : Controller
         var comercio = await _context.ComerciosAliados.FindAsync(comercioId.Value);
         if (comercio == null) return RedirectToAction(nameof(Index));
 
+        var productos = await _context.Productos.Where(p => p.ComercioId == comercioId.Value).OrderBy(p => p.Nombre).ToListAsync();
+        ViewBag.Productos = productos;
+
         return View(comercio);
+    }
+
+    [HttpPost][ValidateAntiForgeryToken]
+    public async Task<IActionResult> AgregarProducto(string Nombre, string? Descripcion, decimal? Precio, int ComercioId)
+    {
+        if (!string.IsNullOrWhiteSpace(Nombre))
+        {
+            _context.Productos.Add(new Producto { Nombre = Nombre.Trim(), Descripcion = Descripcion?.Trim(), Precio = Precio, ComercioId = ComercioId });
+            await _context.SaveChangesAsync();
+            TempData["Exito"] = "Producto agregado.";
+        }
+        return RedirectToAction(nameof(Dashboard));
+    }
+
+    [HttpPost][ValidateAntiForgeryToken]
+    public async Task<IActionResult> SubirCSV(Microsoft.AspNetCore.Http.IFormFile? archivo, int ComercioId)
+    {
+        if (archivo == null || archivo.Length == 0) { TempData["Error"] = "Selecciona un archivo CSV."; return RedirectToAction(nameof(Dashboard)); }
+        int count = 0;
+        using var reader = new System.IO.StreamReader(archivo.OpenReadStream());
+        while (!reader.EndOfStream)
+        {
+            var line = await reader.ReadLineAsync();
+            if (string.IsNullOrWhiteSpace(line)) continue;
+            var parts = line.Split(',');
+            if (parts.Length < 1 || string.IsNullOrWhiteSpace(parts[0])) continue;
+            var nombre = parts[0].Trim();
+            var desc = parts.Length > 1 ? parts[1].Trim() : null;
+            decimal? precio = null;
+            if (parts.Length > 2 && decimal.TryParse(parts[2].Trim(), System.Globalization.NumberStyles.Any, System.Globalization.CultureInfo.InvariantCulture, out var p)) precio = p;
+            _context.Productos.Add(new Producto { Nombre = nombre, Descripcion = string.IsNullOrEmpty(desc) ? null : desc, Precio = precio, ComercioId = ComercioId });
+            count++;
+        }
+        await _context.SaveChangesAsync();
+        TempData["Exito"] = $"{count} productos importados desde CSV.";
+        return RedirectToAction(nameof(Dashboard));
+    }
+
+    [HttpPost][ValidateAntiForgeryToken]
+    public async Task<IActionResult> EliminarProducto(int id)
+    {
+        var prod = await _context.Productos.FindAsync(id);
+        if (prod != null) { _context.Productos.Remove(prod); await _context.SaveChangesAsync(); TempData["Exito"] = "Producto eliminado."; }
+        return RedirectToAction(nameof(Dashboard));
     }
 }

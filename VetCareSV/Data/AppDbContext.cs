@@ -10,6 +10,7 @@ public class AppDbContext : DbContext
     public DbSet<Cita> Citas { get; set; }
     public DbSet<HistorialMedico> HistorialesMedicos { get; set; }
     public DbSet<ComercioAliado> ComerciosAliados { get; set; }
+    public DbSet<Producto> Productos { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -102,6 +103,17 @@ public class AppDbContext : DbContext
                 new ComercioAliado { Id = 5, Nombre = "Casa del Acuario SV", Categoria = "Tienda", Direccion = "1a Calle Poniente, Santa Ana", Departamento = "Santa Ana", Telefono = "2441-6600", Descripcion = "Peces, reptiles y accesorios especializados." },
                 new ComercioAliado { Id = 6, Nombre = "PetFood Premium SV", Categoria = "Tienda", Direccion = "Col. San Benito, San Salvador", Departamento = "San Salvador", Telefono = "2264-7700", Descripcion = "Alimentos premium y orgánicos para mascotas." }
             );
+        });
+
+        modelBuilder.Entity<Producto>(e => {
+            e.ToTable("productos");
+            e.HasKey(p => p.Id);
+            e.Property(p => p.Id).HasColumnName("id");
+            e.Property(p => p.Nombre).HasColumnName("nombre").IsRequired().HasMaxLength(200);
+            e.Property(p => p.Descripcion).HasColumnName("descripcion");
+            e.Property(p => p.Precio).HasColumnName("precio").HasColumnType("decimal(10,2)");
+            e.Property(p => p.ComercioId).HasColumnName("comercio_id");
+            e.HasOne(p => p.Comercio).WithMany(c => c.Productos).HasForeignKey(p => p.ComercioId).OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

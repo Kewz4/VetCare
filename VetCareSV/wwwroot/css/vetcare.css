@@ -824,3 +824,93 @@ a:hover { opacity: 0.8; }
   .vc-nav-links .vc-user-name { display: none; }
   .vc-hero-stats { grid-template-columns: 1fr 1fr; }
 }
+
+/* =========================================================
+   CITA DETAIL & RECETA MÉDICA
+   ========================================================= */
+.vc-cita-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+.vc-receta-card { border-top: 3px solid var(--mint); }
+.vc-receta-header { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem; }
+.vc-receta-icon { background: rgba(62,207,178,0.08); }
+.vc-receta-section { margin-bottom: 1.25rem; }
+.vc-receta-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--navy-300); font-weight: 600; margin-bottom: 0.35rem; }
+.vc-receta-text { color: var(--white); font-size: 0.95rem; line-height: 1.6; }
+.vc-receta-productos { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
+.vc-receta-productos-header { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 700; color: var(--mint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; }
+.vc-producto-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.vc-producto-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius-sm); padding: 0.85rem 1rem; transition: border-color var(--transition); }
+.vc-producto-item:hover { border-color: rgba(62,207,178,0.25); }
+.vc-producto-info { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; min-width: 0; }
+.vc-producto-nombre { font-size: 0.95rem; color: var(--white); font-weight: 600; }
+.vc-producto-desc { font-size: 0.82rem; color: var(--navy-200); }
+.vc-producto-tienda { font-size: 0.8rem; color: var(--navy-300); display: flex; align-items: center; gap: 0.3rem; margin-top: 0.15rem; }
+.vc-producto-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+.vc-producto-precio { font-size: 1rem; font-weight: 700; color: var(--mint); }
+
+/* =========================================================
+   COMERCIO DASHBOARD
+   ========================================================= */
+.vc-dashboard-grid { display: grid; grid-template-columns: 1fr 260px; gap: 1.5rem; align-items: start; }
+.vc-stat-highlight { text-align: center; padding: 2rem 1.5rem; }
+.vc-stat-big { font-size: 3.5rem; font-weight: 700; color: var(--mint); line-height: 1; font-family: 'DM Serif Display', serif; }
+.vc-stat-big-label { font-size: 0.9rem; color: var(--navy-200); margin-top: 0.5rem; font-weight: 600; }
+.vc-add-panel { display: none; }
+.vc-add-panel.open { display: block; }
+.vc-add-panel-inner { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.5rem; }
+.vc-add-panel-inner h3 { color: var(--white); margin-bottom: 1.25rem; font-size: 1.1rem; }
+.vc-divider-label { text-align: center; color: var(--navy-300); font-size: 0.85rem; margin: 1.5rem 0; position: relative; }
+.vc-divider-label::before, .vc-divider-label::after { content: ''; position: absolute; top: 50%; width: 40%; height: 1px; background: rgba(255,255,255,0.08); }
+.vc-divider-label::before { left: 0; }
+.vc-divider-label::after { right: 0; }
+.vc-file-input { color: var(--navy-100); font-size: 0.9rem; }
+.vc-file-input::file-selector-button { background: rgba(62,207,178,0.1); border: 1px solid var(--mint); color: var(--mint); border-radius: 6px; padding: 0.4rem 0.85rem; cursor: pointer; font-size: 0.85rem; margin-right: 0.75rem; transition: background var(--transition); }
+.vc-file-input::file-selector-button:hover { background: rgba(62,207,178,0.2); }
+
+@media (max-width: 768px) {
+  .vc-cita-detail-grid { grid-template-columns: 1fr; }
+  .vc-dashboard-grid { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   CITA DETAIL & RECETA
+   ========================================================= */
+.vc-cita-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start; }
+.vc-receta-card { border-top: 3px solid var(--mint); }
+.vc-receta-header { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.5rem; }
+.vc-receta-icon { background: rgba(62,207,178,0.08); }
+.vc-receta-section { margin-bottom: 1.25rem; }
+.vc-receta-label { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--navy-300); font-weight: 600; margin-bottom: 0.35rem; }
+.vc-receta-text { color: var(--white); font-size: 0.95rem; line-height: 1.6; }
+.vc-receta-productos { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); }
+.vc-receta-productos-header { display: flex; align-items: center; gap: 0.5rem; font-size: 0.85rem; font-weight: 600; color: var(--mint); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; }
+.vc-producto-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.vc-producto-item { display: flex; align-items: center; justify-content: space-between; gap: 1rem; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); border-radius: var(--radius-sm); padding: 0.85rem 1rem; }
+.vc-producto-info { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; min-width: 0; }
+.vc-producto-nombre { font-size: 0.95rem; color: var(--white); font-weight: 600; }
+.vc-producto-desc { font-size: 0.82rem; color: var(--navy-200); }
+.vc-producto-tienda { font-size: 0.8rem; color: var(--navy-300); display: flex; align-items: center; gap: 0.3rem; margin-top: 0.15rem; }
+.vc-producto-right { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
+.vc-producto-precio { font-size: 1rem; font-weight: 700; color: var(--mint); }
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+.vc-dashboard-grid { display: grid; grid-template-columns: 1fr 280px; gap: 1.5rem; align-items: start; }
+.vc-stat-highlight { text-align: center; padding: 2rem; }
+.vc-stat-big { font-size: 3.5rem; font-weight: 700; color: var(--mint); line-height: 1; font-family: 'DM Serif Display', serif; }
+.vc-stat-big-label { font-size: 0.9rem; color: var(--navy-200); margin-top: 0.5rem; }
+.vc-add-panel { display: none; }
+.vc-add-panel.open { display: block; }
+.vc-add-panel-inner { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.5rem; }
+.vc-add-panel-inner h3 { color: var(--white); margin-bottom: 1.25rem; }
+.vc-divider-label { text-align: center; color: var(--navy-300); font-size: 0.85rem; margin: 1.25rem 0; position: relative; }
+.vc-divider-label::before, .vc-divider-label::after { content: ''; position: absolute; top: 50%; width: 38%; height: 1px; background: rgba(255,255,255,0.08); }
+.vc-divider-label::before { left: 0; }
+.vc-divider-label::after { right: 0; }
+.vc-file-input { color: var(--navy-100); font-size: 0.9rem; }
+.vc-file-input::file-selector-button { background: rgba(62,207,178,0.1); border: 1px solid var(--mint); color: var(--mint); border-radius: 6px; padding: 0.4rem 0.85rem; cursor: pointer; font-size: 0.85rem; margin-right: 0.75rem; }
+
+@media (max-width: 768px) {
+  .vc-cita-detail-grid { grid-template-columns: 1fr; }
+  .vc-dashboard-grid { grid-template-columns: 1fr; }
+}

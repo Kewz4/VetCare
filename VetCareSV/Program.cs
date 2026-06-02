@@ -90,6 +90,68 @@ using (var scope = app.Services.CreateScope())
         );
         db.SaveChanges();
     }
+
+    // Seed demo products on farmacia
+    var farmacia = db.ComerciosAliados.FirstOrDefault(c => c.Categoria == "Farmacia");
+    if (farmacia != null && !db.Productos.Any(p => p.ComercioId == farmacia.Id))
+    {
+        db.Productos.AddRange(
+            new VetCareSV.Models.Producto { Nombre = "Amoxicilina 250mg", Descripcion = "Antibiótico para infecciones bacterianas en mascotas", Precio = 8.50m, ComercioId = farmacia.Id },
+            new VetCareSV.Models.Producto { Nombre = "Ivermectina 1%", Descripcion = "Desparasitante inyectable de amplio espectro", Precio = 5.75m, ComercioId = farmacia.Id },
+            new VetCareSV.Models.Producto { Nombre = "Vacuna Antirrábica", Descripcion = "Vacuna antirrábica para perros y gatos, monodosis", Precio = 12.00m, ComercioId = farmacia.Id },
+            new VetCareSV.Models.Producto { Nombre = "Dexametasona 0.5mg", Descripcion = "Antiinflamatorio corticoide para alergia y dermatitis", Precio = 6.25m, ComercioId = farmacia.Id },
+            new VetCareSV.Models.Producto { Nombre = "Frontline Antipulgas", Descripcion = "Pipeta antipulgas y garrapatas para perros", Precio = 9.99m, ComercioId = farmacia.Id },
+            new VetCareSV.Models.Producto { Nombre = "Omeprazol 20mg", Descripcion = "Protector gástrico para perros y gatos", Precio = 7.50m, ComercioId = farmacia.Id }
+        );
+        db.SaveChanges();
+    }
+
+    // Also seed products on tienda
+    var tienda = db.ComerciosAliados.FirstOrDefault(c => c.Nombre == "PetFood Premium SV");
+    if (tienda != null && !db.Productos.Any(p => p.ComercioId == tienda.Id))
+    {
+        db.Productos.AddRange(
+            new VetCareSV.Models.Producto { Nombre = "Royal Canin Adulto Perro 3kg", Descripcion = "Alimento balanceado premium para perros adultos", Precio = 22.00m, ComercioId = tienda.Id },
+            new VetCareSV.Models.Producto { Nombre = "Pro Plan Gato Adulto 1.5kg", Descripcion = "Alimento completo para gatos adultos", Precio = 18.50m, ComercioId = tienda.Id },
+            new VetCareSV.Models.Producto { Nombre = "Frontline Antipulgas Gato", Descripcion = "Pipeta antipulgas para gatos", Precio = 9.50m, ComercioId = tienda.Id }
+        );
+        db.SaveChanges();
+    }
+
+    // Seed historial médico for completed demo appointments
+    var demoUserSeed = db.Usuarios.FirstOrDefault(u => u.Email == "demo@vetcare.sv");
+    if (demoUserSeed != null)
+    {
+        var citasCompletadas = db.Citas
+            .Include(c => c.Mascota)
+            .Where(c => c.Mascota != null && c.Mascota.UsuarioId == demoUserSeed.Id && c.Estado == "Completada")
+            .Where(c => !db.HistorialesMedicos.Any(h => h.CitaId == c.Id))
+            .ToList();
+
+        foreach (var cita in citasCompletadas)
+        {
+            if (!db.HistorialesMedicos.Any(h => h.CitaId == cita.Id))
+            {
+                string diag, trat, obs;
+                if (cita.Motivo?.Contains("Vacunación") == true)
+                { diag = "Paciente en buen estado general. Sin contraindicaciones."; trat = "Vacuna Antirrábica aplicada. Próximo refuerzo en 12 meses."; obs = "Se recomienda reposo el resto del día."; }
+                else if (cita.Motivo?.Contains("peso") == true || cita.Motivo?.Contains("revisión") == true)
+                { diag = "Sobrepeso leve detectado (0.5kg sobre el rango ideal)."; trat = "Dieta con Royal Canin Adulto reducido en calorías. Omeprazol 20mg si presenta acidez."; obs = "Control en 30 días."; }
+                else
+                { diag = "Parasitismo intestinal leve confirmado por análisis de heces."; trat = "Ivermectina 1% dosis única. Frontline Antipulgas como preventivo."; obs = "Repetir desparasitación en 3 meses."; }
+
+                db.HistorialesMedicos.Add(new VetCareSV.Models.HistorialMedico
+                {
+                    CitaId = cita.Id,
+                    Diagnostico = diag,
+                    Tratamiento = trat,
+                    Observaciones = obs,
+                    FechaRegistro = cita.Fecha.AddHours(1)
+                });
+            }
+        }
+        db.SaveChanges();
+    }
 }
 
 if (!app.Environment.IsDevelopment())

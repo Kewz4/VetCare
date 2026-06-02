@@ -11,7 +11,7 @@
     @if (!Model.Any())
     {
         <div class="vc-empty-state">
-            <span>📅</span>
+            <div class="vc-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
             <p>No tienes citas agendadas aún.</p>
             <a asp-action="Create" class="vc-btn-primary">Agendar primera cita</a>
         </div>
