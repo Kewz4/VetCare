@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VetCare SV — Cuidamos a tu familia peluda</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,700;1,9..40,300;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── TOKENS ──────────────────────────────────────────────── */
+    :root {
+      --teal-50:  #e8f7f7;
+      --teal-100: #c2e9e8;
+      --teal-400: #2ab8b0;
+      --teal-500: #1d9e97;
+      --teal-600: #1a8f88;
+      --teal-700: #0d7a73;
+      --navy-900: #0d2d3a;
+      --navy-800: #123344;
+      --navy-700: #1a4255;
+      --mint:     #3ecfb2;
+      --gold:     #f5c842;
+      --surface:  #f4f8f8;
+      --white:    #ffffff;
+      --text-dark: #0d2d3a;
+      --text-mid:  #4a6b75;
+      --text-light: #8ca8b2;
+
+      --radius-sm: 6px;
+      --radius-md: 14px;
+      --radius-lg: 28px;
+      --radius-xl: 48px;
+
+      --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-in-out:   cubic-bezier(0.45, 0, 0.55, 1);
+
+      --font-sans:  'DM Sans', sans-serif;
+      --font-serif: 'DM Serif Display', serif;
+    }
+
+    /* ─── RESET ───────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--white);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── UTILITY ─────────────────────────────────────────────── */
+    .visually-hidden { position: absolute; width: 1px; height: 1px; clip: rect(0,0,0,0); overflow: hidden; }
+
+    /* ─── NAV ─────────────────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 18px 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: background 0.4s var(--ease-out-expo), backdrop-filter 0.4s;
+    }
+    .nav.scrolled {
+      background: rgba(13, 45, 58, 0.88);
+      backdrop-filter: blur(16px);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--white);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo-paw {
+      width: 36px; height: 36px;
+      background: var(--mint);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--mint);
+      color: var(--navy-900) !important;
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-weight: 700 !important;
+      font-size: 0.875rem;
+      transition: background 0.2s, transform 0.15s !important;
+    }
+    .nav-cta:hover { background: var(--white) !important; transform: scale(1.04); }
+
+    /* ─── HERO ────────────────────────────────────────────────── */
+    .hero {
+      min-height: 100svh;
+      background: var(--navy-900);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 120px 5vw 80px;
+      gap: 40px;
+    }
+
+    /* background blob */
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(62,207,178,0.18) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(29,158,151,0.12) 0%, transparent 70%);
+      bottom: -60px; left: 30%;
+      pointer-events: none;
+    }
+
+    .hero-content { position: relative; z-index: 2; }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(62,207,178,0.15);
+      border: 1px solid rgba(62,207,178,0.3);
+      color: var(--mint);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 28px;
+    }
+    .hero-eyebrow-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--mint);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.7); }
+    }
+
+    .hero-title {
+      font-family: var(--font-serif);
+      font-size: clamp(3rem, 5.5vw, 5.5rem);
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+    .hero-title em {
+      font-style: italic;
+      color: var(--mint);
+    }
+    .hero-title .line-break { display: block; }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      color: rgba(255,255,255,0.6);
+      max-width: 440px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--mint);
+      color: var(--navy-900);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 100px;
+      transition: transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 0 0 0 rgba(62,207,178,0.4);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(62,207,178,0.35);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: rgba(255,255,255,0.75);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--mint); color: var(--mint); }
+
+    /* Hero visual side */
+    .hero-visual {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius-lg);
+      padding: 24px 28px;
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s var(--ease-out-expo);
+    }
+    .hero-card:hover { transform: translateX(-6px); }
+    .hero-card-label {
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--mint);
+      margin-bottom: 8px;
+    }
+    .hero-card-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+    }
+    .hero-card-sub {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.45);
+      margin-top: 4px;
+    }
+
+    .hero-card--accent {
+      background: linear-gradient(135deg, var(--teal-600) 0%, var(--teal-400) 100%);
+      border-color: transparent;
+    }
+    .hero-card--accent .hero-card-label { color: rgba(255,255,255,0.65); }
+    .hero-card--accent .hero-card-sub { color: rgba(255,255,255,0.55); }
+
+    .hero-cards-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .hero-stat-number {
+      font-family: var(--font-serif);
+      font-size: 2.4rem;
+      line-height: 1;
+      color: var(--white);
+    }
+    .hero-stat-unit {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      font-weight: 400;
+    }
+
+    /* ─── SECTION SHARED ──────────────────────────────────────── */
+    section { padding: 100px 5vw; }
+
+    .section-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal-600);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--text-dark);
+      margin-bottom: 18px;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--text-mid);
+      max-width: 520px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ─── PROBLEMA/SOLUCIÓN ───────────────────────────────────── */
+    .problem-section {
+      background: var(--surface);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .problem-side {
+      position: relative;
+    }
+
+    .problem-quote {
+      font-family: var(--font-serif);
+      font-size: clamp(1.4rem, 2.5vw, 2.2rem);
+      line-height: 1.3;
+      color: var(--text-dark);
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+    .problem-quote strong { color: var(--teal-600); font-style: normal; }
+
+    .problem-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .problem-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .problem-icon {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+    }
+    .problem-icon--bad  { background: #fdecea; }
+    .problem-icon--good { background: rgba(62,207,178,0.15); }
+
+    .problem-text { font-size: 0.95rem; color: var(--text-mid); line-height: 1.6; }
+    .problem-text strong { color: var(--text-dark); }
+
+    /* Solution visual */
+    .solution-visual {
+      background: var(--navy-900);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .solution-visual::before {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(62,207,178,0.2) 0%, transparent 70%);
+      top: -80px; right: -80px;
+      pointer-events: none;
+    }
+    .solution-steps {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .solution-step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .solution-step:last-child { border-bottom: none; }
+    .solution-step-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--mint);
+      color: var(--navy-900);
+      font-weight: 800;
+      font-size: 0.8rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .solution-step-body {}
+    .solution-step-title { color: var(--white); font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+    .solution-step-desc { color: rgba(255,255,255,0.5); font-size: 0.82rem; font-weight: 300; line-height: 1.5; }
+
+    /* ─── MODULOS ─────────────────────────────────────────────── */
+    .modules-section {
+      background: var(--white);
+    }
+    .modules-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: end;
+      margin-bottom: 64px;
+    }
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .module-card {
+      background: var(--surface);
+      padding: 36px 30px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s var(--ease-out-expo);
+      cursor: default;
+    }
+    .module-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--teal-400);
+      transform: scaleY(0);
+      transform-origin: bottom;
+      transition: transform 0.3s var(--ease-out-expo);
+    }
+    .module-card:hover { background: var(--teal-50); }
+    .module-card:hover::before { transform: scaleY(1); }
+
+    .module-number {
+      font-family: var(--font-serif);
+      font-size: 3.5rem;
+      line-height: 1;
+      color: rgba(13,45,58,0.07);
+      position: absolute;
+      top: 20px; right: 24px;
+      font-style: italic;
+      user-select: none;
+    }
+    .module-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    .module-title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .module-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .module-features li {
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      display: flex;
+      gap: 8px;
+      align-items: baseline;
+    }
+    .module-features li::before {
+      content: '—';
+      color: var(--teal-400);
+      flex-shrink: 0;
+    }
+    .module-tag {
+      display: inline-block;
+      margin-top: 16px;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--teal-600);
+      background: rgba(29,158,151,0.1);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    /* Large featured module */
+    .module-card--featured {
+      grid-column: span 2;
+      background: var(--navy-900);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .module-card--featured:hover { background: var(--navy-800); }
+    .module-card--featured .module-number { color: rgba(255,255,255,0.05); }
+    .module-card--featured .module-title { color: var(--white); font-size: 1.3rem; }
+    .module-card--featured .module-features li { color: rgba(255,255,255,0.55); }
+    .module-card--featured .module-features li::before { color: var(--mint); }
+    .module-card--featured .module-tag { color: var(--mint); background: rgba(62,207,178,0.1); }
+
+    .module-featured-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .status-pill {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      font-size: 0.78rem;
+    }
+    .status-pill-label { color: rgba(255,255,255,0.4); margin-bottom: 4px; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .status-pill-value { color: var(--white); font-weight: 600; }
+    .status-dot {
+      display: inline-block;
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      margin-right: 5px;
+    }
+    .status-dot--pending  { background: var(--gold); }
+    .status-dot--ok       { background: var(--mint); }
+    .status-dot--done     { background: var(--text-light); }
+
+    /* ─── ARQUITECTURA ────────────────────────────────────────── */
+    .arch-section {
+      background: var(--surface);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+    .arch-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .arch-layer {
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: transform 0.2s;
+    }
+    .arch-layer:hover { transform: translateX(6px); }
+    .arch-layer--client  { background: rgba(13,45,58,0.06); }
+    .arch-layer--control { background: var(--teal-600); }
+    .arch-layer--service { background: var(--teal-700); }
+    .arch-layer--model   { background: var(--navy-800); }
+    .arch-layer--db      { background: var(--navy-900); }
+
+    .arch-layer-icon { font-size: 22px; flex-shrink: 0; }
+    .arch-layer-body {}
+    .arch-layer-name {
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-bottom: 2px;
+    }
+    .arch-layer--control .arch-layer-name,
+    .arch-layer--service .arch-layer-name,
+    .arch-layer--model   .arch-layer-name,
+    .arch-layer--db      .arch-layer-name { color: var(--white); }
+    .arch-layer-items {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.55);
+      font-family: 'DM Mono', monospace;
+    }
+    .arch-layer--client .arch-layer-name { color: var(--text-dark); }
+    .arch-layer--client .arch-layer-items { color: var(--text-mid); }
+
+    .arch-arrow {
+      text-align: center;
+      color: var(--teal-400);
+      font-size: 18px;
+      padding: 2px 0;
+    }
+
+    /* Concepts side */
+    .arch-concepts { }
+    .concept-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .concept-item {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      transition: background 0.2s;
+    }
+    .concept-item:hover { background: rgba(29,158,151,0.06); }
+    .concept-session {
+      background: var(--teal-600);
+      color: var(--white);
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .concept-text {
+      font-size: 0.88rem;
+      color: var(--text-mid);
+      line-height: 1.5;
+    }
+    .concept-text strong { color: var(--text-dark); }
+
+    /* ─── ENTIDADES ───────────────────────────────────────────── */
+    .entities-section { background: var(--navy-900); }
+    .entities-section .section-title { color: var(--white); }
+    .entities-section .section-eyebrow { color: var(--mint); }
+    .entities-section .section-sub { color: rgba(255,255,255,0.5); }
+
+    .entities-header {
+      margin-bottom: 56px;
+    }
+    .entities-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .entity-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-lg);
+      padding: 28px 24px;
+      transition: background 0.25s, border-color 0.25s, transform 0.25s var(--ease-out-expo);
+    }
+    .entity-card:hover {
+      background: rgba(255,255,255,0.07);
+      border-color: rgba(62,207,178,0.3);
+      transform: translateY(-4px);
+    }
+    .entity-title {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .entity-title::before {
+      content: '';
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 2px;
+      background: var(--mint);
+      flex-shrink: 0;
+    }
+    .entity-fields {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .entity-field {
+      display: flex;
+      gap: 10px;
+      font-size: 0.82rem;
+      font-family: 'DM Mono', 'Courier New', monospace;
+    }
+    .field-type { color: var(--teal-400); flex-shrink: 0; }
+    .field-name { color: rgba(255,255,255,0.75); }
+
+    /* ─── ALCANCE ─────────────────────────────────────────────── */
+    .scope-section {
+      background: var(--white);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .scope-list { list-style: none; display: flex; flex-direction: column; gap: 14px; }
+    .scope-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 16px 20px;
+      border-radius: var(--radius-md);
+      transition: background 0.2s;
+    }
+    .scope-item:hover { background: var(--surface); }
+    .scope-check {
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      margin-top: 1px;
+    }
+    .scope-check--yes { background: rgba(62,207,178,0.15); color: var(--teal-600); }
+    .scope-check--no  { background: rgba(239,68,68,0.1); color: #ef4444; }
+    .scope-text { font-size: 0.9rem; color: var(--text-mid); line-height: 1.5; }
+    .scope-text strong { color: var(--text-dark); }
+
+    .scope-out-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-light);
+      margin-bottom: 16px;
+      margin-top: 36px;
+    }
+
+    /* ─── TECH STRIP ──────────────────────────────────────────── */
+    .tech-strip {
+      background: var(--teal-600);
+      padding: 0 5vw;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      overflow: hidden;
+    }
+    .tech-strip-inner {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+      width: 100%;
+    }
+    .tech-badge {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 32px 36px;
+      border-right: 1px solid rgba(255,255,255,0.15);
+      flex: 1;
+      transition: background 0.2s;
+    }
+    .tech-badge:last-child { border-right: none; }
+    .tech-badge:hover { background: rgba(255,255,255,0.08); }
+    .tech-badge-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .tech-badge-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+    }
+
+    /* ─── FOOTER / CTA ────────────────────────────────────────── */
+    .cta-section {
+      background: var(--navy-900);
+      padding: 120px 5vw;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(62,207,178,0.12) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .cta-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 16px;
+    }
+    .cta-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      line-height: 1.05;
+      color: var(--white);
+      margin-bottom: 24px;
+      letter-spacing: -0.03em;
+      position: relative;
+    }
+    .cta-title em { font-style: italic; color: var(--mint); }
+    .cta-sub {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 48px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+      font-weight: 300;
+      line-height: 1.7;
+    }
+    .cta-actions {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .footer-info {
+      background: var(--navy-900);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 32px 5vw;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .footer-meta {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+      text-align: right;
+      line-height: 1.6;
+    }
+    .footer-meta a { color: var(--mint); }
+
+    /* ─── SCROLL REVEAL ───────────────────────────────────────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; padding-top: 100px; }
+      .hero-visual { display: none; }
+      .problem-section,
+      .arch-section,
+      .scope-section { grid-template-columns: 1fr; gap: 48px; }
+      .modules-header { grid-template-columns: 1fr; }
+      .modules-grid { grid-template-columns: 1fr 1fr; }
+      .module-card--featured { grid-column: span 2; grid-template-columns: 1fr; }
+      .entities-grid { grid-template-columns: 1fr 1fr; }
+      .tech-strip-inner { flex-wrap: wrap; }
+      .tech-badge { flex: 0 0 50%; }
+      .nav-links { display: none; }
+      .footer-info { flex-direction: column; gap: 16px; text-align: center; }
+      .footer-meta { text-align: center; }
+    }
+    @media (max-width: 600px) {
+      .modules-grid { grid-template-columns: 1fr; }
+      .module-card--featured { grid-column: span 1; }
+      .entities-grid { grid-template-columns: 1fr; }
+      .hero-cards-row { grid-template-columns: 1fr; }
+      .tech-badge { flex: 0 0 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ NAV ═══════════════════════════════════════════════════ -->
+  <nav class="nav" id="mainNav" aria-label="Navegación principal">
+    <a href="#" class="nav-logo" aria-label="VetCare SV inicio">
+      <div class="nav-logo-paw" aria-hidden="true">🐾</div>
+      VetCare <span style="color:var(--mint);margin-left:2px">SV</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#modulos">Módulos</a></li>
+      <li><a href="#arquitectura">Arquitectura</a></li>
+      <li><a href="#entidades">Modelos</a></li>
+      <li><a href="#alcance">Alcance</a></li>
+      <li><a href="#contacto" class="nav-cta">Agendar Cita</a></li>
+    </ul>
+  </nav>
+
+  <!-- ═══ HERO ═══════════════════════════════════════════════════ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <div class="hero-eyebrow" aria-label="El Salvador">
+        <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+        Hecho para El Salvador
+      </div>
+      <h1 class="hero-title" id="hero-title">
+        <span class="line-break">Tu mascota</span>
+        <em>merece</em> la mejor<br>
+        atención veterinaria
+      </h1>
+      <p class="hero-sub">
+        VetCare SV conecta a dueños de mascotas con veterinarias y comercios aliados en El Salvador. Agenda citas, gestiona historiales y encuentra clínicas — todo en un solo lugar.
+      </p>
+      <div class="hero-actions">
+        <a href="#modulos" class="btn-primary">Explorar la plataforma</a>
+        <a href="#arquitectura" class="btn-ghost">Ver arquitectura técnica</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-card hero-card--accent">
+        <div class="hero-card-label">Próxima cita</div>
+        <div class="hero-card-value">
+          <span class="hero-stat-number">14</span>
+          <span class="hero-stat-unit">Jun, 2026</span>
+        </div>
+        <div class="hero-card-sub">Max — Clínica Veterinaria San Salvador · 10:00 AM</div>
+      </div>
+      <div class="hero-cards-row">
+        <div class="hero-card">
+          <div class="hero-card-label">Comercios Aliados</div>
+          <div class="hero-card-value">
+            <span class="hero-stat-number">120+</span>
+          </div>
+          <div class="hero-card-sub">Veterinarias y tiendas</div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-label">Mascotas registradas</div>
+          <div class="hero-card-value">
+            <span class="hero-stat-number">3.4k</span>
+          </div>
+          <div class="hero-card-sub">En toda la república</div>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-label">Historial médico activo</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;">
+          <span style="background:rgba(62,207,178,0.15);color:var(--mint);font-size:0.75rem;font-weight:600;padding:4px 12px;border-radius:100px;">🐕 Perros</span>
+          <span style="background:rgba(62,207,178,0.15);color:var(--mint);font-size:0.75rem;font-weight:600;padding:4px 12px;border-radius:100px;">🐈 Gatos</span>
+          <span style="background:rgba(62,207,178,0.15);color:var(--mint);font-size:0.75rem;font-weight:600;padding:4px 12px;border-radius:100px;">🐦 Aves</span>
+        </div>
+        <div class="hero-card-sub" style="margin-top:10px">Diagnósticos · Tratamientos · Vacunas</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PROBLEMA / SOLUCIÓN ════════════════════════════════════ -->
+  <section class="problem-section" aria-label="Problema y solución">
+    <div class="problem-side">
+      <p class="section-eyebrow reveal">El problema</p>
+      <p class="hero-title section-title reveal reveal-delay-1" style="max-width:400px">
+        Las citas veterinarias siguen siendo<br>
+        <em style="color:var(--teal-600);font-style:italic">analógicas</em>
+      </p>
+      <ul class="problem-list reveal reveal-delay-2">
+        <li class="problem-item">
+          <div class="problem-icon problem-icon--bad" aria-hidden="true">✕</div>
+          <p class="problem-text"><strong>Solo por llamada telefónica</strong> — sin confirmación digital, sin recordatorio automático.</p>
+        </li>
+        <li class="problem-item">
+          <div class="problem-icon problem-icon--bad" aria-hidden="true">✕</div>
+          <p class="problem-text"><strong>Sin historial centralizado</strong> — cada visita queda en papel o se pierde.</p>
+        </li>
+        <li class="problem-item">
+          <div class="problem-icon problem-icon--bad" aria-hidden="true">✕</div>
+          <p class="problem-text"><strong>Difícil encontrar veterinarias</strong> — no hay un directorio confiable para El Salvador.</p>
+        </li>
+        <li class="problem-item">
+          <div class="problem-icon problem-icon--good" aria-hidden="true">✓</div>
+          <p class="problem-text"><strong>VetCare SV resuelve todo esto</strong> con una plataforma digital integrada, diseñada localmente.</p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="solution-visual reveal reveal-delay-2">
+      <div class="solution-steps">
+        <div class="solution-step">
+          <div class="solution-step-num">1</div>
+          <div class="solution-step-body">
+            <div class="solution-step-title">Registrate como dueño</div>
+            <div class="solution-step-desc">Crea tu perfil y agrega tus mascotas con especie, raza y datos médicos.</div>
+          </div>
+        </div>
+        <div class="solution-step">
+          <div class="solution-step-num">2</div>
+          <div class="solution-step-body">
+            <div class="solution-step-title">Encuentra una veterinaria</div>
+            <div class="solution-step-desc">Busca en el catálogo por departamento, especialidad o nombre. Información real y verificada.</div>
+          </div>
+        </div>
+        <div class="solution-step">
+          <div class="solution-step-num">3</div>
+          <div class="solution-step-body">
+            <div class="solution-step-title">Agenda tu cita en línea</div>
+            <div class="solution-step-desc">Selecciona fecha, hora y mascota. La cita queda confirmada con estado pendiente/confirmada/completada.</div>
+          </div>
+        </div>
+        <div class="solution-step">
+          <div class="solution-step-num">4</div>
+          <div class="solution-step-body">
+            <div class="solution-step-title">Accede al historial médico</div>
+            <div class="solution-step-desc">Diagnósticos y tratamientos quedan guardados por consulta para siempre.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ MÓDULOS ════════════════════════════════════════════════ -->
+  <section class="modules-section" id="modulos" aria-labelledby="modules-title">
+    <div class="modules-header">
+      <div>
+        <p class="section-eyebrow reveal">La plataforma</p>
+        <h2 class="section-title reveal reveal-delay-1" id="modules-title">Seis módulos.<br>Una experiencia completa.</h2>
+      </div>
+      <p class="section-sub reveal reveal-delay-2">
+        Cada módulo fue diseñado aplicando conceptos de Programación Orientada a Objetos, arquitectura MVC y Entity Framework Core.
+      </p>
+    </div>
+
+    <div class="modules-grid" role="list">
+
+      <!-- Featured: Citas -->
+      <div class="module-card module-card--featured reveal" role="listitem">
+        <div>
+          <div class="module-number" aria-hidden="true">03</div>
+          <div class="module-icon" aria-hidden="true">📅</div>
+          <h3 class="module-title">Módulo de Citas</h3>
+          <ul class="module-features">
+            <li>Agendamiento y cancelación en línea</li>
+            <li>Estados: pendiente · confirmada · completada</li>
+            <li>Servicios con interfaces IService</li>
+            <li>Try-Catch para validaciones críticas</li>
+          </ul>
+          <span class="module-tag">Sesión 7 · 9</span>
+        </div>
+        <div class="module-featured-visual">
+          <div class="status-pill">
+            <div class="status-pill-label">Estado</div>
+            <div class="status-pill-value"><span class="status-dot status-dot--ok"></span>Confirmada</div>
+          </div>
+          <div class="status-pill">
+            <div class="status-pill-label">Mascota</div>
+            <div class="status-pill-value">🐕 Max</div>
+          </div>
+          <div class="status-pill">
+            <div class="status-pill-label">Fecha</div>
+            <div class="status-pill-value">14 Jun 2026</div>
+          </div>
+          <div class="status-pill">
+            <div class="status-pill-label">Veterinaria</div>
+            <div class="status-pill-value">Clínica SV</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Usuarios -->
+      <div class="module-card reveal reveal-delay-1" role="listitem">
+        <div class="module-number" aria-hidden="true">01</div>
+        <div class="module-icon" aria-hidden="true">👤</div>
+        <h3 class="module-title">Módulo de Usuarios</h3>
+        <ul class="module-features">
+          <li>Registro e inicio de sesión</li>
+          <li>Roles: Dueño · Veterinario · Admin</li>
+          <li>Encapsulamiento con props privadas</li>
+        </ul>
+        <span class="module-tag">Sesión 5</span>
+      </div>
+
+      <!-- Mascotas -->
+      <div class="module-card reveal reveal-delay-2" role="listitem">
+        <div class="module-number" aria-hidden="true">02</div>
+        <div class="module-icon" aria-hidden="true">🐾</div>
+        <h3 class="module-title">Módulo de Mascotas</h3>
+        <ul class="module-features">
+          <li>CRUD completo por dueño</li>
+          <li>Herencia: Perro · Gato · Ave</li>
+          <li>Data Annotations para validación</li>
+        </ul>
+        <span class="module-tag">Sesión 4 · 7</span>
+      </div>
+
+      <!-- Comercios -->
+      <div class="module-card reveal reveal-delay-1" role="listitem">
+        <div class="module-number" aria-hidden="true">04</div>
+        <div class="module-icon" aria-hidden="true">🏪</div>
+        <h3 class="module-title">Comercios Aliados</h3>
+        <ul class="module-features">
+          <li>Catálogo de veterinarias y tiendas</li>
+          <li>Búsqueda con LINQ Where/OrderBy</li>
+          <li>DTOs para exponer datos seguros</li>
+        </ul>
+        <span class="module-tag">Sesión 7 · 10</span>
+      </div>
+
+      <!-- Historial -->
+      <div class="module-card reveal reveal-delay-2" role="listitem">
+        <div class="module-number" aria-hidden="true">05</div>
+        <div class="module-icon" aria-hidden="true">📋</div>
+        <h3 class="module-title">Historial Médico</h3>
+        <ul class="module-features">
+          <li>Consultas y diagnósticos por mascota</li>
+          <li>Filtros con LINQ GroupBy/Select</li>
+          <li>Excepciones personalizadas</li>
+        </ul>
+        <span class="module-tag">Sesión 9 · 10</span>
+      </div>
+
+      <!-- Admin -->
+      <div class="module-card reveal reveal-delay-3" role="listitem">
+        <div class="module-number" aria-hidden="true">06</div>
+        <div class="module-icon" aria-hidden="true">⚙️</div>
+        <h3 class="module-title">Panel Admin</h3>
+        <ul class="module-features">
+          <li>Gestión global de usuarios</li>
+          <li>Reportes con consultas LINQ</li>
+          <li>Config con appsettings.json</li>
+        </ul>
+        <span class="module-tag">Sesión 11</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ TECH STRIP ══════════════════════════════════════════════ -->
+  <div class="tech-strip" role="list" aria-label="Tecnologías utilizadas">
+    <div class="tech-strip-inner">
+      <div class="tech-badge" role="listitem">
+        <span class="tech-badge-label">Backend</span>
+        <span class="tech-badge-name">ASP.NET Core</span>
+      </div>
+      <div class="tech-badge" role="listitem">
+        <span class="tech-badge-label">Lenguaje</span>
+        <span class="tech-badge-name">C# / MVC</span>
+      </div>
+      <div class="tech-badge" role="listitem">
+        <span class="tech-badge-label">ORM</span>
+        <span class="tech-badge-name">Entity Framework</span>
+      </div>
+      <div class="tech-badge" role="listitem">
+        <span class="tech-badge-label">Base de datos</span>
+        <span class="tech-badge-name">PostgreSQL</span>
+      </div>
+      <div class="tech-badge" role="listitem">
+        <span class="tech-badge-label">Consultas</span>
+        <span class="tech-badge-name">LINQ</span>
+      </div>
+      <div class="tech-badge" role="listitem">
+        <span class="tech-badge-label">Patrones</span>
+        <span class="tech-badge-name">DTOs · IService</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ ARQUITECTURA ════════════════════════════════════════════ -->
+  <section class="arch-section" id="arquitectura" aria-labelledby="arch-title">
+    <div>
+      <p class="section-eyebrow reveal">Arquitectura técnica</p>
+      <h2 class="section-title reveal reveal-delay-1" id="arch-title">MVC + POO:<br>capas bien definidas</h2>
+      <p class="section-sub reveal reveal-delay-2" style="margin-bottom:40px">
+        La arquitectura separa responsabilidades de forma limpia, aplicando cada concepto del curso en la capa correcta.
+      </p>
+      <div class="arch-stack reveal reveal-delay-3">
+        <div class="arch-layer arch-layer--client">
+          <div class="arch-layer-icon">🖥️</div>
+          <div class="arch-layer-body">
+            <div class="arch-layer-name">Cliente / Navegador</div>
+            <div class="arch-layer-items" style="color:var(--text-mid)">Dueños · Veterinarios · Administradores</div>
+          </div>
+        </div>
+        <div class="arch-arrow" aria-hidden="true">↕</div>
+        <div class="arch-layer arch-layer--control">
+          <div class="arch-layer-icon">🎮</div>
+          <div class="arch-layer-body">
+            <div class="arch-layer-name">Controladores</div>
+            <div class="arch-layer-items">CitasController · VeterinariasController · UsuariosController</div>
+          </div>
+        </div>
+        <div class="arch-arrow" aria-hidden="true">↕</div>
+        <div class="arch-layer arch-layer--service">
+          <div class="arch-layer-icon">⚙️</div>
+          <div class="arch-layer-body">
+            <div class="arch-layer-name">Servicios e Interfaces</div>
+            <div class="arch-layer-items">ICitaService · IVeterinariaService · IUsuarioService</div>
+          </div>
+        </div>
+        <div class="arch-arrow" aria-hidden="true">↕</div>
+        <div class="arch-layer arch-layer--model">
+          <div class="arch-layer-icon">📦</div>
+          <div class="arch-layer-body">
+            <div class="arch-layer-name">Modelos / DTOs</div>
+            <div class="arch-layer-items">Mascota · Cita · Comercio · CrearCitaDTO · VetDTO</div>
+          </div>
+        </div>
+        <div class="arch-arrow" aria-hidden="true">↕</div>
+        <div class="arch-layer arch-layer--db">
+          <div class="arch-layer-icon">🗄️</div>
+          <div class="arch-layer-body">
+            <div class="arch-layer-name">Base de Datos</div>
+            <div class="arch-layer-items">PostgreSQL · Entity Framework Core · Migraciones</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="arch-concepts reveal reveal-delay-2">
+      <p class="section-eyebrow" style="margin-bottom:20px">Conceptos del curso aplicados</p>
+      <div class="concept-list">
+        <div class="concept-item">
+          <span class="concept-session">Ses. 3–4</span>
+          <p class="concept-text"><strong>Clases, Objetos y Constructores</strong> para las entidades: Mascota, Cita y Veterinaria.</p>
+        </div>
+        <div class="concept-item">
+          <span class="concept-session">Ses. 5</span>
+          <p class="concept-text"><strong>Encapsulamiento</strong> con propiedades privadas y getters/setters en modelos de dominio.</p>
+        </div>
+        <div class="concept-item">
+          <span class="concept-session">Ses. 5</span>
+          <p class="concept-text"><strong>Herencia:</strong> Perro, Gato y Ave heredan de la clase base abstracta Mascota.</p>
+        </div>
+        <div class="concept-item">
+          <span class="concept-session">Ses. 6–7</span>
+          <p class="concept-text"><strong>Patrón MVC</strong> como arquitectura principal: Modelo, Vista, Controlador.</p>
+        </div>
+        <div class="concept-item">
+          <span class="concept-session">Ses. 7</span>
+          <p class="concept-text"><strong>DTOs</strong> para evitar exponer datos sensibles al cliente en las respuestas de la API.</p>
+        </div>
+        <div class="concept-item">
+          <span class="concept-session">Ses. 9</span>
+          <p class="concept-text"><strong>Try-Catch</strong> con excepciones personalizadas en el módulo de citas y validaciones.</p>
+        </div>
+        <div class="concept-item">
+          <span class="concept-session">Ses. 10</span>
+          <p class="concept-text"><strong>LINQ:</strong> Where, OrderBy y GroupBy para consultas de datos en comercios e historial.</p>
+        </div>
+        <div class="concept-item">
+          <span class="concept-session">Ses. 11</span>
+          <p class="concept-text"><strong>Entity Framework + PostgreSQL</strong> como base de datos relacional con migraciones.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ENTIDADES ═══════════════════════════════════════════════ -->
+  <section class="entities-section" id="entidades" aria-labelledby="entities-title">
+    <div class="entities-header">
+      <p class="section-eyebrow reveal">Modelos C#</p>
+      <h2 class="section-title reveal reveal-delay-1" id="entities-title">Entidades principales del sistema</h2>
+      <p class="section-sub reveal reveal-delay-2">
+        Diseñadas con POO (Sesiones 4–5), validadas con Data Annotations (Sesión 7) y conectadas via Entity Framework Core (Sesión 11).
+      </p>
+    </div>
+
+    <div class="entities-grid">
+
+      <div class="entity-card reveal">
+        <div class="entity-title">Usuario</div>
+        <ul class="entity-fields">
+          <li class="entity-field"><span class="field-type">int</span><span class="field-name">Id</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Nombre</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Email</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">PasswordHash</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Rol</span></li>
+        </ul>
+      </div>
+
+      <div class="entity-card reveal reveal-delay-1">
+        <div class="entity-title">Mascota</div>
+        <ul class="entity-fields">
+          <li class="entity-field"><span class="field-type">int</span><span class="field-name">Id</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Nombre</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Especie</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Raza</span></li>
+          <li class="entity-field"><span class="field-type">int</span><span class="field-name">UsuarioId</span></li>
+        </ul>
+      </div>
+
+      <div class="entity-card reveal reveal-delay-2">
+        <div class="entity-title">Veterinaria</div>
+        <ul class="entity-fields">
+          <li class="entity-field"><span class="field-type">int</span><span class="field-name">Id</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Nombre</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Direccion</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Departamento</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Telefono</span></li>
+        </ul>
+      </div>
+
+      <div class="entity-card reveal reveal-delay-1">
+        <div class="entity-title">Cita</div>
+        <ul class="entity-fields">
+          <li class="entity-field"><span class="field-type">int</span><span class="field-name">Id</span></li>
+          <li class="entity-field"><span class="field-type">DateTime</span><span class="field-name">Fecha</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Estado</span></li>
+          <li class="entity-field"><span class="field-type">int</span><span class="field-name">MascotaId</span></li>
+          <li class="entity-field"><span class="field-type">int</span><span class="field-name">VeterinariaId</span></li>
+        </ul>
+      </div>
+
+      <div class="entity-card reveal reveal-delay-2">
+        <div class="entity-title">HistorialMedico</div>
+        <ul class="entity-fields">
+          <li class="entity-field"><span class="field-type">int</span><span class="field-name">Id</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Diagnostico</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Tratamiento</span></li>
+          <li class="entity-field"><span class="field-type">int</span><span class="field-name">CitaId</span></li>
+        </ul>
+      </div>
+
+      <div class="entity-card reveal reveal-delay-3">
+        <div class="entity-title">ComercioAliado</div>
+        <ul class="entity-fields">
+          <li class="entity-field"><span class="field-type">int</span><span class="field-name">Id</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Nombre</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Categoria</span></li>
+          <li class="entity-field"><span class="field-type">string</span><span class="field-name">Direccion</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ ALCANCE ════════════════════════════════════════════════ -->
+  <section class="scope-section" id="alcance" aria-labelledby="scope-title">
+    <div>
+      <p class="section-eyebrow reveal">Lo que incluye</p>
+      <h2 class="section-title reveal reveal-delay-1" id="scope-title">Alcance del proyecto</h2>
+      <ul class="scope-list reveal reveal-delay-2">
+        <li class="scope-item">
+          <div class="scope-check scope-check--yes" aria-label="Incluido">✓</div>
+          <p class="scope-text"><strong>Registro y autenticación</strong> de usuarios con roles: dueño, veterinario y admin.</p>
+        </li>
+        <li class="scope-item">
+          <div class="scope-check scope-check--yes" aria-label="Incluido">✓</div>
+          <p class="scope-text"><strong>CRUD completo</strong> de mascotas y perfiles veterinarios.</p>
+        </li>
+        <li class="scope-item">
+          <div class="scope-check scope-check--yes" aria-label="Incluido">✓</div>
+          <p class="scope-text"><strong>Agendamiento, modificación y cancelación</strong> de citas veterinarias en línea.</p>
+        </li>
+        <li class="scope-item">
+          <div class="scope-check scope-check--yes" aria-label="Incluido">✓</div>
+          <p class="scope-text"><strong>Catálogo de veterinarias y comercios</strong> aliados en El Salvador.</p>
+        </li>
+        <li class="scope-item">
+          <div class="scope-check scope-check--yes" aria-label="Incluido">✓</div>
+          <p class="scope-text"><strong>Historial médico</strong> de mascotas por consulta con diagnóstico y tratamiento.</p>
+        </li>
+        <li class="scope-item">
+          <div class="scope-check scope-check--yes" aria-label="Incluido">✓</div>
+          <p class="scope-text"><strong>Panel administrativo</strong> con estadísticas usando consultas LINQ.</p>
+        </li>
+        <li class="scope-item">
+          <div class="scope-check scope-check--yes" aria-label="Incluido">✓</div>
+          <p class="scope-text"><strong>API REST</strong> con controladores MVC, servicios e interfaces tipadas.</p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="reveal reveal-delay-2">
+      <p class="section-eyebrow">Fuera de alcance</p>
+      <h3 class="section-title" style="font-size:1.8rem;margin-bottom:24px">No incluido en esta versión</h3>
+      <p class="section-sub" style="margin-bottom:32px">Estas funcionalidades quedan fuera de esta iteración para mantener el foco en los conceptos del curso.</p>
+      <ul class="scope-list">
+        <li class="scope-item">
+          <div class="scope-check scope-check--no" aria-label="No incluido">✕</div>
+          <p class="scope-text">Pasarela de pagos en línea</p>
+        </li>
+        <li class="scope-item">
+          <div class="scope-check scope-check--no" aria-label="No incluido">✕</div>
+          <p class="scope-text">Geolocalización GPS en tiempo real</p>
+        </li>
+        <li class="scope-item">
+          <div class="scope-check scope-check--no" aria-label="No incluido">✕</div>
+          <p class="scope-text">Aplicación móvil nativa (solo web)</p>
+        </li>
+        <li class="scope-item">
+          <div class="scope-check scope-check--no" aria-label="No incluido">✕</div>
+          <p class="scope-text">Chat en tiempo real entre usuarios</p>
+        </li>
+        <li class="scope-item">
+          <div class="scope-check scope-check--no" aria-label="No incluido">✕</div>
+          <p class="scope-text">Integración con APIs externas de mapas</p>
+        </li>
+      </ul>
+
+      <!-- project card -->
+      <div style="margin-top:40px;background:var(--navy-900);border-radius:var(--radius-lg);padding:28px 28px 24px;">
+        <p style="font-size:0.68rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--mint);margin-bottom:12px">Proyecto Final</p>
+        <p style="color:var(--white);font-weight:600;font-size:1rem;margin-bottom:6px">VetCare SV</p>
+        <p style="color:rgba(255,255,255,0.45);font-size:0.82rem;line-height:1.6;margin-bottom:16px">Especialización III · Lenguaje de Programación<br>Universidad Mónica Herrera · 2026</p>
+        <p style="font-family:'DM Mono','Courier New',monospace;font-size:0.72rem;color:var(--teal-400)">C# · ASP.NET Core MVC · EF Core · PostgreSQL · LINQ</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA ════════════════════════════════════════════════════ -->
+  <section class="cta-section" id="contacto" aria-labelledby="cta-title">
+    <p class="cta-eyebrow reveal">¿Listo para empezar?</p>
+    <h2 class="cta-title reveal reveal-delay-1" id="cta-title">
+      Cuida a tu mascota<br>
+      con <em>VetCare SV</em>
+    </h2>
+    <p class="cta-sub reveal reveal-delay-2">
+      Un sistema hecho en El Salvador, para El Salvador y sus mascotas. Basado en los conceptos del curso: POO · MVC · LINQ · Entity Framework · DTOs · Try-Catch.
+    </p>
+    <div class="cta-actions reveal reveal-delay-3">
+      <a href="mailto:Kenneth.rodas@monicaherrera.edu.sv" class="btn-primary">Contactar al desarrollador</a>
+      <a href="#modulos" class="btn-ghost">Ver módulos</a>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═════════════════════════════════════════════════ -->
+  <footer class="footer-info" role="contentinfo">
+    <div class="footer-logo">
+      <div class="nav-logo-paw" aria-hidden="true">🐾</div>
+      VetCare <span style="color:var(--mint);margin-left:2px">SV</span>
+    </div>
+    <div class="footer-meta">
+      <p>Desarrollado por <strong style="color:rgba(255,255,255,0.7)">Kenneth Rodas</strong></p>
+      <p><a href="mailto:Kenneth.rodas@monicaherrera.edu.sv">Kenneth.rodas@monicaherrera.edu.sv</a></p>
+      <p style="margin-top:4px">Universidad Mónica Herrera · Especialización III · 2026</p>
+    </div>
+  </footer>
+
+  <!-- ═══ SCRIPTS ════════════════════════════════════════════════ -->
+  <script>
+    // Nav scroll state
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

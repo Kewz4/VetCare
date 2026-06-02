@@ -1,0 +1,54 @@
+@model IEnumerable<VetCareSV.Models.HistorialMedico>
+@{ ViewData["Title"] = "Historial Médico"; var mascota = ViewBag.Mascota as VetCareSV.Models.Mascota; }
+<div class="vc-container" style="padding-top:2rem;">
+    <div class="vc-form-header">
+        <a asp-controller="Mascotas" asp-action="Details" asp-route-id="@mascota?.Id" class="vc-back-link">← @mascota?.Nombre</a>
+    </div>
+    <div class="vc-page-header">
+        <div>
+            <h1>Historial Médico</h1>
+            <p>Registros clínicos de <strong>@mascota?.Nombre</strong></p>
+        </div>
+    </div>
+    @if (!Model.Any())
+    {
+        <div class="vc-empty-state">
+            <span>📋</span>
+            <p>No hay registros médicos aún para @mascota?.Nombre.</p>
+        </div>
+    }
+    else
+    {
+        <div class="vc-timeline">
+            @foreach (var h in Model)
+            {
+                <div class="vc-timeline-item">
+                    <div class="vc-timeline-dot"></div>
+                    <div class="vc-card vc-timeline-card">
+                        <div class="vc-timeline-header">
+                            <span class="vc-timeline-date">@h.FechaRegistro.ToString("dd MMM yyyy")</span>
+                            <span class="vc-timeline-vet">@h.Cita?.Veterinaria?.Nombre</span>
+                        </div>
+                        <div class="vc-detail-grid">
+                            <div class="vc-detail-item">
+                                <span class="vc-detail-label">Diagnóstico</span>
+                                <span class="vc-detail-value">@h.Diagnostico</span>
+                            </div>
+                            <div class="vc-detail-item">
+                                <span class="vc-detail-label">Tratamiento</span>
+                                <span class="vc-detail-value">@h.Tratamiento</span>
+                            </div>
+                            @if (!string.IsNullOrEmpty(h.Observaciones))
+                            {
+                                <div class="vc-detail-item">
+                                    <span class="vc-detail-label">Observaciones</span>
+                                    <span class="vc-detail-value">@h.Observaciones</span>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,77 @@
+@model VetCareSV.Models.Cita
+@{ ViewData["Title"] = "Detalle de Cita"; }
+<div class="vc-container" style="padding-top:2rem;">
+    <div class="vc-form-header">
+        <a asp-action="Index" class="vc-back-link">← Mis Citas</a>
+    </div>
+    <div class="vc-detail-layout">
+        <div class="vc-card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+                <h2 style="margin:0;">Cita #@Model.Id</h2>
+                <span class="vc-badge vc-badge--@Model.Estado.ToLower()">@Model.Estado</span>
+            </div>
+            <div class="vc-detail-grid">
+                <div class="vc-detail-item">
+                    <span class="vc-detail-label">Mascota</span>
+                    <span class="vc-detail-value">@Model.Mascota?.Nombre (@Model.Mascota?.Especie)</span>
+                </div>
+                <div class="vc-detail-item">
+                    <span class="vc-detail-label">Veterinaria</span>
+                    <span class="vc-detail-value">@Model.Veterinaria?.Nombre</span>
+                </div>
+                <div class="vc-detail-item">
+                    <span class="vc-detail-label">Dirección</span>
+                    <span class="vc-detail-value">@Model.Veterinaria?.Direccion</span>
+                </div>
+                <div class="vc-detail-item">
+                    <span class="vc-detail-label">Teléfono</span>
+                    <span class="vc-detail-value">@(Model.Veterinaria?.Telefono ?? "—")</span>
+                </div>
+                <div class="vc-detail-item">
+                    <span class="vc-detail-label">Fecha y hora</span>
+                    <span class="vc-detail-value">@Model.Fecha.ToString("dddd, dd MMMM yyyy · HH:mm")</span>
+                </div>
+                <div class="vc-detail-item">
+                    <span class="vc-detail-label">Motivo</span>
+                    <span class="vc-detail-value">@(Model.Motivo ?? "No especificado")</span>
+                </div>
+            </div>
+            @if (Model.Estado == "Pendiente" || Model.Estado == "Confirmada")
+            {
+                <div style="margin-top:1.5rem;">
+                    <form asp-action="Cancelar" asp-route-id="@Model.Id" method="post">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="vc-btn-danger" onclick="return confirm('¿Cancelar esta cita?')">Cancelar cita</button>
+                    </form>
+                </div>
+            }
+        </div>
+        @if (Model.HistorialMedico != null)
+        {
+            <div class="vc-card">
+                <h3 style="color:var(--mint);margin-bottom:1rem;">📋 Historial Médico</h3>
+                <div class="vc-detail-grid">
+                    <div class="vc-detail-item">
+                        <span class="vc-detail-label">Diagnóstico</span>
+                        <span class="vc-detail-value">@Model.HistorialMedico.Diagnostico</span>
+                    </div>
+                    <div class="vc-detail-item">
+                        <span class="vc-detail-label">Tratamiento</span>
+                        <span class="vc-detail-value">@Model.HistorialMedico.Tratamiento</span>
+                    </div>
+                    @if (!string.IsNullOrEmpty(Model.HistorialMedico.Observaciones))
+                    {
+                        <div class="vc-detail-item">
+                            <span class="vc-detail-label">Observaciones</span>
+                            <span class="vc-detail-value">@Model.HistorialMedico.Observaciones</span>
+                        </div>
+                    }
+                    <div class="vc-detail-item">
+                        <span class="vc-detail-label">Registrado</span>
+                        <span class="vc-detail-value">@Model.HistorialMedico.FechaRegistro.ToString("dd/MM/yyyy HH:mm")</span>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

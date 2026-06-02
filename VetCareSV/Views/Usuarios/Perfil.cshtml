@@ -1,0 +1,59 @@
+@model VetCareSV.Models.Usuario
+@{ ViewData["Title"] = "Mi Perfil"; }
+<div class="vc-container" style="padding-top:2rem;">
+    <div class="vc-page-header">
+        <h1>Mi Perfil</h1>
+        <p>Información de tu cuenta VetCare SV</p>
+    </div>
+    <div class="vc-profile-grid">
+        <div class="vc-card vc-profile-card">
+            <div class="vc-profile-avatar">👤</div>
+            <h2 class="vc-profile-name">@Model.Nombre</h2>
+            <span class="vc-badge vc-badge--@(Model.Rol == "Admin" ? "admin" : Model.Rol == "Veterinario" ? "vet" : "user")">@Model.Rol</span>
+            <div class="vc-profile-info">
+                <div class="vc-info-row">
+                    <span class="vc-info-label">Email</span>
+                    <span class="vc-info-value">@Model.Email</span>
+                </div>
+                <div class="vc-info-row">
+                    <span class="vc-info-label">Miembro desde</span>
+                    <span class="vc-info-value">@Model.FechaRegistro.ToString("dd MMM yyyy")</span>
+                </div>
+                <div class="vc-info-row">
+                    <span class="vc-info-label">Mascotas registradas</span>
+                    <span class="vc-info-value">@Model.Mascotas.Count</span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h3 class="vc-section-subtitle">Mis Mascotas</h3>
+            @if (!Model.Mascotas.Any())
+            {
+                <div class="vc-empty-state">
+                    <span>🐾</span>
+                    <p>Aún no tienes mascotas registradas.</p>
+                    <a asp-controller="Mascotas" asp-action="Create" class="vc-btn-primary">Registrar mascota</a>
+                </div>
+            }
+            else
+            {
+                <div class="vc-pets-mini-grid">
+                    @foreach (var m in Model.Mascotas)
+                    {
+                        <div class="vc-pet-mini-card">
+                            <span class="vc-pet-mini-icon">@(m.Especie == "Perro" ? "🐕" : m.Especie == "Gato" ? "🐈" : "🦜")</span>
+                            <div>
+                                <strong>@m.Nombre</strong>
+                                <small>@m.Especie @(!string.IsNullOrEmpty(m.Raza) ? "· " + m.Raza : "")</small>
+                            </div>
+                            <a asp-controller="Mascotas" asp-action="Details" asp-route-id="@m.Id" class="vc-btn-ghost-sm">Ver</a>
+                        </div>
+                    }
+                </div>
+                <div style="margin-top:1rem;">
+                    <a asp-controller="Mascotas" asp-action="Index" class="vc-btn-ghost">Ver todas mis mascotas</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

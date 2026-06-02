@@ -1,0 +1,42 @@
+@model IEnumerable<VetCareSV.Models.Mascota>
+@{ ViewData["Title"] = "Mis Mascotas"; }
+<div class="vc-container" style="padding-top:2rem;">
+    <div class="vc-page-header">
+        <div>
+            <h1>Mis Mascotas</h1>
+            <p>Gestiona el perfil de tus compañeros</p>
+        </div>
+        <a asp-action="Create" class="vc-btn-primary">+ Registrar Mascota</a>
+    </div>
+    @if (!Model.Any())
+    {
+        <div class="vc-empty-state">
+            <span>🐾</span>
+            <p>Aún no tienes mascotas registradas.</p>
+            <a asp-action="Create" class="vc-btn-primary">Registrar primera mascota</a>
+        </div>
+    }
+    else
+    {
+        <div class="vc-pets-grid">
+            @foreach (var m in Model)
+            {
+                <div class="vc-pet-card">
+                    <div class="vc-pet-icon">@(m.Especie == "Perro" ? "🐕" : m.Especie == "Gato" ? "🐈" : "🦜")</div>
+                    <div class="vc-pet-info">
+                        <h3>@m.Nombre</h3>
+                        <span class="vc-pet-species">@m.Especie</span>
+                        @if (!string.IsNullOrEmpty(m.Raza)) { <p class="vc-pet-detail">Raza: @m.Raza</p> }
+                        @if (m.Edad.HasValue) { <p class="vc-pet-detail">Edad: @m.Edad años</p> }
+                        @if (!string.IsNullOrEmpty(m.Color)) { <p class="vc-pet-detail">Color: @m.Color</p> }
+                    </div>
+                    <div class="vc-pet-actions">
+                        <a asp-action="Details" asp-route-id="@m.Id" class="vc-btn-ghost-sm">Ver</a>
+                        <a asp-action="Edit" asp-route-id="@m.Id" class="vc-btn-ghost-sm">Editar</a>
+                        <a asp-action="Delete" asp-route-id="@m.Id" class="vc-btn-danger-sm">Eliminar</a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

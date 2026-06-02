@@ -1,0 +1,39 @@
+@model VetCareSV.DTOs.CrearHistorialDTO
+@{ ViewData["Title"] = "Registrar Historial"; var cita = ViewBag.Cita as VetCareSV.Models.Cita; }
+<div class="vc-container vc-form-page">
+    <div class="vc-form-header">
+        <a asp-controller="Admin" asp-action="Index" class="vc-back-link">← Panel Admin</a>
+        <h1>Registrar Historial Médico</h1>
+    </div>
+    @if (cita != null)
+    {
+        <div class="vc-card" style="margin-bottom:1.5rem;padding:1rem 1.5rem;">
+            <p style="margin:0;color:var(--navy-200);">Cita #@cita.Id · <strong>@cita.Mascota?.Nombre</strong> · @cita.Fecha.ToString("dd/MM/yyyy HH:mm") · @cita.Veterinaria?.Nombre</p>
+        </div>
+    }
+    <div class="vc-form-card">
+        <form asp-action="Create" method="post" class="vc-form">
+            @Html.AntiForgeryToken()
+            <input type="hidden" asp-for="CitaId" />
+            <div asp-validation-summary="ModelOnly" class="vc-validation-errors"></div>
+            <div class="vc-field">
+                <label asp-for="Diagnostico">Diagnóstico *</label>
+                <textarea asp-for="Diagnostico" rows="3" placeholder="Describe el diagnóstico..."></textarea>
+                <span asp-validation-for="Diagnostico" class="vc-field-error"></span>
+            </div>
+            <div class="vc-field">
+                <label asp-for="Tratamiento">Tratamiento *</label>
+                <textarea asp-for="Tratamiento" rows="3" placeholder="Describe el tratamiento indicado..."></textarea>
+                <span asp-validation-for="Tratamiento" class="vc-field-error"></span>
+            </div>
+            <div class="vc-field">
+                <label asp-for="Observaciones">Observaciones</label>
+                <textarea asp-for="Observaciones" rows="2" placeholder="Notas adicionales..."></textarea>
+            </div>
+            <div class="vc-form-actions">
+                <a asp-controller="Admin" asp-action="Index" class="vc-btn-ghost">Cancelar</a>
+                <button type="submit" class="vc-btn-primary">Registrar Historial</button>
+            </div>
+        </form>
+    </div>
+</div>

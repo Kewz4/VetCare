@@ -1,0 +1,46 @@
+@model VetCareSV.Models.Veterinaria
+@{ ViewData["Title"] = Model.Nombre; }
+<div class="vc-container" style="padding-top:2rem;">
+    <div class="vc-form-header">
+        <a asp-action="Index" class="vc-back-link">← Veterinarias</a>
+    </div>
+    <div class="vc-card" style="max-width:700px;">
+        <div style="display:flex;gap:1rem;align-items:flex-start;margin-bottom:1.5rem;">
+            <div style="font-size:3rem;">🏥</div>
+            <div>
+                <h1 style="margin:0 0 0.25rem;">@Model.Nombre</h1>
+                <span class="vc-badge vc-badge--teal">@Model.Departamento</span>
+            </div>
+        </div>
+        <div class="vc-detail-grid">
+            <div class="vc-detail-item">
+                <span class="vc-detail-label">Dirección</span>
+                <span class="vc-detail-value">@Model.Direccion</span>
+            </div>
+            @if (!string.IsNullOrEmpty(Model.Telefono))
+            {
+                <div class="vc-detail-item">
+                    <span class="vc-detail-label">Teléfono</span>
+                    <span class="vc-detail-value">@Model.Telefono</span>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Email))
+            {
+                <div class="vc-detail-item">
+                    <span class="vc-detail-label">Email</span>
+                    <span class="vc-detail-value">@Model.Email</span>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(Model.Horario))
+            {
+                <div class="vc-detail-item">
+                    <span class="vc-detail-label">Horario</span>
+                    <span class="vc-detail-value">@Model.Horario</span>
+                </div>
+            }
+        </div>
+        <div style="margin-top:2rem;">
+            <a asp-controller="Citas" asp-action="Create" class="vc-btn-primary">Agendar Cita aquí</a>
+        </div>
+    </div>
+</div>

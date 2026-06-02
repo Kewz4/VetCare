@@ -1,0 +1,67 @@
+@{ ViewData["Title"] = "Inicio"; }
+<section class="vc-hero">
+    <div class="vc-hero-content">
+        <div class="vc-eyebrow"><span class="vc-dot"></span> Hecho para El Salvador</div>
+        <h1 class="vc-hero-title">Tu mascota merece<br><em>la mejor atención</em></h1>
+        <p class="vc-hero-sub">Agenda citas veterinarias, gestiona el historial médico de tus mascotas y encuentra veterinarias y comercios aliados — todo en un solo lugar.</p>
+        <div class="vc-hero-actions">
+            @if (Context.Session.GetInt32("UsuarioId") != null)
+            {
+                <a asp-controller="Citas" asp-action="Create" class="vc-btn-primary">Agendar Cita</a>
+                <a asp-controller="Mascotas" asp-action="Index" class="vc-btn-ghost">Mis Mascotas</a>
+            }
+            else
+            {
+                <a asp-controller="Usuarios" asp-action="Registro" class="vc-btn-primary">Comenzar gratis</a>
+                <a asp-controller="Veterinarias" asp-action="Index" class="vc-btn-ghost">Ver Veterinarias</a>
+            }
+        </div>
+    </div>
+    <div class="vc-hero-stats">
+        <div class="vc-stat-card">
+            <span class="vc-stat-num">@ViewBag.TotalMascotas</span>
+            <span class="vc-stat-label">Mascotas registradas</span>
+        </div>
+        <div class="vc-stat-card vc-stat-card--accent">
+            <span class="vc-stat-num">@ViewBag.TotalVeterinarias</span>
+            <span class="vc-stat-label">Veterinarias aliadas</span>
+        </div>
+        <div class="vc-stat-card">
+            <span class="vc-stat-num">@ViewBag.TotalCitas</span>
+            <span class="vc-stat-label">Citas agendadas</span>
+        </div>
+        <div class="vc-stat-card">
+            <span class="vc-stat-num">@ViewBag.TotalComercios</span>
+            <span class="vc-stat-label">Comercios aliados</span>
+        </div>
+    </div>
+</section>
+
+<section class="vc-features">
+    <div class="vc-container">
+        <p class="vc-section-eyebrow">¿Cómo funciona?</p>
+        <h2 class="vc-section-title">Todo lo que necesitas<br>para cuidar a tu mascota</h2>
+        <div class="vc-features-grid">
+            <div class="vc-feature-card">
+                <div class="vc-feature-icon">📅</div>
+                <h3>Agenda citas en línea</h3>
+                <p>Sin llamadas ni esperas. Agenda, modifica o cancela cuando quieras desde cualquier dispositivo.</p>
+            </div>
+            <div class="vc-feature-card">
+                <div class="vc-feature-icon">📋</div>
+                <h3>Historial médico digital</h3>
+                <p>Diagnósticos, tratamientos y vacunas de cada mascota siempre disponibles y organizados.</p>
+            </div>
+            <div class="vc-feature-card">
+                <div class="vc-feature-icon">🏪</div>
+                <h3>Comercios aliados</h3>
+                <p>Directorio de veterinarias, tiendas y farmacias veterinarias de todo El Salvador.</p>
+            </div>
+            <div class="vc-feature-card">
+                <div class="vc-feature-icon">🐾</div>
+                <h3>Gestión de mascotas</h3>
+                <p>Registra todos tus perros, gatos y aves con su información completa en un solo perfil.</p>
+            </div>
+        </div>
+    </div>
+</section>

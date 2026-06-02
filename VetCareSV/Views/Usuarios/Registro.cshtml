@@ -1,0 +1,35 @@
+@model VetCareSV.DTOs.CrearUsuarioDTO
+@{ ViewData["Title"] = "Crear Cuenta"; }
+<div class="vc-auth-page">
+    <div class="vc-auth-card">
+        <div class="vc-auth-logo">🐾</div>
+        <h1 class="vc-auth-title">Crea tu cuenta</h1>
+        <p class="vc-auth-sub">Únete a VetCare SV — es gratis</p>
+        <form asp-action="Registro" method="post" class="vc-form">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="All" class="vc-validation-errors"></div>
+            <div class="vc-field">
+                <label asp-for="Nombre">Nombre completo</label>
+                <input asp-for="Nombre" placeholder="Tu nombre" />
+                <span asp-validation-for="Nombre" class="vc-field-error"></span>
+            </div>
+            <div class="vc-field">
+                <label asp-for="Email">Correo electrónico</label>
+                <input asp-for="Email" type="email" placeholder="correo@ejemplo.com" />
+                <span asp-validation-for="Email" class="vc-field-error"></span>
+            </div>
+            <div class="vc-field">
+                <label asp-for="Password">Contraseña</label>
+                <input asp-for="Password" type="password" placeholder="Mínimo 6 caracteres" />
+                <span asp-validation-for="Password" class="vc-field-error"></span>
+            </div>
+            <div class="vc-field">
+                <label asp-for="ConfirmarPassword">Confirmar contraseña</label>
+                <input asp-for="ConfirmarPassword" type="password" placeholder="Repite tu contraseña" />
+                <span asp-validation-for="ConfirmarPassword" class="vc-field-error"></span>
+            </div>
+            <button type="submit" class="vc-btn-primary vc-btn-full">Crear cuenta</button>
+        </form>
+        <p class="vc-auth-switch">¿Ya tienes cuenta? <a asp-action="Login">Inicia sesión</a></p>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+@model IEnumerable<VetCareSV.Models.Veterinaria>
+@{ ViewData["Title"] = "Veterinarias"; }
+<div class="vc-container" style="padding-top:2rem;">
+    <div class="vc-page-header">
+        <div>
+            <h1>Veterinarias</h1>
+            <p>Encuentra clínicas veterinarias en todo El Salvador</p>
+        </div>
+    </div>
+    <form method="get" class="vc-search-bar">
+        <div class="vc-field" style="flex:1;">
+            <input type="text" name="termino" value="@ViewBag.Termino" placeholder="Buscar por nombre o dirección..." />
+        </div>
+        <div class="vc-field">
+            <select name="departamento">
+                <option value="">Todos los departamentos</option>
+                @foreach (var d in new[] { "San Salvador", "Santa Ana", "La Libertad", "San Miguel", "Sonsonate", "Ahuachapán", "La Paz", "Usulután" })
+                {
+                    <option value="@d" selected="@(ViewBag.Departamento == d ? "selected" : null)">@d</option>
+                }
+            </select>
+        </div>
+        <button type="submit" class="vc-btn-primary">Buscar</button>
+        @if (!string.IsNullOrEmpty(ViewBag.Termino as string) || !string.IsNullOrEmpty(ViewBag.Departamento as string))
+        {
+            <a asp-action="Index" class="vc-btn-ghost">Limpiar</a>
+        }
+    </form>
+    @if (!Model.Any())
+    {
+        <div class="vc-empty-state">
+            <span>🏥</span>
+            <p>No se encontraron veterinarias con esos criterios.</p>
+            <a asp-action="Index" class="vc-btn-ghost">Ver todas</a>
+        </div>
+    }
+    else
+    {
+        <div class="vc-cards-grid">
+            @foreach (var v in Model)
+            {
+                <div class="vc-card vc-vet-card">
+                    <div class="vc-card-icon">🏥</div>
+                    <div class="vc-card-body">
+                        <h3>@v.Nombre</h3>
+                        <p class="vc-card-meta">📍 @v.Departamento</p>
+                        <p class="vc-card-text">@v.Direccion</p>
+                        @if (!string.IsNullOrEmpty(v.Telefono))
+                        { <p class="vc-card-text">📞 @v.Telefono</p> }
+                        @if (!string.IsNullOrEmpty(v.Horario))
+                        { <p class="vc-card-text">🕐 @v.Horario</p> }
+                    </div>
+                    <a asp-action="Details" asp-route-id="@v.Id" class="vc-btn-ghost-sm">Ver detalle</a>
+                </div>
+            }
+        </div>
+    }
+</div>

@@ -1,0 +1,566 @@
+/* =========================================================
+   VetCare SV — Design System
+   ========================================================= */
+
+:root {
+  --navy-900: #0d2d3a;
+  --navy-800: #112f3d;
+  --navy-700: #163545;
+  --navy-600: #1b3d4e;
+  --navy-400: #2e5666;
+  --navy-300: #4a7a8a;
+  --navy-200: #7aaabb;
+  --navy-100: #b0d0da;
+  --teal-600: #1a8f88;
+  --teal-500: #20a89f;
+  --mint: #3ecfb2;
+  --mint-light: #7ee6d0;
+  --gold: #f5c842;
+  --red: #e05252;
+  --green: #3ecf7e;
+  --white: #f4f9fb;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --shadow: 0 4px 24px rgba(0,0,0,0.25);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.18);
+  --transition: 0.2s ease;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--navy-900);
+  color: var(--white);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+h1, h2, h3 { font-family: 'DM Serif Display', serif; line-height: 1.2; }
+em { font-style: italic; color: var(--mint); }
+
+a { color: var(--mint); text-decoration: none; transition: opacity var(--transition); }
+a:hover { opacity: 0.8; }
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+.vc-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1rem 2rem;
+  background: transparent;
+  transition: background var(--transition), box-shadow var(--transition);
+}
+.vc-nav.scrolled {
+  background: rgba(13,45,58,0.97);
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+  backdrop-filter: blur(10px);
+}
+.vc-nav-logo {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.4rem; font-weight: 400;
+  color: var(--white); display: flex; align-items: center; gap: 0.5rem;
+}
+.vc-nav-paw { font-size: 1.2rem; }
+.vc-accent { color: var(--mint); }
+.vc-nav-links {
+  display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+}
+.vc-nav-links > a {
+  color: var(--navy-100); font-size: 0.9rem; font-weight: 500;
+  padding: 0.4rem 0.75rem; border-radius: var(--radius-sm);
+  transition: color var(--transition), background var(--transition);
+}
+.vc-nav-links > a:hover { color: var(--mint); background: rgba(62,207,178,0.08); opacity: 1; }
+
+.vc-badge-admin {
+  background: var(--gold) !important; color: var(--navy-900) !important;
+  font-weight: 700 !important; border-radius: 20px !important; padding: 0.3rem 0.8rem !important;
+}
+
+/* User menu dropdown */
+.vc-user-menu { position: relative; }
+.vc-user-name {
+  cursor: pointer; padding: 0.4rem 0.75rem; border-radius: var(--radius-sm);
+  color: var(--navy-100); font-size: 0.9rem;
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.vc-user-dropdown {
+  display: none; position: absolute; right: 0; top: 110%;
+  background: var(--navy-700); border: 1px solid rgba(62,207,178,0.2);
+  border-radius: var(--radius-sm); min-width: 160px;
+  box-shadow: var(--shadow); overflow: hidden;
+}
+.vc-user-menu:hover .vc-user-dropdown { display: block; }
+.vc-user-dropdown a, .vc-user-dropdown button {
+  display: block; width: 100%; padding: 0.75rem 1rem;
+  color: var(--navy-100); font-size: 0.875rem; text-align: left;
+  background: none; border: none; cursor: pointer; font-family: inherit;
+  transition: background var(--transition);
+}
+.vc-user-dropdown a:hover, .vc-user-dropdown button:hover {
+  background: rgba(62,207,178,0.1); color: var(--mint); opacity: 1;
+}
+
+/* =========================================================
+   MAIN / LAYOUT
+   ========================================================= */
+.vc-main { flex: 1; padding-top: 70px; }
+.vc-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
+.vc-alert {
+  padding: 1rem 1.5rem; margin: 1rem auto; max-width: 1200px;
+  border-radius: var(--radius-sm); font-weight: 500; font-size: 0.95rem;
+}
+.vc-alert--success { background: rgba(62,207,126,0.15); border: 1px solid var(--green); color: var(--green); }
+.vc-alert--error   { background: rgba(224,82,82,0.15);  border: 1px solid var(--red);   color: var(--red); }
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.vc-hero {
+  min-height: 90vh; display: flex; flex-direction: column; justify-content: center;
+  padding: 6rem 2rem 4rem;
+  background: radial-gradient(ellipse at 60% 40%, rgba(26,143,136,0.18) 0%, transparent 65%),
+              linear-gradient(160deg, var(--navy-900) 0%, #0a2330 100%);
+}
+.vc-eyebrow {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.85rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--mint); margin-bottom: 1.25rem;
+}
+.vc-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--mint);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+.vc-hero-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: var(--white); margin-bottom: 1.25rem; max-width: 700px;
+}
+.vc-hero-sub {
+  font-size: 1.1rem; color: var(--navy-200); max-width: 560px;
+  line-height: 1.7; margin-bottom: 2.5rem;
+}
+.vc-hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 4rem; }
+.vc-hero-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem; max-width: 700px;
+}
+
+/* Stat Cards */
+.vc-stat-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(62,207,178,0.12);
+  border-radius: var(--radius); padding: 1.25rem 1.5rem;
+  display: flex; flex-direction: column; gap: 0.25rem;
+}
+.vc-stat-card--accent { background: rgba(26,143,136,0.15); border-color: rgba(62,207,178,0.3); }
+.vc-stat-num { font-family: 'DM Serif Display', serif; font-size: 2.25rem; color: var(--mint); }
+.vc-stat-label { font-size: 0.8rem; color: var(--navy-200); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+.vc-btn-primary, .vc-btn-ghost, .vc-btn-danger,
+.vc-btn-primary-sm, .vc-btn-ghost-sm, .vc-btn-danger-sm {
+  display: inline-flex; align-items: center; justify-content: center;
+  border: none; cursor: pointer; font-family: inherit; font-weight: 600;
+  border-radius: var(--radius-sm); transition: all var(--transition); text-decoration: none;
+}
+.vc-btn-primary {
+  background: var(--mint); color: var(--navy-900);
+  padding: 0.75rem 1.75rem; font-size: 1rem;
+}
+.vc-btn-primary:hover { background: var(--mint-light); opacity: 1; transform: translateY(-1px); }
+
+.vc-btn-ghost {
+  background: transparent; color: var(--mint); border: 1.5px solid var(--mint);
+  padding: 0.75rem 1.75rem; font-size: 1rem;
+}
+.vc-btn-ghost:hover { background: rgba(62,207,178,0.1); opacity: 1; }
+
+.vc-btn-danger {
+  background: var(--red); color: var(--white);
+  padding: 0.75rem 1.75rem; font-size: 1rem;
+}
+.vc-btn-danger:hover { background: #c94444; opacity: 1; }
+
+.vc-btn-primary-sm {
+  background: var(--mint); color: var(--navy-900);
+  padding: 0.4rem 1rem; font-size: 0.85rem; border-radius: 20px;
+}
+.vc-btn-primary-sm:hover { background: var(--mint-light); opacity: 1; }
+
+.vc-btn-ghost-sm {
+  background: transparent; color: var(--mint); border: 1px solid var(--mint);
+  padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 20px;
+}
+.vc-btn-ghost-sm:hover { background: rgba(62,207,178,0.1); opacity: 1; }
+
+.vc-btn-danger-sm {
+  background: transparent; color: var(--red); border: 1px solid var(--red);
+  padding: 0.35rem 0.85rem; font-size: 0.82rem; border-radius: 20px;
+}
+.vc-btn-danger-sm:hover { background: rgba(224,82,82,0.1); opacity: 1; }
+
+.vc-btn-full { width: 100%; }
+
+/* =========================================================
+   FEATURES SECTION
+   ========================================================= */
+.vc-features {
+  background: linear-gradient(180deg, #0a2330 0%, var(--navy-900) 100%);
+  padding: 5rem 0;
+}
+.vc-section-eyebrow {
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--mint); font-weight: 600; margin-bottom: 0.75rem;
+}
+.vc-section-title {
+  font-size: clamp(2rem, 4vw, 3rem); color: var(--white); margin-bottom: 3rem;
+}
+.vc-features-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;
+}
+.vc-feature-card {
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(62,207,178,0.1);
+  border-radius: var(--radius); padding: 2rem 1.5rem;
+  transition: transform var(--transition), border-color var(--transition);
+}
+.vc-feature-card:hover { transform: translateY(-4px); border-color: rgba(62,207,178,0.3); }
+.vc-feature-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.vc-feature-card h3 { font-size: 1.1rem; color: var(--white); margin-bottom: 0.5rem; }
+.vc-feature-card p { color: var(--navy-200); font-size: 0.92rem; line-height: 1.6; }
+
+/* =========================================================
+   AUTH PAGES
+   ========================================================= */
+.vc-auth-page {
+  min-height: calc(100vh - 70px); display: flex;
+  align-items: center; justify-content: center; padding: 2rem;
+}
+.vc-auth-card {
+  background: var(--navy-800); border: 1px solid rgba(62,207,178,0.15);
+  border-radius: var(--radius); padding: 2.5rem; width: 100%; max-width: 440px;
+  box-shadow: var(--shadow);
+}
+.vc-auth-logo { font-size: 3rem; text-align: center; margin-bottom: 1rem; }
+.vc-auth-title {
+  font-family: 'DM Serif Display', serif; font-size: 1.75rem;
+  text-align: center; color: var(--white); margin-bottom: 0.35rem;
+}
+.vc-auth-sub { color: var(--navy-200); text-align: center; font-size: 0.9rem; margin-bottom: 2rem; }
+.vc-auth-switch { text-align: center; margin-top: 1.5rem; color: var(--navy-200); font-size: 0.9rem; }
+.vc-auth-switch a { color: var(--mint); font-weight: 500; }
+
+/* =========================================================
+   FORMS
+   ========================================================= */
+.vc-form { display: flex; flex-direction: column; gap: 1.25rem; }
+.vc-form-card {
+  background: var(--navy-800); border: 1px solid rgba(62,207,178,0.12);
+  border-radius: var(--radius); padding: 2rem; max-width: 760px;
+}
+.vc-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.vc-form-page { padding-top: 2rem; }
+.vc-form-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.vc-form-header h1 { font-size: 1.75rem; color: var(--white); }
+.vc-form-actions { display: flex; gap: 1rem; margin-top: 0.5rem; flex-wrap: wrap; }
+.vc-back-link { color: var(--navy-200); font-size: 0.9rem; }
+.vc-back-link:hover { color: var(--mint); opacity: 1; }
+
+.vc-field { display: flex; flex-direction: column; gap: 0.4rem; }
+.vc-field label { font-size: 0.875rem; color: var(--navy-100); font-weight: 500; }
+.vc-field input, .vc-field select, .vc-field textarea {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(62,207,178,0.2);
+  border-radius: var(--radius-sm); padding: 0.7rem 1rem;
+  color: var(--white); font-family: inherit; font-size: 0.95rem;
+  transition: border-color var(--transition), background var(--transition);
+  width: 100%;
+}
+.vc-field input:focus, .vc-field select:focus, .vc-field textarea:focus {
+  outline: none; border-color: var(--mint); background: rgba(62,207,178,0.06);
+}
+.vc-field select option { background: var(--navy-700); color: var(--white); }
+.vc-field textarea { resize: vertical; }
+.vc-field-error { color: var(--red); font-size: 0.8rem; }
+.vc-validation-errors {
+  background: rgba(224,82,82,0.1); border: 1px solid var(--red);
+  border-radius: var(--radius-sm); padding: 0.75rem 1rem; color: var(--red); font-size: 0.875rem;
+}
+.vc-validation-errors ul { padding-left: 1.25rem; }
+.vc-select-sm {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(62,207,178,0.2);
+  border-radius: var(--radius-sm); padding: 0.3rem 0.5rem;
+  color: var(--white); font-family: inherit; font-size: 0.8rem;
+}
+
+/* =========================================================
+   CARDS (general)
+   ========================================================= */
+.vc-card {
+  background: var(--navy-800); border: 1px solid rgba(62,207,178,0.12);
+  border-radius: var(--radius); padding: 1.5rem;
+}
+.vc-cards-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+.vc-card-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.vc-card-body { flex: 1; }
+.vc-card-meta { color: var(--mint); font-size: 0.85rem; margin: 0.25rem 0; }
+.vc-card-text { color: var(--navy-200); font-size: 0.88rem; margin: 0.2rem 0; }
+.vc-card-desc { color: var(--navy-300); font-size: 0.85rem; margin-top: 0.5rem; font-style: italic; }
+.vc-vet-card, .vc-comercio-card {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  transition: transform var(--transition), border-color var(--transition);
+}
+.vc-vet-card:hover, .vc-comercio-card:hover {
+  transform: translateY(-3px); border-color: rgba(62,207,178,0.3);
+}
+.vc-vet-card h3, .vc-comercio-card h3 { color: var(--white); font-size: 1rem; margin: 0.25rem 0; }
+
+/* =========================================================
+   PET CARDS
+   ========================================================= */
+.vc-pets-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+.vc-pet-card {
+  background: var(--navy-800); border: 1px solid rgba(62,207,178,0.12);
+  border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem;
+  transition: transform var(--transition), border-color var(--transition);
+}
+.vc-pet-card:hover { transform: translateY(-3px); border-color: rgba(62,207,178,0.3); }
+.vc-pet-icon { font-size: 2.5rem; }
+.vc-pet-info h3 { color: var(--white); font-size: 1.1rem; margin-bottom: 0.2rem; }
+.vc-pet-species {
+  font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--mint); font-weight: 600;
+}
+.vc-pet-detail { color: var(--navy-200); font-size: 0.875rem; margin-top: 0.15rem; }
+.vc-pet-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: auto; }
+
+.vc-pet-icon-large { font-size: 5rem; text-align: center; margin-bottom: 1rem; }
+.vc-pet-detail-card { text-align: center; }
+.vc-pet-detail-card h2 { font-size: 1.75rem; color: var(--white); margin-bottom: 0.75rem; }
+
+/* Mini pet list */
+.vc-pets-mini-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+.vc-pet-mini-card {
+  display: flex; align-items: center; gap: 0.75rem;
+  background: rgba(255,255,255,0.04); border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+}
+.vc-pet-mini-icon { font-size: 1.75rem; }
+.vc-pet-mini-card > div { flex: 1; }
+.vc-pet-mini-card strong { display: block; color: var(--white); font-size: 0.95rem; }
+.vc-pet-mini-card small { color: var(--navy-200); font-size: 0.8rem; }
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+.vc-page-header {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  margin-bottom: 1.75rem; flex-wrap: wrap; gap: 1rem;
+}
+.vc-page-header h1 { font-size: 2rem; color: var(--white); margin-bottom: 0.25rem; }
+.vc-page-header p { color: var(--navy-200); font-size: 0.95rem; }
+.vc-section-subtitle { color: var(--mint); font-family: 'DM Sans', sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 1rem; }
+.vc-header-actions { display: flex; gap: 0.5rem; }
+
+/* =========================================================
+   SEARCH BAR
+   ========================================================= */
+.vc-search-bar {
+  display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: flex-end;
+  background: var(--navy-800); border: 1px solid rgba(62,207,178,0.12);
+  border-radius: var(--radius); padding: 1.25rem; margin-bottom: 1.5rem;
+}
+.vc-search-bar .vc-field { min-width: 180px; }
+
+/* =========================================================
+   CATEGORY CHIPS
+   ========================================================= */
+.vc-categoria-chips { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.vc-chip {
+  padding: 0.4rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 500;
+  background: rgba(255,255,255,0.06); color: var(--navy-100); border: 1px solid transparent;
+  cursor: pointer; transition: all var(--transition);
+}
+.vc-chip:hover { border-color: var(--mint); color: var(--mint); opacity: 1; }
+.vc-chip--active { background: var(--mint); color: var(--navy-900); border-color: var(--mint); }
+.vc-chip--sm { padding: 0.2rem 0.6rem; font-size: 0.75rem; margin-bottom: 0.5rem; display: inline-block; }
+
+/* =========================================================
+   BADGES
+   ========================================================= */
+.vc-badge {
+  display: inline-block; padding: 0.2rem 0.7rem; border-radius: 20px;
+  font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+}
+.vc-badge--pendiente  { background: rgba(245,200,66,0.2);  color: var(--gold);  border: 1px solid rgba(245,200,66,0.4); }
+.vc-badge--confirmada { background: rgba(26,143,136,0.2);  color: var(--mint);  border: 1px solid rgba(62,207,178,0.4); }
+.vc-badge--completada { background: rgba(62,207,126,0.2);  color: var(--green); border: 1px solid rgba(62,207,126,0.4); }
+.vc-badge--cancelada  { background: rgba(224,82,82,0.2);   color: var(--red);   border: 1px solid rgba(224,82,82,0.4); }
+.vc-badge--teal       { background: rgba(26,143,136,0.2);  color: var(--mint);  border: 1px solid rgba(62,207,178,0.3); }
+.vc-badge--admin      { background: rgba(245,200,66,0.2);  color: var(--gold);  border: 1px solid rgba(245,200,66,0.4); }
+.vc-badge--vet        { background: rgba(62,207,178,0.15); color: var(--mint);  border: 1px solid rgba(62,207,178,0.3); }
+.vc-badge--user       { background: rgba(255,255,255,0.08); color: var(--navy-100); border: 1px solid rgba(255,255,255,0.15); }
+.vc-badge--dueno      { background: rgba(255,255,255,0.08); color: var(--navy-100); border: 1px solid rgba(255,255,255,0.15); }
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+.vc-table-wrapper {
+  overflow-x: auto; border-radius: var(--radius);
+  border: 1px solid rgba(62,207,178,0.12);
+}
+.vc-table {
+  width: 100%; border-collapse: collapse; font-size: 0.9rem;
+}
+.vc-table thead tr {
+  background: rgba(62,207,178,0.08);
+}
+.vc-table th {
+  padding: 0.85rem 1rem; text-align: left; font-size: 0.78rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.08em; color: var(--mint);
+}
+.vc-table td {
+  padding: 0.85rem 1rem; border-top: 1px solid rgba(255,255,255,0.05);
+  color: var(--navy-100); vertical-align: middle;
+}
+.vc-table tbody tr:hover { background: rgba(62,207,178,0.04); }
+.vc-table-actions { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
+
+/* =========================================================
+   DETAIL LAYOUT
+   ========================================================= */
+.vc-detail-layout {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start;
+}
+.vc-detail-grid { display: grid; gap: 0.85rem; }
+.vc-detail-item { display: flex; flex-direction: column; gap: 0.2rem; }
+.vc-detail-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--navy-300); font-weight: 600; }
+.vc-detail-value { color: var(--white); font-size: 0.95rem; }
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+.vc-profile-grid { display: grid; grid-template-columns: 320px 1fr; gap: 2rem; align-items: start; }
+.vc-profile-card { text-align: center; }
+.vc-profile-avatar { font-size: 4rem; margin-bottom: 1rem; }
+.vc-profile-name { font-size: 1.5rem; color: var(--white); margin-bottom: 0.5rem; }
+.vc-profile-info { margin-top: 1.5rem; text-align: left; display: flex; flex-direction: column; gap: 0.75rem; }
+.vc-info-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.vc-info-label { font-size: 0.8rem; color: var(--navy-300); text-transform: uppercase; letter-spacing: 0.05em; }
+.vc-info-value { color: var(--white); font-size: 0.9rem; }
+
+/* =========================================================
+   CITA LIST (in pet detail)
+   ========================================================= */
+.vc-citas-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.vc-cita-row {
+  display: flex; justify-content: space-between; align-items: center;
+  background: rgba(255,255,255,0.04); border-radius: var(--radius-sm); padding: 0.75rem 1rem;
+}
+.vc-cita-row > div { display: flex; flex-direction: column; }
+.vc-cita-row strong { color: var(--white); font-size: 0.9rem; }
+.vc-cita-row small { color: var(--navy-200); font-size: 0.8rem; }
+
+/* =========================================================
+   TIMELINE (historial)
+   ========================================================= */
+.vc-timeline { display: flex; flex-direction: column; gap: 1.5rem; position: relative; padding-left: 2rem; }
+.vc-timeline::before {
+  content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+  width: 2px; background: rgba(62,207,178,0.2);
+}
+.vc-timeline-item { position: relative; }
+.vc-timeline-dot {
+  position: absolute; left: -2rem; top: 1.25rem;
+  width: 16px; height: 16px; border-radius: 50%;
+  background: var(--mint); border: 3px solid var(--navy-900);
+}
+.vc-timeline-card { }
+.vc-timeline-header { display: flex; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 0.5rem; }
+.vc-timeline-date { font-weight: 700; color: var(--mint); }
+.vc-timeline-vet { color: var(--navy-200); font-size: 0.875rem; }
+
+/* =========================================================
+   DELETE CONFIRM
+   ========================================================= */
+.vc-delete-confirm {
+  max-width: 500px; margin: 4rem auto; text-align: center;
+}
+.vc-delete-icon { font-size: 4rem; margin-bottom: 1rem; }
+.vc-delete-confirm h1 { color: var(--red); margin-bottom: 0.75rem; font-size: 1.75rem; }
+.vc-delete-confirm p { color: var(--navy-200); margin-bottom: 1.5rem; }
+.vc-delete-info { text-align: left; margin-bottom: 2rem; }
+
+/* =========================================================
+   ADMIN STATS
+   ========================================================= */
+.vc-admin-stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem; margin-bottom: 1rem;
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+.vc-empty-state {
+  text-align: center; padding: 4rem 2rem;
+  border: 1px dashed rgba(62,207,178,0.2); border-radius: var(--radius); margin-top: 1.5rem;
+}
+.vc-empty-state > span { font-size: 3rem; display: block; margin-bottom: 1rem; }
+.vc-empty-state p { color: var(--navy-200); margin-bottom: 1.5rem; }
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.vc-footer {
+  background: rgba(0,0,0,0.3); border-top: 1px solid rgba(62,207,178,0.1);
+  padding: 2.5rem 1.5rem;
+}
+.vc-footer-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
+.vc-footer-logo {
+  font-family: 'DM Serif Display', serif; font-size: 1.3rem;
+  color: var(--white); margin-bottom: 0.5rem;
+}
+.vc-footer-sub { color: var(--navy-300); font-size: 0.85rem; margin-bottom: 0.25rem; }
+.vc-footer-credit { color: var(--navy-400); font-size: 0.8rem; }
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 768px) {
+  .vc-nav { padding: 0.75rem 1rem; }
+  .vc-nav-links { gap: 0.25rem; }
+  .vc-hero { padding: 5rem 1rem 3rem; }
+  .vc-hero-stats { grid-template-columns: 1fr 1fr; }
+  .vc-detail-layout { grid-template-columns: 1fr; }
+  .vc-profile-grid { grid-template-columns: 1fr; }
+  .vc-form-row { grid-template-columns: 1fr; }
+  .vc-auth-card { padding: 1.75rem; }
+  .vc-page-header { flex-direction: column; }
+  .vc-search-bar { flex-direction: column; }
+  .vc-search-bar .vc-field { width: 100%; }
+}
+
+@media (max-width: 480px) {
+  .vc-hero-title { font-size: 2rem; }
+  .vc-nav-links .vc-user-name { display: none; }
+  .vc-hero-stats { grid-template-columns: 1fr 1fr; }
+}
