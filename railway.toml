@@ -1,0 +1,8 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "VetCareSV/Dockerfile"
+
+[deploy]
+startCommand = "dotnet VetCareSV.dll"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
