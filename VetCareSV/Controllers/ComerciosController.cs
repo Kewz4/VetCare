@@ -66,6 +66,9 @@ public class ComerciosController : Controller
         _context.ComerciosAliados.Add(comercio);
         await _context.SaveChangesAsync();
 
+        usuario.ComercioId = comercio.Id;
+        await _context.SaveChangesAsync();
+
         HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
         HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre);
         HttpContext.Session.SetString("UsuarioRol", "Comercio");

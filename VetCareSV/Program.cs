@@ -33,7 +33,7 @@ using (var scope = app.Services.CreateScope())
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     db.Database.EnsureCreated();
 
-    // Create productos table if it doesn't exist (EnsureCreated won't add new tables)
+    // Add new columns/tables that EnsureCreated won't create on existing DBs
     db.Database.ExecuteSqlRaw("""
         CREATE TABLE IF NOT EXISTS productos (
             id SERIAL PRIMARY KEY,
@@ -43,6 +43,7 @@ using (var scope = app.Services.CreateScope())
             comercio_id INTEGER NOT NULL REFERENCES comercios_aliados(id) ON DELETE CASCADE
         )
     """);
+    db.Database.ExecuteSqlRaw("ALTER TABLE usuarios ADD COLUMN IF NOT EXISTS comercio_id INTEGER REFERENCES comercios_aliados(id) ON DELETE SET NULL");
 
     if (!db.Veterinarias.Any())
     {
@@ -161,6 +162,46 @@ using (var scope = app.Services.CreateScope())
                 });
             }
         }
+        db.SaveChanges();
+    }
+
+    // Demo comercio account for presentation
+    if (!db.Usuarios.Any(u => u.Email == "comercio@vetcare.sv"))
+    {
+        var demoComercio = new VetCareSV.Models.ComercioAliado
+        {
+            Nombre = "Farmacia VetDemo SV",
+            Categoria = "Farmacia",
+            Direccion = "Bulevar de los Héroes, Local 12, San Salvador",
+            Departamento = "San Salvador",
+            Telefono = "2299-8800",
+            Descripcion = "Farmacia veterinaria con amplio catálogo de medicamentos y suplementos para mascotas."
+        };
+        db.ComerciosAliados.Add(demoComercio);
+        db.SaveChanges();
+
+        var demoComercioUser = new VetCareSV.Models.Usuario
+        {
+            Nombre = "Carlos Méndez",
+            Email = "comercio@vetcare.sv",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Demo1234"),
+            Rol = "Comercio",
+            FechaRegistro = DateTime.UtcNow.AddMonths(-1),
+            ComercioId = demoComercio.Id
+        };
+        db.Usuarios.Add(demoComercioUser);
+        db.SaveChanges();
+
+        db.Productos.AddRange(
+            new VetCareSV.Models.Producto { Nombre = "Amoxicilina 500mg", Descripcion = "Antibiótico de amplio espectro para perros y gatos", Precio = 11.50m, ComercioId = demoComercio.Id },
+            new VetCareSV.Models.Producto { Nombre = "Ivermectina 1% 50ml", Descripcion = "Desparasitante inyectable, frasco multidosis", Precio = 14.75m, ComercioId = demoComercio.Id },
+            new VetCareSV.Models.Producto { Nombre = "Vacuna Antirrábica monodosis", Descripcion = "Vacuna antirrábica certificada para perros y gatos", Precio = 13.00m, ComercioId = demoComercio.Id },
+            new VetCareSV.Models.Producto { Nombre = "Frontline Antipulgas Perro M", Descripcion = "Pipeta antipulgas y garrapatas talla mediana 10-20kg", Precio = 10.25m, ComercioId = demoComercio.Id },
+            new VetCareSV.Models.Producto { Nombre = "Dexametasona 4mg/ml", Descripcion = "Antiinflamatorio corticoide inyectable", Precio = 8.00m, ComercioId = demoComercio.Id },
+            new VetCareSV.Models.Producto { Nombre = "Omeprazol 20mg x 30 cáps", Descripcion = "Protector gástrico para uso veterinario", Precio = 9.50m, ComercioId = demoComercio.Id },
+            new VetCareSV.Models.Producto { Nombre = "Metronidazol 250mg", Descripcion = "Antiparasitario y antibacteriano intestinal", Precio = 7.25m, ComercioId = demoComercio.Id },
+            new VetCareSV.Models.Producto { Nombre = "Suero Fisiológico 500ml", Descripcion = "Solución salina estéril para rehidratación", Precio = 5.50m, ComercioId = demoComercio.Id }
+        );
         db.SaveChanges();
     }
 }

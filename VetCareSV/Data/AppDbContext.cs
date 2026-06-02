@@ -26,6 +26,8 @@ public class AppDbContext : DbContext
             e.Property(u => u.PasswordHash).HasColumnName("password_hash").IsRequired();
             e.Property(u => u.Rol).HasColumnName("rol").HasDefaultValue("Dueno");
             e.Property(u => u.FechaRegistro).HasColumnName("fecha_registro").HasDefaultValueSql("CURRENT_TIMESTAMP");
+            e.Property(u => u.ComercioId).HasColumnName("comercio_id");
+            e.HasOne(u => u.Comercio).WithMany().HasForeignKey(u => u.ComercioId).IsRequired(false).OnDelete(DeleteBehavior.SetNull);
         });
 
         modelBuilder.Entity<Mascota>(e => {

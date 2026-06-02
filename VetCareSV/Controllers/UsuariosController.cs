@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using VetCareSV.Data;
 using VetCareSV.DTOs;
 using VetCareSV.Services;
 namespace VetCareSV.Controllers;
 public class UsuariosController : Controller
 {
     private readonly IUsuarioService _service;
-    public UsuariosController(IUsuarioService service) { _service = service; }
+    private readonly AppDbContext _context;
+    public UsuariosController(IUsuarioService service, AppDbContext context) { _service = service; _context = context; }
 
     public IActionResult Login() { if (HttpContext.Session.GetInt32("UsuarioId") != null) return RedirectToAction("Index", "Home"); return View(); }
 
@@ -20,6 +23,13 @@ public class UsuariosController : Controller
             HttpContext.Session.SetInt32("UsuarioId", usuario.Id);
             HttpContext.Session.SetString("UsuarioNombre", usuario.Nombre);
             HttpContext.Session.SetString("UsuarioRol", usuario.Rol);
+            if (usuario.Rol == "Comercio")
+            {
+                var fullUser = await _context.Usuarios.FindAsync(usuario.Id);
+                if (fullUser?.ComercioId != null)
+                    HttpContext.Session.SetInt32("ComercioId", fullUser.ComercioId.Value);
+                return RedirectToAction("Dashboard", "Comercios");
+            }
             return RedirectToAction("Index", "Home");
         }
         catch (Exception ex) { ModelState.AddModelError("", ex.Message); return View(dto); }
