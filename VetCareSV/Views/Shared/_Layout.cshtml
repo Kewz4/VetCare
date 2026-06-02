@@ -11,7 +11,7 @@
 <body>
 <nav class="vc-nav" id="mainNav">
     <a asp-controller="Home" asp-action="Index" class="vc-nav-logo">
-        <img src="https://1rdekw89rj.ucarecdn.net/320638db-7a49-495c-ac81-ab070918354b/vetcarelogo.png"
+        <img src="https://1rdekw89rj.ucarecd.net/320638db-7a49-495c-ac81-ab070918354b/vetcarelogo.png"
              alt="VetCare SV" class="vc-nav-logo-img" />
     </a>
     <div class="vc-nav-links">
@@ -48,11 +48,19 @@
 <main class="vc-main">
     @if (TempData["Exito"] != null)
     {
-        <div class="vc-alert vc-alert--success">✓ @TempData["Exito"]</div>
+        <div class="vc-toast vc-toast--success" id="vcToast">
+            <span class="vc-toast-icon">✓</span>
+            <span class="vc-toast-msg">@TempData["Exito"]</span>
+            <button class="vc-toast-close" onclick="this.parentElement.remove()">×</button>
+        </div>
     }
     @if (TempData["Error"] != null)
     {
-        <div class="vc-alert vc-alert--error">✕ @TempData["Error"]</div>
+        <div class="vc-toast vc-toast--error" id="vcToast">
+            <span class="vc-toast-icon">✕</span>
+            <span class="vc-toast-msg">@TempData["Error"]</span>
+            <button class="vc-toast-close" onclick="this.parentElement.remove()">×</button>
+        </div>
     }
     @RenderBody()
 </main>
@@ -60,7 +68,7 @@
 <footer class="vc-footer">
     <div class="vc-footer-inner">
         <div class="vc-footer-logo">
-            <img src="https://1rdekw89rj.ucarecdn.net/320638db-7a49-495c-ac81-ab070918354b/vetcarelogo.png"
+            <img src="https://1rdekw89rj.ucarecd.net/320638db-7a49-495c-ac81-ab070918354b/vetcarelogo.png"
                  alt="VetCare SV" class="vc-footer-logo-img" />
         </div>
         <p class="vc-footer-sub">Sistema de Citas Veterinarias · El Salvador · 2026</p>
@@ -71,6 +79,9 @@
 <script>
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), {passive:true});
+// Auto-dismiss toast after 4s
+const toast = document.getElementById('vcToast');
+if (toast) setTimeout(() => toast.classList.add('vc-toast--out'), 4000);
 </script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
