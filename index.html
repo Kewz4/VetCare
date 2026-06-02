@@ -55,6 +55,125 @@
     /* ─── UTILITY ─────────────────────────────────────────────── */
     .visually-hidden { position: absolute; width: 1px; height: 1px; clip: rect(0,0,0,0); overflow: hidden; }
 
+    /* ─── HERO PETS ──────────────────────────────────────────── */
+    .hero-pets {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .hero-pets-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 500px;
+      height: 520px;
+    }
+    .hero-pets-glow {
+      position: absolute;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(62,207,178,0.18) 0%, transparent 68%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+    .hero-pet-dog {
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 78%;
+      filter: drop-shadow(0 24px 48px rgba(0,0,0,0.35));
+      animation: float-dog 5s ease-in-out infinite;
+    }
+    .hero-pet-cat {
+      position: absolute;
+      bottom: 28px; left: 0;
+      width: 42%;
+      filter: drop-shadow(0 16px 32px rgba(0,0,0,0.3));
+      animation: float-cat 5s ease-in-out infinite 0.8s;
+    }
+    @keyframes float-dog {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    @keyframes float-cat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-7px); }
+    }
+
+    /* ─── COMERCIOS PREVIEW ───────────────────────────────────── */
+    .comercios-section {
+      background: var(--navy-900);
+      padding: 100px 5vw;
+    }
+    .comercios-section .section-title { color: var(--white); }
+    .comercios-section .section-eyebrow { color: var(--mint); }
+    .comercios-section .section-sub { color: rgba(255,255,255,0.5); margin-bottom: 56px; }
+    .comercios-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .comercio-card {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+    }
+    .comercio-card-img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease-out-expo);
+      display: block;
+    }
+    .comercio-card:hover .comercio-card-img { transform: scale(1.06); }
+    .comercio-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(13,45,58,0.9) 0%, rgba(13,45,58,0.2) 55%, transparent 100%);
+    }
+    .comercio-card-body {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .comercio-card-cat {
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mint);
+    }
+    .comercio-card-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .comercio-card-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--white);
+      color: var(--navy-900);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 8px 16px;
+      border-radius: 100px;
+      width: fit-content;
+      transition: background 0.2s, transform 0.15s;
+      text-decoration: none;
+    }
+    .comercio-card-btn:hover { background: var(--mint); transform: translateY(-2px); }
+    .comercios-cta {
+      text-align: center;
+      margin-top: 40px;
+    }
+
     /* ─── NAV ─────────────────────────────────────────────────── */
     .nav {
       position: fixed;
@@ -901,6 +1020,8 @@
       .hero { grid-template-columns: 1fr; padding-top: 100px; }
       .hero-visual { display: none; }
       .hero-dog { display: none; }
+      .hero-pets { display: none; }
+      .comercios-grid { grid-template-columns: 1fr 1fr; }
       .problem-section,
       .arch-section,
       .scope-section { grid-template-columns: 1fr; gap: 48px; }
@@ -920,6 +1041,7 @@
       .entities-grid { grid-template-columns: 1fr; }
       .hero-cards-row { grid-template-columns: 1fr; }
       .tech-badge { flex: 0 0 100%; }
+      .comercios-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -928,8 +1050,7 @@
   <!-- ═══ NAV ═══════════════════════════════════════════════════ -->
   <nav class="nav" id="mainNav" aria-label="Navegación principal">
     <a href="#" class="nav-logo" aria-label="VetCare SV inicio">
-      <div class="nav-logo-paw" aria-hidden="true">🐾</div>
-      VetCare <span style="color:var(--mint);margin-left:2px">SV</span>
+      <img src="https://1rdekw89rj.ucarecdn.net/320638db-7a49-495c-ac81-ab070918354b/vetcarelogo.png" alt="VetCare SV" height="36" style="height:36px;width:auto;object-fit:contain;" />
     </a>
     <ul class="nav-links" role="list">
       <li><a href="#modulos">Módulos</a></li>
@@ -961,10 +1082,19 @@
       </div>
     </div>
 
-    <div class="hero-dog" aria-hidden="true">
-      <div class="hero-dog-wrap">
-        <div class="hero-dog-glow"></div>
-        <img src="assets/dog-hero.svg" alt="Mascota feliz" width="420" height="520" />
+    <div class="hero-pets" aria-hidden="true">
+      <div class="hero-pets-wrap">
+        <div class="hero-pets-glow"></div>
+        <img
+          class="hero-pet-cat"
+          src="https://1rdekw89rj.ucarecdn.net/763e0416-69f4-4653-84e8-ff20897cb2b8/cat.png"
+          alt="Gato"
+        />
+        <img
+          class="hero-pet-dog"
+          src="https://1rdekw89rj.ucarecdn.net/de2fb12e-690b-4a05-a89d-b96c1a5b2b0c/dog.png"
+          alt="Perro"
+        />
       </div>
     </div>
   </section>
@@ -1144,6 +1274,57 @@
         <span class="module-tag">Sesión 11</span>
       </div>
 
+    </div>
+  </section>
+
+  <!-- ═══ COMERCIOS PREVIEW ═════════════════════════════════════ -->
+  <section class="comercios-section" aria-labelledby="comercios-title">
+    <p class="section-eyebrow reveal">Red de aliados</p>
+    <h2 class="section-title reveal reveal-delay-1" id="comercios-title">Veterinarias y comercios<br>en un solo catálogo</h2>
+    <p class="section-sub reveal reveal-delay-2">
+      Filtra por departamento y categoría. Encuentra farmacias veterinarias, tiendas y clínicas usando búsquedas con LINQ.
+    </p>
+    <div class="comercios-grid reveal reveal-delay-2">
+
+      <div class="comercio-card">
+        <img class="comercio-card-img"
+          src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=600&q=80&auto=format&fit=crop"
+          alt="Clínica veterinaria" loading="lazy" />
+        <div class="comercio-card-overlay"></div>
+        <div class="comercio-card-body">
+          <span class="comercio-card-cat">Veterinaria</span>
+          <p class="comercio-card-name">Clínicas veterinarias por departamento</p>
+          <a href="#modulos" class="comercio-card-btn">Ver catálogo &rarr;</a>
+        </div>
+      </div>
+
+      <div class="comercio-card">
+        <img class="comercio-card-img"
+          src="https://images.unsplash.com/photo-1587300003388-59208cc962cb?w=600&q=80&auto=format&fit=crop"
+          alt="Tienda de mascotas" loading="lazy" />
+        <div class="comercio-card-overlay"></div>
+        <div class="comercio-card-body">
+          <span class="comercio-card-cat">Tienda / Grooming</span>
+          <p class="comercio-card-name">Accesorios, alimentos y estética</p>
+          <a href="#modulos" class="comercio-card-btn">Explorar tiendas &rarr;</a>
+        </div>
+      </div>
+
+      <div class="comercio-card">
+        <img class="comercio-card-img"
+          src="https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=600&q=80&auto=format&fit=crop"
+          alt="Farmacia veterinaria" loading="lazy" />
+        <div class="comercio-card-overlay"></div>
+        <div class="comercio-card-body">
+          <span class="comercio-card-cat">Farmacia</span>
+          <p class="comercio-card-name">Medicamentos y suplementos especializados</p>
+          <a href="#modulos" class="comercio-card-btn">Ver farmacias &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+    <div class="comercios-cta reveal reveal-delay-3">
+      <a href="#contacto" class="btn-primary">Ver todos los comercios</a>
     </div>
   </section>
 
@@ -1439,8 +1620,7 @@
   <!-- ═══ FOOTER ═════════════════════════════════════════════════ -->
   <footer class="footer-info" role="contentinfo">
     <div class="footer-logo">
-      <div class="nav-logo-paw" aria-hidden="true">🐾</div>
-      VetCare <span style="color:var(--mint);margin-left:2px">SV</span>
+      <img src="https://1rdekw89rj.ucarecdn.net/320638db-7a49-495c-ac81-ab070918354b/vetcarelogo.png" alt="VetCare SV" height="28" style="height:28px;width:auto;filter:brightness(0) invert(1);opacity:0.85;" />
     </div>
     <div class="footer-meta">
       <p>Desarrollado por <strong style="color:rgba(255,255,255,0.7)">Kenneth Rodas</strong></p>
