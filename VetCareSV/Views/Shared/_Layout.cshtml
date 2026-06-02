@@ -20,19 +20,36 @@
         <a asp-controller="Comercios" asp-action="Index">Comercios</a>
         @if (Context.Session.GetInt32("UsuarioId") != null)
         {
-            <a asp-controller="Mascotas" asp-action="Index">Mis Mascotas</a>
-            <a asp-controller="Citas" asp-action="Index">Mis Citas</a>
             @if (Context.Session.GetString("UsuarioRol") == "Admin")
             {
                 <a asp-controller="Admin" asp-action="Index" class="vc-badge-admin">Admin</a>
             }
-            <div class="vc-user-menu">
-                <span class="vc-user-name">👤 @Context.Session.GetString("UsuarioNombre")</span>
-                <div class="vc-user-dropdown">
-                    <a asp-controller="Usuarios" asp-action="Perfil">Mi Perfil</a>
+            <div class="vc-user-menu" id="userMenu">
+                <button class="vc-user-name" id="userMenuBtn" type="button" onclick="toggleMenu()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                    @Context.Session.GetString("UsuarioNombre")
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vc-icon-xs vc-chevron"><path d="M6 9l6 6 6-6"/></svg>
+                </button>
+                <div class="vc-user-dropdown" id="userDropdown">
+                    <a asp-controller="Usuarios" asp-action="Perfil">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+                        Mi Perfil
+                    </a>
+                    <a asp-controller="Mascotas" asp-action="Index">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><ellipse cx="12" cy="17" rx="5" ry="3.5"/><ellipse cx="6.5" cy="11" rx="2" ry="3"/><ellipse cx="17.5" cy="11" rx="2" ry="3"/><ellipse cx="9" cy="7" rx="1.5" ry="2"/><ellipse cx="15" cy="7" rx="1.5" ry="2"/></svg>
+                        Mis Mascotas
+                    </a>
+                    <a asp-controller="Citas" asp-action="Index">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                        Mis Citas
+                    </a>
+                    <div class="vc-dropdown-divider"></div>
                     <form asp-controller="Usuarios" asp-action="Logout" method="post">
                         @Html.AntiForgeryToken()
-                        <button type="submit">Cerrar Sesión</button>
+                        <button type="submit">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                            Cerrar Sesión
+                        </button>
                     </form>
                 </div>
             </div>
@@ -41,7 +58,7 @@
         {
             <a asp-controller="Usuarios" asp-action="Login" class="vc-btn-ghost-sm">Iniciar Sesión</a>
             <a asp-controller="Usuarios" asp-action="Registro" class="vc-btn-primary-sm">Registrarse</a>
-            <a asp-controller="Comercios" asp-action="RegistroComercio" class="vc-btn-ghost-sm" style="border-color:rgba(245,200,66,0.5);color:var(--gold)">Soy comercio</a>
+            <a asp-controller="Comercios" asp-action="RegistroComercio" class="vc-btn-ghost-sm vc-btn-gold-sm">Soy comercio</a>
         }
     </div>
 </nav>
@@ -50,17 +67,21 @@
     @if (TempData["Exito"] != null)
     {
         <div class="vc-toast vc-toast--success" id="vcToast">
-            <span class="vc-toast-icon">✓</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="vc-icon-sm"><polyline points="20 6 9 17 4 12"/></svg>
             <span class="vc-toast-msg">@TempData["Exito"]</span>
-            <button class="vc-toast-close" onclick="this.parentElement.remove()">×</button>
+            <button class="vc-toast-close" onclick="this.parentElement.remove()" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
         </div>
     }
     @if (TempData["Error"] != null)
     {
         <div class="vc-toast vc-toast--error" id="vcToast">
-            <span class="vc-toast-icon">✕</span>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="vc-icon-sm"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
             <span class="vc-toast-msg">@TempData["Error"]</span>
-            <button class="vc-toast-close" onclick="this.parentElement.remove()">×</button>
+            <button class="vc-toast-close" onclick="this.parentElement.remove()" type="button">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
         </div>
     }
     @RenderBody()
@@ -80,9 +101,26 @@
 <script>
 const nav = document.getElementById('mainNav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40), {passive:true});
-// Auto-dismiss toast after 4s
+
+// Toast auto-dismiss
 const toast = document.getElementById('vcToast');
 if (toast) setTimeout(() => toast.classList.add('vc-toast--out'), 4000);
+
+// User menu - click toggle instead of hover
+function toggleMenu() {
+    const dropdown = document.getElementById('userDropdown');
+    const btn = document.getElementById('userMenuBtn');
+    const isOpen = dropdown.classList.toggle('open');
+    btn.classList.toggle('active', isOpen);
+}
+// Close when clicking outside
+document.addEventListener('click', e => {
+    const menu = document.getElementById('userMenu');
+    if (menu && !menu.contains(e.target)) {
+        document.getElementById('userDropdown')?.classList.remove('open');
+        document.getElementById('userMenuBtn')?.classList.remove('active');
+    }
+});
 </script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>
