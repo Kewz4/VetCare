@@ -1,0 +1,82 @@
+@model VetCareSV.DTOs.RegistrarComercioDTO
+@{ ViewData["Title"] = "Registrar Comercio"; }
+<div class="vc-auth-page">
+  <div class="vc-auth-card" style="max-width:560px">
+    <div class="vc-auth-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:36px;height:36px;color:var(--mint)"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M10 14h4v6h-4z"/></svg>
+    </div>
+    <h1 class="vc-auth-title">Registra tu comercio</h1>
+    <p class="vc-auth-sub">Conecta tu negocio con dueños de mascotas en El Salvador</p>
+    <form asp-action="RegistroComercio" method="post" class="vc-form">
+      @Html.AntiForgeryToken()
+      <div asp-validation-summary="All" class="vc-validation-errors"></div>
+      <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--navy-300);margin-bottom:0.75rem;font-weight:600">Datos del comercio</p>
+      <div class="vc-field">
+        <label asp-for="NombreComercio">Nombre del negocio</label>
+        <input asp-for="NombreComercio" placeholder="Ej. PetShop Central" />
+        <span asp-validation-for="NombreComercio" class="vc-field-error"></span>
+      </div>
+      <div class="vc-form-row">
+        <div class="vc-field">
+          <label asp-for="Categoria">Categoría</label>
+          <select asp-for="Categoria">
+            <option value="">-- Selecciona --</option>
+            <option>Tienda</option>
+            <option>Farmacia</option>
+            <option>Grooming</option>
+            <option>Agropecuaria</option>
+            <option>Clínica</option>
+            <option>Otro</option>
+          </select>
+          <span asp-validation-for="Categoria" class="vc-field-error"></span>
+        </div>
+        <div class="vc-field">
+          <label asp-for="Departamento">Departamento</label>
+          <select asp-for="Departamento">
+            <option value="">-- Selecciona --</option>
+            <option>San Salvador</option><option>Santa Ana</option><option>San Miguel</option>
+            <option>La Libertad</option><option>Sonsonate</option><option>Usulután</option>
+            <option>Cuscatlán</option><option>La Paz</option><option>Chalatenango</option>
+            <option>Ahuachapán</option><option>San Vicente</option><option>La Unión</option>
+            <option>Morazán</option><option>Cabañas</option>
+          </select>
+        </div>
+      </div>
+      <div class="vc-field">
+        <label asp-for="Direccion">Dirección</label>
+        <input asp-for="Direccion" placeholder="Dirección exacta del negocio" />
+        <span asp-validation-for="Direccion" class="vc-field-error"></span>
+      </div>
+      <div class="vc-form-row">
+        <div class="vc-field">
+          <label asp-for="Telefono">Teléfono</label>
+          <input asp-for="Telefono" placeholder="2200-0000" />
+        </div>
+        <div class="vc-field">
+          <label asp-for="Descripcion">Descripción breve</label>
+          <input asp-for="Descripcion" placeholder="¿Qué ofreces?" />
+        </div>
+      </div>
+      <p style="font-size:0.75rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--navy-300);margin:1rem 0 0.75rem;font-weight:600">Datos de acceso</p>
+      <div class="vc-field">
+        <label asp-for="NombreContacto">Nombre del responsable</label>
+        <input asp-for="NombreContacto" placeholder="Tu nombre completo" />
+        <span asp-validation-for="NombreContacto" class="vc-field-error"></span>
+      </div>
+      <div class="vc-form-row">
+        <div class="vc-field">
+          <label asp-for="Email">Email de acceso</label>
+          <input asp-for="Email" type="email" placeholder="correo@negocio.com" />
+          <span asp-validation-for="Email" class="vc-field-error"></span>
+        </div>
+        <div class="vc-field">
+          <label asp-for="Password">Contraseña</label>
+          <input asp-for="Password" type="password" placeholder="Mínimo 6 caracteres" />
+          <span asp-validation-for="Password" class="vc-field-error"></span>
+        </div>
+      </div>
+      <button type="submit" class="vc-btn-primary vc-btn-full" style="margin-top:0.5rem">Registrar comercio</button>
+    </form>
+    <p class="vc-auth-switch">¿Ya tienes cuenta? <a asp-controller="Usuarios" asp-action="Login">Inicia sesión</a></p>
+  </div>
+</div>

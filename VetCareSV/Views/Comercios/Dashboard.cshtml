@@ -1,0 +1,18 @@
+@model VetCareSV.Models.ComercioAliado
+@{ ViewData["Title"] = "Panel de Comercio"; }
+<div class="vc-container" style="padding-top:2rem">
+  <div class="vc-page-header">
+    <h1>Panel de tu Comercio</h1>
+    <p>Gestiona la información de <strong>@Model.Nombre</strong> en el directorio VetCare SV</p>
+  </div>
+  <div class="vc-card" style="max-width:600px;padding:2rem">
+    <div class="vc-info-row"><span class="vc-info-label">Nombre</span><span class="vc-info-value">@Model.Nombre</span></div>
+    <div class="vc-info-row"><span class="vc-info-label">Categoría</span><span class="vc-info-value">@Model.Categoria</span></div>
+    <div class="vc-info-row"><span class="vc-info-label">Dirección</span><span class="vc-info-value">@Model.Direccion</span></div>
+    <div class="vc-info-row"><span class="vc-info-label">Departamento</span><span class="vc-info-value">@(Model.Departamento ?? "—")</span></div>
+    <div class="vc-info-row"><span class="vc-info-label">Teléfono</span><span class="vc-info-value">@(Model.Telefono ?? "—")</span></div>
+    <div class="vc-info-row"><span class="vc-info-label">Descripción</span><span class="vc-info-value">@(Model.Descripcion ?? "—")</span></div>
+  </div>
+  <p style="margin-top:1.5rem;color:var(--navy-300);font-size:0.9rem">Tu comercio ya aparece en el directorio público de VetCare SV.</p>
+  <a asp-controller="Comercios" asp-action="Index" class="vc-btn-ghost" style="margin-top:1rem;display:inline-block">Ver directorio</a>
+</div>
