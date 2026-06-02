@@ -65,32 +65,14 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// Static files con hash en query string → cache largo (inmutable)
-// Sin hash → no cache
+// No cachear nada — cada respuesta pide al servidor
 app.UseStaticFiles(new StaticFileOptions
 {
     OnPrepareResponse = ctx =>
     {
-        var query = ctx.Context.Request.QueryString.Value ?? "";
-        if (query.Contains("v="))
-        {
-            ctx.Context.Response.Headers["Cache-Control"] = "public, max-age=31536000, immutable";
-        }
-        else
-        {
-            ctx.Context.Response.Headers["Cache-Control"] = "no-cache";
-        }
-    }
-});
-
-// Las páginas HTML nunca se cachean para que el browser siempre obtenga el HTML fresco
-app.Use(async (context, next) =>
-{
-    await next();
-    if (context.Response.ContentType?.StartsWith("text/html") == true)
-    {
-        context.Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
-        context.Response.Headers["Pragma"] = "no-cache";
+        ctx.Context.Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
+        ctx.Context.Response.Headers["Pragma"] = "no-cache";
+        ctx.Context.Response.Headers["Expires"] = "0";
     }
 });
 
