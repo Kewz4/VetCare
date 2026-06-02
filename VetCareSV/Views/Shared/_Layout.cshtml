@@ -57,8 +57,7 @@
         else
         {
             <a asp-controller="Usuarios" asp-action="Login" class="vc-btn-ghost-sm">Iniciar Sesión</a>
-            <a asp-controller="Usuarios" asp-action="Registro" class="vc-btn-primary-sm">Registrarse</a>
-            <a asp-controller="Comercios" asp-action="RegistroComercio" class="vc-btn-ghost-sm vc-btn-gold-sm">Soy comercio</a>
+            <button type="button" class="vc-btn-primary-sm vc-btn-register-nav" onclick="openRegisterModal()">Registrarse</button>
         }
     </div>
 </nav>
@@ -121,7 +120,54 @@ document.addEventListener('click', e => {
         document.getElementById('userMenuBtn')?.classList.remove('active');
     }
 });
+
+// Global register modal (available on all pages)
+function openRegisterModal() {
+    const m = document.getElementById('globalRegisterModal');
+    if (m) { m.classList.add('open'); document.body.style.overflow = 'hidden'; }
+}
+function closeRegisterModal() {
+    const m = document.getElementById('globalRegisterModal');
+    if (m) { m.classList.remove('open'); document.body.style.overflow = ''; }
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeRegisterModal(); });
 </script>
 @await RenderSectionAsync("Scripts", required: false)
+
+@if (Context.Session.GetInt32("UsuarioId") == null)
+{
+<div class="vc-modal-overlay" id="globalRegisterModal" onclick="if(event.target===this)closeRegisterModal()">
+    <div class="vc-modal">
+        <button class="vc-modal-close" onclick="closeRegisterModal()" type="button">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+        <h2 class="vc-modal-title">Como quieres registrarte?</h2>
+        <p class="vc-modal-sub">Elige el tipo de cuenta que mejor describe tu uso de VetCare SV</p>
+        <div class="vc-modal-options">
+            <a asp-controller="Usuarios" asp-action="Registro" class="vc-modal-option">
+                <div class="vc-modal-option-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="17" rx="5" ry="3.5"/><ellipse cx="6.5" cy="11" rx="2" ry="3"/><ellipse cx="17.5" cy="11" rx="2" ry="3"/><ellipse cx="9" cy="7" rx="1.5" ry="2"/><ellipse cx="15" cy="7" rx="1.5" ry="2"/></svg>
+                </div>
+                <div class="vc-modal-option-text">
+                    <strong>Soy dueno de mascotas</strong>
+                    <span>Agenda citas y lleva el historial medico</span>
+                </div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vc-modal-arrow"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+            <a asp-controller="Comercios" asp-action="RegistroComercio" class="vc-modal-option vc-modal-option--comercio">
+                <div class="vc-modal-option-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M10 14h4v6h-4z"/></svg>
+                </div>
+                <div class="vc-modal-option-text">
+                    <strong>Tengo un comercio o clinica</strong>
+                    <span>Aparece en el directorio de VetCare SV</span>
+                </div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vc-modal-arrow"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
+        </div>
+        <p class="vc-modal-footer">Ya tienes cuenta? <a asp-controller="Usuarios" asp-action="Login">Inicia sesion</a></p>
+    </div>
+</div>
+}
 </body>
 </html>
