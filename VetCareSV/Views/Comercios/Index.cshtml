@@ -84,6 +84,7 @@
                         @if (!string.IsNullOrEmpty(c.Descripcion))
                         { <p class="vc-card-desc">@c.Descripcion</p> }
                     </div>
+                    <a asp-action="Details" asp-route-id="@c.Id" class="vc-btn-ghost-sm">Ver detalle</a>
                 </div>
             }
         </div>

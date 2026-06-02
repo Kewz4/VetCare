@@ -28,13 +28,13 @@ public class CitasController : Controller
         return View(cita);
     }
 
-    public async Task<IActionResult> Create()
+    public async Task<IActionResult> Create(int? vetId)
     {
         var uid = GetUserId(); if (uid == null) return RedirectToAction("Login", "Usuarios");
         var mascotas = await _mascotaService.ObtenerPorUsuarioAsync(uid.Value);
         var vets = await _vetService.ObtenerTodasAsync();
         ViewBag.Mascotas = new SelectList(mascotas, "Id", "Nombre");
-        ViewBag.Veterinarias = new SelectList(vets, "Id", "Nombre");
+        ViewBag.Veterinarias = new SelectList(vets, "Id", "Nombre", vetId);
         ViewBag.NoPets = !mascotas.Any();
         return View();
     }

@@ -23,6 +23,13 @@ public class ComerciosController : Controller
         return View(comercios);
     }
 
+    public async Task<IActionResult> Details(int id)
+    {
+        var comercio = await _context.ComerciosAliados.FindAsync(id);
+        if (comercio == null) return NotFound();
+        return View(comercio);
+    }
+
     [HttpGet]
     public IActionResult RegistroComercio() => View();
 

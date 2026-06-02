@@ -63,7 +63,7 @@ a:hover { opacity: 0.8; }
 .vc-nav-logo {
   display: flex; align-items: center;
 }
-.vc-nav-logo-img { height: 96px; width: auto; display: block; }
+.vc-nav-logo-img { height: 120px; width: auto; display: block; }
 .vc-accent { color: var(--mint); }
 .vc-nav-links {
   display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
@@ -265,6 +265,7 @@ a:hover { opacity: 0.8; }
   padding: 0.45rem 1.1rem; font-size: 0.85rem; font-weight: 700; border: none;
 }
 .vc-btn-primary-sm:hover { opacity: 1; transform: translateY(-1px); background: var(--mint-light); }
+.vc-btn-register-nav { cursor: pointer; }
 
 .vc-btn-ghost-sm {
   background: transparent; color: var(--mint);
@@ -550,6 +551,22 @@ a:hover { opacity: 0.8; }
 .vc-detail-layout {
   display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; align-items: start;
 }
+.vc-detail-card { padding: 2rem; }
+.vc-detail-card-header { display: flex; gap: 1.25rem; align-items: flex-start; margin-bottom: 2rem; }
+.vc-card-icon-svg--lg { width: 64px; height: 64px; flex-shrink: 0; }
+.vc-card-icon-svg--lg svg { width: 36px; height: 36px; }
+.vc-detail-title { font-size: 1.6rem; margin: 0.25rem 0; }
+.vc-detail-info-grid { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+.vc-detail-info-item { display: flex; align-items: flex-start; gap: 0.75rem; }
+.vc-detail-info-item svg { margin-top: 0.15rem; flex-shrink: 0; color: var(--mint); }
+.vc-detail-info-label { display: block; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--navy-300); font-weight: 600; margin-bottom: 0.15rem; }
+.vc-detail-info-value { display: block; color: var(--white); font-size: 0.95rem; line-height: 1.5; }
+.vc-detail-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+
+.vc-map-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius); overflow: hidden; }
+.vc-map-label { padding: 1rem 1.25rem 0.5rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--navy-300); font-weight: 600; }
+.vc-map-frame { width: 100%; height: 360px; border: none; display: block; }
+
 .vc-detail-grid { display: grid; gap: 0.85rem; }
 .vc-detail-item { display: flex; flex-direction: column; gap: 0.2rem; }
 .vc-detail-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--navy-300); font-weight: 600; }

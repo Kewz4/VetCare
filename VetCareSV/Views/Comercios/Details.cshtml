@@ -1,15 +1,23 @@
-@model VetCareSV.Models.Veterinaria
+@model VetCareSV.Models.ComercioAliado
 @{ ViewData["Title"] = Model.Nombre; }
 @{
     var mapQuery = Uri.EscapeDataString(Model.Nombre + ", " + Model.Direccion + ", El Salvador");
     var mapUrl = "https://maps.google.com/maps?q=" + mapQuery + "&output=embed&z=15";
     var mapsLink = "https://www.google.com/maps/search/" + mapQuery;
+
+    string ComercioIcon(string cat) => cat switch {
+        "Farmacia"     => """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8l-5-5z"/><path d="M9 3v5h10"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>""",
+        "Grooming"     => """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3l.9 2.6A2 2 0 0 0 8.8 7H15a2 2 0 0 1 2 2v1"/><path d="M6 21l4-8"/><path d="M10 17c2.5 0 4.5-1 6-3"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="17" r="3"/></svg>""",
+        "Agropecuaria" => """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22V12"/><path d="M5 12C5 7 8 3 12 2c4 1 7 5 7 10"/><path d="M5 12h14"/><path d="M5.5 17H18.5"/><path d="M3 22h18"/></svg>""",
+        "Clínica"      => """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>""",
+        _              => """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M10 14h4v6h-4z"/></svg>"""
+    };
 }
 <div class="vc-container" style="padding-top:2rem;">
     <div class="vc-form-header">
         <a asp-action="Index" class="vc-back-link">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vc-icon-xs"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            Veterinarias
+            Comercios
         </a>
     </div>
 
@@ -18,11 +26,15 @@
             <div class="vc-card vc-detail-card">
                 <div class="vc-detail-card-header">
                     <div class="vc-card-icon-svg vc-card-icon-svg--lg">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+                        @Html.Raw(ComercioIcon(Model.Categoria))
                     </div>
                     <div>
+                        <span class="vc-chip vc-chip--sm" style="margin-bottom:0.5rem;display:inline-block;">@Model.Categoria</span>
                         <h1 class="vc-detail-title">@Model.Nombre</h1>
-                        <span class="vc-chip">@Model.Departamento</span>
+                        @if (!string.IsNullOrEmpty(Model.Departamento))
+                        {
+                            <span class="vc-chip" style="margin-top:0.25rem;">@Model.Departamento</span>
+                        }
                     </div>
                 </div>
 
@@ -44,34 +56,20 @@
                             </div>
                         </div>
                     }
-                    @if (!string.IsNullOrEmpty(Model.Email))
+                    @if (!string.IsNullOrEmpty(Model.Descripcion))
                     {
-                        <div class="vc-detail-info-item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <div class="vc-detail-info-item vc-detail-info-item--full">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
                             <div>
-                                <span class="vc-detail-info-label">Email</span>
-                                <span class="vc-detail-info-value">@Model.Email</span>
-                            </div>
-                        </div>
-                    }
-                    @if (!string.IsNullOrEmpty(Model.Horario))
-                    {
-                        <div class="vc-detail-info-item">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-sm"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                            <div>
-                                <span class="vc-detail-info-label">Horario</span>
-                                <span class="vc-detail-info-value">@Model.Horario</span>
+                                <span class="vc-detail-info-label">Descripción</span>
+                                <span class="vc-detail-info-value">@Model.Descripcion</span>
                             </div>
                         </div>
                     }
                 </div>
 
                 <div class="vc-detail-actions">
-                    <a asp-controller="Citas" asp-action="Create" asp-route-vetId="@Model.Id" class="vc-btn-primary">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vc-icon-sm"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                        Agendar Cita aquí
-                    </a>
-                    <a href="@mapsLink" target="_blank" rel="noopener" class="vc-btn-ghost">
+                    <a href="@mapsLink" target="_blank" rel="noopener" class="vc-btn-primary">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="vc-icon-sm"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
                         Abrir en Google Maps
                     </a>
