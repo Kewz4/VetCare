@@ -1,5 +1,16 @@
 @model IEnumerable<VetCareSV.Models.ComercioAliado>
 @{ ViewData["Title"] = "Comercios Aliados"; }
+
+@functions {
+    static string ComercioIcon(string categoria) => categoria switch {
+        "Farmacia"     => """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8l-5-5z"/><path d="M9 3v5h10"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>""",
+        "Grooming"     => """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 3l.9 2.6A2 2 0 0 0 8.8 7H15a2 2 0 0 1 2 2v1"/><path d="M6 21l4-8"/><path d="M10 17c2.5 0 4.5-1 6-3"/><circle cx="17" cy="17" r="3"/><circle cx="7" cy="17" r="3"/></svg>""",
+        "Agropecuaria" => """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22V12"/><path d="M5 12C5 7 8 3 12 2c4 1 7 5 7 10"/><path d="M5 12h14"/><path d="M5.5 17H18.5"/><path d="M3 22h18"/></svg>""",
+        "Clínica"      => """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>""",
+        _              => """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M10 14h4v6h-4z"/></svg>"""
+    };
+}
+
 <div class="vc-container" style="padding-top:2rem;">
     <div class="vc-page-header">
         <div>
@@ -14,7 +25,7 @@
         <div class="vc-field">
             <select name="categoria">
                 <option value="">Todas las categorías</option>
-                @foreach (var cat in new[] { "Tienda", "Farmacia", "Grooming", "Agropecuaria", "Veterinaria" })
+                @foreach (var cat in new[] { "Tienda", "Farmacia", "Grooming", "Agropecuaria", "Clínica" })
                 {
                     <option value="@cat" selected="@(ViewBag.Categoria == cat ? "selected" : null)">@cat</option>
                 }
@@ -38,7 +49,9 @@
     @if (!Model.Any())
     {
         <div class="vc-empty-state">
-            <span>🏪</span>
+            <div class="vc-empty-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0 2 2 0 0 0 4 0"/><path d="M5 9v11a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M10 14h4v6h-4z"/></svg>
+            </div>
             <p>No se encontraron comercios con esos criterios.</p>
             <a asp-action="Index" class="vc-btn-ghost">Ver todos</a>
         </div>
@@ -48,23 +61,26 @@
         <div class="vc-cards-grid">
             @foreach (var c in Model)
             {
-                var icon = c.Categoria switch {
-                    "Farmacia" => "💊",
-                    "Grooming" => "✂️",
-                    "Agropecuaria" => "🌾",
-                    "Veterinaria" => "🏥",
-                    _ => "🛒"
-                };
                 <div class="vc-card vc-comercio-card">
-                    <div class="vc-card-icon">@icon</div>
+                    <div class="vc-card-icon-svg">@Html.Raw(ComercioIcon(c.Categoria))</div>
                     <div class="vc-card-body">
                         <span class="vc-chip vc-chip--sm">@c.Categoria</span>
                         <h3>@c.Nombre</h3>
                         @if (!string.IsNullOrEmpty(c.Departamento))
-                        { <p class="vc-card-meta">📍 @c.Departamento</p> }
+                        {
+                            <p class="vc-card-meta">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-xs"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+                                @c.Departamento
+                            </p>
+                        }
                         <p class="vc-card-text">@c.Direccion</p>
                         @if (!string.IsNullOrEmpty(c.Telefono))
-                        { <p class="vc-card-text">📞 @c.Telefono</p> }
+                        {
+                            <p class="vc-card-text">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" class="vc-icon-xs"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.28 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.5a16 16 0 0 0 6 6l.96-.96a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                                @c.Telefono
+                            </p>
+                        }
                         @if (!string.IsNullOrEmpty(c.Descripcion))
                         { <p class="vc-card-desc">@c.Descripcion</p> }
                     </div>
