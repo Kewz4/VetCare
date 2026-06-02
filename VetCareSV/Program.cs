@@ -57,6 +57,39 @@ using (var scope = app.Services.CreateScope())
         );
         db.SaveChanges();
     }
+
+    // Demo account with pets and appointments for presentation
+    if (!db.Usuarios.Any(u => u.Email == "demo@vetcare.sv"))
+    {
+        var demoUser = new VetCareSV.Models.Usuario
+        {
+            Nombre = "María García",
+            Email = "demo@vetcare.sv",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("Demo1234"),
+            Rol = "Usuario",
+            FechaRegistro = DateTime.UtcNow.AddMonths(-3)
+        };
+        db.Usuarios.Add(demoUser);
+        db.SaveChanges();
+
+        var vet1 = db.Veterinarias.First();
+        var vet2 = db.Veterinarias.Skip(1).First();
+
+        var mascota1 = new VetCareSV.Models.Mascota { Nombre = "Max", Especie = "Perro", Raza = "Labrador", Edad = 3, Color = "Dorado", UsuarioId = demoUser.Id };
+        var mascota2 = new VetCareSV.Models.Mascota { Nombre = "Luna", Especie = "Gato", Raza = "Siamés", Edad = 2, Color = "Crema", UsuarioId = demoUser.Id };
+        var mascota3 = new VetCareSV.Models.Mascota { Nombre = "Toby", Especie = "Perro", Raza = "Beagle", Edad = 5, Color = "Tricolor", UsuarioId = demoUser.Id };
+        db.Mascotas.AddRange(mascota1, mascota2, mascota3);
+        db.SaveChanges();
+
+        db.Citas.AddRange(
+            new VetCareSV.Models.Cita { MascotaId = mascota1.Id, VeterinariaId = vet1.Id, Fecha = DateTime.UtcNow.AddDays(-30), Motivo = "Vacunación anual", Estado = "Completada" },
+            new VetCareSV.Models.Cita { MascotaId = mascota2.Id, VeterinariaId = vet2.Id, Fecha = DateTime.UtcNow.AddDays(-15), Motivo = "Control de peso y revisión general", Estado = "Completada" },
+            new VetCareSV.Models.Cita { MascotaId = mascota1.Id, VeterinariaId = vet1.Id, Fecha = DateTime.UtcNow.AddDays(-7), Motivo = "Desparasitación", Estado = "Completada" },
+            new VetCareSV.Models.Cita { MascotaId = mascota3.Id, VeterinariaId = vet2.Id, Fecha = DateTime.UtcNow.AddDays(3), Motivo = "Consulta dermatológica", Estado = "Pendiente" },
+            new VetCareSV.Models.Cita { MascotaId = mascota2.Id, VeterinariaId = vet1.Id, Fecha = DateTime.UtcNow.AddDays(10), Motivo = "Vacuna antirrábica", Estado = "Pendiente" }
+        );
+        db.SaveChanges();
+    }
 }
 
 if (!app.Environment.IsDevelopment())

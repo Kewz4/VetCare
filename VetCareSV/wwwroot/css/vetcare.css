@@ -174,9 +174,9 @@ a:hover { opacity: 0.8; }
    ========================================================= */
 .vc-hero {
   min-height: 90vh; display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 55% 45%;
   align-items: center;
-  padding: 6rem 2rem 4rem;
+  padding: 6rem 4rem 4rem 6rem;
   gap: 2rem;
   background: radial-gradient(ellipse at 60% 40%, rgba(26,143,136,0.18) 0%, transparent 65%),
               linear-gradient(160deg, var(--navy-900) 0%, #0a2330 100%);

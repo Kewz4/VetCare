@@ -11,7 +11,7 @@
     @if (!Model.Any())
     {
         <div class="vc-empty-state">
-            <span>🐾</span>
+            <div class="vc-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="17" rx="5" ry="3.5"/><ellipse cx="6.5" cy="11" rx="2" ry="3"/><ellipse cx="17.5" cy="11" rx="2" ry="3"/><ellipse cx="9" cy="7" rx="1.5" ry="2"/><ellipse cx="15" cy="7" rx="1.5" ry="2"/></svg></div>
             <p>Aún no tienes mascotas registradas.</p>
             <a asp-action="Create" class="vc-btn-primary">Registrar primera mascota</a>
         </div>
@@ -22,7 +22,7 @@
             @foreach (var m in Model)
             {
                 <div class="vc-pet-card">
-                    <div class="vc-pet-icon">@(m.Especie == "Perro" ? "🐕" : m.Especie == "Gato" ? "🐈" : "🦜")</div>
+                    <div class="vc-pet-icon">@Html.Raw(m.Especie == "Perro" ? """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:32px;height:32px;color:var(--mint)"><ellipse cx="12" cy="17" rx="5" ry="3.5"/><ellipse cx="6.5" cy="11" rx="2" ry="3"/><ellipse cx="17.5" cy="11" rx="2" ry="3"/><ellipse cx="9" cy="7" rx="1.5" ry="2"/><ellipse cx="15" cy="7" rx="1.5" ry="2"/></svg>""" : m.Especie == "Gato" ? """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:32px;height:32px;color:var(--mint)"><path d="M12 5C9 5 6 7 6 10c0 4 2 7 6 8 4-1 6-4 6-8 0-3-3-5-6-5z"/><path d="M6 5 4 3M18 5l2-2"/></svg>""" : """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:32px;height:32px;color:var(--mint)"><ellipse cx="12" cy="13" rx="5" ry="7"/><path d="M7 8c-2-1-3-3-2-5M17 8c2-1 3-3 2-5"/></svg>""")</div>
                     <div class="vc-pet-info">
                         <h3>@m.Nombre</h3>
                         <span class="vc-pet-species">@m.Especie</span>

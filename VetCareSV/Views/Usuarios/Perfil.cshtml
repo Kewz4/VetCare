@@ -7,7 +7,7 @@
     </div>
     <div class="vc-profile-grid">
         <div class="vc-card vc-profile-card">
-            <div class="vc-profile-avatar">👤</div>
+            <div class="vc-profile-avatar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:56px;height:56px;color:var(--mint)"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg></div>
             <h2 class="vc-profile-name">@Model.Nombre</h2>
             <span class="vc-badge vc-badge--@(Model.Rol == "Admin" ? "admin" : Model.Rol == "Veterinario" ? "vet" : "user")">@Model.Rol</span>
             <div class="vc-profile-info">
@@ -30,7 +30,7 @@
             @if (!Model.Mascotas.Any())
             {
                 <div class="vc-empty-state">
-                    <span>🐾</span>
+                    <div class="vc-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><ellipse cx="12" cy="17" rx="5" ry="3.5"/><ellipse cx="6.5" cy="11" rx="2" ry="3"/><ellipse cx="17.5" cy="11" rx="2" ry="3"/><ellipse cx="9" cy="7" rx="1.5" ry="2"/><ellipse cx="15" cy="7" rx="1.5" ry="2"/></svg></div>
                     <p>Aún no tienes mascotas registradas.</p>
                     <a asp-controller="Mascotas" asp-action="Create" class="vc-btn-primary">Registrar mascota</a>
                 </div>
@@ -41,7 +41,7 @@
                     @foreach (var m in Model.Mascotas)
                     {
                         <div class="vc-pet-mini-card">
-                            <span class="vc-pet-mini-icon">@(m.Especie == "Perro" ? "🐕" : m.Especie == "Gato" ? "🐈" : "🦜")</span>
+                            <span class="vc-pet-mini-icon">@Html.Raw(m.Especie == "Perro" ? """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:20px;height:20px"><ellipse cx="12" cy="17" rx="5" ry="3.5"/><ellipse cx="6.5" cy="11" rx="2" ry="3"/><ellipse cx="17.5" cy="11" rx="2" ry="3"/><ellipse cx="9" cy="7" rx="1.5" ry="2"/><ellipse cx="15" cy="7" rx="1.5" ry="2"/></svg>""" : m.Especie == "Gato" ? """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:20px;height:20px"><path d="M12 5C9 5 6 7 6 10c0 4 2 7 6 8 4-1 6-4 6-8 0-3-3-5-6-5z"/><path d="M6 5 4 3M18 5l2-2"/></svg>""" : """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:20px;height:20px"><path d="M12 3c-3 0-5 2-5 5 0 4 2 7 5 8 3-1 5-4 5-8 0-3-2-5-5-5z"/><path d="M7 8H5M17 8h2"/></svg>""")</span>
                             <div>
                                 <strong>@m.Nombre</strong>
                                 <small>@m.Especie @(!string.IsNullOrEmpty(m.Raza) ? "· " + m.Raza : "")</small>

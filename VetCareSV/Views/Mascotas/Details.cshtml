@@ -9,7 +9,7 @@
     </div>
     <div class="vc-detail-layout">
         <div class="vc-card vc-pet-detail-card">
-            <div class="vc-pet-icon-large">@(Model.Especie == "Perro" ? "🐕" : Model.Especie == "Gato" ? "🐈" : "🦜")</div>
+            <div class="vc-pet-icon-large">@Html.Raw(Model.Especie == "Perro" ? """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:64px;height:64px;color:var(--mint)"><ellipse cx="12" cy="17" rx="5" ry="3.5"/><ellipse cx="6.5" cy="11" rx="2" ry="3"/><ellipse cx="17.5" cy="11" rx="2" ry="3"/><ellipse cx="9" cy="7" rx="1.5" ry="2"/><ellipse cx="15" cy="7" rx="1.5" ry="2"/></svg>""" : Model.Especie == "Gato" ? """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:64px;height:64px;color:var(--mint)"><path d="M12 5C9 5 6 7 6 10c0 4 2 7 6 8 4-1 6-4 6-8 0-3-3-5-6-5z"/><path d="M6 5 4 3M18 5l2-2"/></svg>""" : """<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="width:64px;height:64px;color:var(--mint)"><ellipse cx="12" cy="13" rx="5" ry="7"/><path d="M7 8c-2-1-3-3-2-5M17 8c2-1 3-3 2-5"/></svg>""")</div>
             <h2>@Model.Nombre</h2>
             <div class="vc-detail-grid">
                 <div class="vc-detail-item">
@@ -48,7 +48,7 @@
             @if (!Model.Citas.Any())
             {
                 <div class="vc-empty-state">
-                    <span>📅</span>
+                    <div class="vc-empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
                     <p>Sin citas registradas aún.</p>
                 </div>
             }
